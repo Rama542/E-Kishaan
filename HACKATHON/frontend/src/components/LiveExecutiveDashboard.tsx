@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -41,7 +40,6 @@ export default function LiveExecutiveDashboard({
   onNavigateTab,
   onEditCrops,
 }: LiveExecutiveDashboardProps) {
-  const { t } = useTranslation();
   const [district, setDistrict] = useState<string>('Ludhiana');
   const [quickAcres, setQuickAcres] = useState<number>(2.5);
 
@@ -101,7 +99,7 @@ export default function LiveExecutiveDashboard({
         >
           <CardHeader className="pb-2">
             <CardTitle className="text-base font-semibold flex items-center justify-between">
-              <span>{t('liveDashboard.fieldWeather') || '☀️ Field Weather Today'}</span>
+              <span>☀️ Field Weather Today</span>
               <CloudRain className="w-5 h-5 text-blue-200 group-hover:scale-110 transition-transform" />
             </CardTitle>
           </CardHeader>
@@ -109,14 +107,14 @@ export default function LiveExecutiveDashboard({
             <div className="flex items-baseline justify-between">
               <span className="text-3xl font-extrabold tracking-tight">28°C</span>
               <Badge className="bg-blue-400/30 text-blue-100 border border-blue-300/40 text-xs">
-                {t('liveDashboard.goodSpray') || 'Good Spray Weather'}
+                Good Spray Weather
               </Badge>
             </div>
-            <p className="text-sm text-blue-100 font-medium">{t('liveDashboard.partlyCloudySafe') || 'Partly Cloudy • Safe for Spraying'}</p>
+            <p className="text-sm text-blue-100 font-medium">Partly Cloudy • Safe for Spraying</p>
             <div className="pt-2 flex items-center justify-between text-xs text-blue-200 border-t border-blue-400/30">
               <span>District: {district}</span>
               <span className="flex items-center gap-1 font-bold group-hover:translate-x-1 transition-transform">
-                {t('liveDashboard.sevenDayForecast') || '7-Day Forecast'} <ChevronRight className="w-3.5 h-3.5" />
+                7-Day Forecast <ChevronRight className="w-3.5 h-3.5" />
               </span>
             </div>
           </CardContent>
@@ -129,22 +127,22 @@ export default function LiveExecutiveDashboard({
         >
           <CardHeader className="pb-2">
             <CardTitle className="text-base font-semibold flex items-center justify-between">
-              <span>{t('liveDashboard.soilMoisture') || '🌱 Soil Moisture & Health'}</span>
+              <span>🌱 Soil Moisture & Health</span>
               <Leaf className="w-5 h-5 text-emerald-200 group-hover:scale-110 transition-transform" />
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-1">
             <div className="flex items-baseline justify-between">
-              <span className="text-3xl font-extrabold tracking-tight">{t('liveDashboard.goodMoist') || 'Good (85%)'}</span>
+              <span className="text-3xl font-extrabold tracking-tight">Good (85%)</span>
               <Badge className="bg-emerald-400/30 text-emerald-100 border border-emerald-300/40 text-xs">
-                {t('liveDashboard.moistFertile') || 'Moist & Fertile'}
+                Moist & Fertile
               </Badge>
             </div>
-            <p className="text-sm text-emerald-100 font-medium">{t('liveDashboard.soilReady') || 'Soil is moist & ready for crop growth'}</p>
+            <p className="text-sm text-emerald-100 font-medium">Soil is moist & ready for crop growth</p>
             <div className="pt-2 flex items-center justify-between text-xs text-emerald-200 border-t border-emerald-400/30">
-              <span>{t('dashboard.tabs.soil') || 'Soil Health'}</span>
+              <span>Soil Health Check</span>
               <span className="flex items-center gap-1 font-bold group-hover:translate-x-1 transition-transform">
-                {t('liveDashboard.checkDetails') || 'Check Details'} <ChevronRight className="w-3.5 h-3.5" />
+                Check Details <ChevronRight className="w-3.5 h-3.5" />
               </span>
             </div>
           </CardContent>
@@ -157,7 +155,7 @@ export default function LiveExecutiveDashboard({
         >
           <CardHeader className="pb-2">
             <CardTitle className="text-base font-semibold flex items-center justify-between">
-              <span>{t('liveDashboard.cropStage') || '🌾 Crop Growth Stage'}</span>
+              <span>🌾 Crop Growth Stage</span>
               <Zap className="w-5 h-5 text-amber-200 group-hover:scale-110 transition-transform" />
             </CardTitle>
           </CardHeader>
@@ -165,14 +163,14 @@ export default function LiveExecutiveDashboard({
             <div className="flex items-baseline justify-between">
               <span className="text-3xl font-extrabold tracking-tight">{activeCrop}</span>
               <Badge className="bg-amber-400/30 text-amber-100 border border-amber-300/40 text-xs">
-                {t('liveDashboard.week4') || 'Week 4'}
+                Week 4
               </Badge>
             </div>
-            <p className="text-sm text-amber-100 font-medium">{t('liveDashboard.branchingPhase') || 'Branching & Stem Strength Phase'}</p>
+            <p className="text-sm text-amber-100 font-medium">Branching & Stem Strength Phase</p>
             <div className="pt-2 flex items-center justify-between text-xs text-amber-200 border-t border-amber-400/30">
-              <span>{crops.length} {t('liveDashboard.cropsPlanted') || 'Crops Planted'}</span>
+              <span>{farmer.primaryCrops.length} Crops Planted</span>
               <span className="flex items-center gap-1 font-bold group-hover:translate-x-1 transition-transform">
-                {t('liveDashboard.growthGuide') || 'Growth Guide'} <ChevronRight className="w-3.5 h-3.5" />
+                Growth Guide <ChevronRight className="w-3.5 h-3.5" />
               </span>
             </div>
           </CardContent>
@@ -185,22 +183,22 @@ export default function LiveExecutiveDashboard({
         >
           <CardHeader className="pb-2">
             <CardTitle className="text-base font-semibold flex items-center justify-between">
-              <span>{t('liveDashboard.expectedProfit') || '💰 Expected Harvest Profit'}</span>
+              <span>💰 Expected Harvest Profit</span>
               <TrendingUp className="w-5 h-5 text-purple-200 group-hover:scale-110 transition-transform" />
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-1">
             <div className="flex items-baseline justify-between">
-              <span className="text-3xl font-extrabold tracking-tight">+{ledgerSummary.roiPercent}% {t('liveDashboard.gain') || 'Gain'}</span>
+              <span className="text-3xl font-extrabold tracking-tight">+{ledgerSummary.roiPercent}% Gain</span>
               <Badge className="bg-purple-400/30 text-purple-100 border border-purple-300/40 text-xs">
-                {t('liveDashboard.goodReturn') || 'Good Return'}
+                Good Return
               </Badge>
             </div>
-            <p className="text-sm text-purple-100 font-medium">{t('liveDashboard.estimatedEarnings') || 'Estimated Net Earnings'}: ₹{ledgerSummary.netProfitINR.toLocaleString('en-IN')}</p>
+            <p className="text-sm text-purple-100 font-medium">Estimated Net Earnings: ₹{ledgerSummary.netProfitINR.toLocaleString('en-IN')}</p>
             <div className="pt-2 flex items-center justify-between text-xs text-purple-200 border-t border-purple-400/30">
-              <span>{t('liveDashboard.totalSales') || 'Total Sales'} ₹{ledgerSummary.totalRevenueINR.toLocaleString('en-IN')}</span>
+              <span>Total Sales ₹{ledgerSummary.totalRevenueINR.toLocaleString('en-IN')}</span>
               <span className="flex items-center gap-1 font-bold group-hover:translate-x-1 transition-transform">
-                {t('liveDashboard.expenseBook') || 'Expense Book'} <ChevronRight className="w-3.5 h-3.5" />
+                Expense Book <ChevronRight className="w-3.5 h-3.5" />
               </span>
             </div>
           </CardContent>
@@ -212,7 +210,7 @@ export default function LiveExecutiveDashboard({
         <CardHeader className="pb-3">
           <CardTitle className="text-base font-bold text-gray-900 flex items-center gap-2">
             <Compass className="w-5 h-5 text-emerald-600" />
-            {t('liveDashboard.toolsTitle') || '🚜 Quick Farm Tools & Shortcuts'}
+            🚜 Quick Farm Tools & Shortcuts
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -223,8 +221,8 @@ export default function LiveExecutiveDashboard({
               className="h-auto py-3 px-3 flex flex-col items-center text-center justify-center border-emerald-200 bg-emerald-50/50 hover:bg-emerald-100 hover:border-emerald-400 transition-all rounded-xl"
             >
               <span className="text-xl mb-1">🌾</span>
-              <span className="font-bold text-xs text-emerald-950">{t('liveDashboard.weeklyGuide') || 'Weekly Farm Guide'}</span>
-              <span className="text-[10px] text-emerald-700 mt-0.5">{t('liveDashboard.stepByStep') || 'Step-by-Step Care'}</span>
+              <span className="font-bold text-xs text-emerald-950">Weekly Farm Guide</span>
+              <span className="text-[10px] text-emerald-700 mt-0.5">Step-by-Step Care</span>
             </Button>
 
             <Button
@@ -233,8 +231,8 @@ export default function LiveExecutiveDashboard({
               className="h-auto py-3 px-3 flex flex-col items-center text-center justify-center border-blue-200 bg-blue-50/50 hover:bg-blue-100 hover:border-blue-400 transition-all rounded-xl"
             >
               <span className="text-xl mb-1">💰</span>
-              <span className="font-bold text-xs text-blue-950">{t('liveDashboard.mandiPrices') || 'Mandi Selling Prices'}</span>
-              <span className="text-[10px] text-blue-700 mt-0.5">{t('liveDashboard.compareMarkets') || 'Compare Local Markets'}</span>
+              <span className="font-bold text-xs text-blue-950">Mandi Selling Prices</span>
+              <span className="text-[10px] text-blue-700 mt-0.5">Compare Local Markets</span>
             </Button>
 
             <Button
@@ -243,8 +241,8 @@ export default function LiveExecutiveDashboard({
               className="h-auto py-3 px-3 flex flex-col items-center text-center justify-center border-amber-200 bg-amber-50/50 hover:bg-amber-100 hover:border-amber-400 transition-all rounded-xl"
             >
               <span className="text-xl mb-1">📅</span>
-              <span className="font-bold text-xs text-amber-950">{t('liveDashboard.workList') || "Today's Work List"}</span>
-              <span className="text-[10px] text-amber-700 mt-0.5">{t('liveDashboard.dailyTasks') || 'Daily Tasks'}</span>
+              <span className="font-bold text-xs text-amber-950">Today's Work List</span>
+              <span className="text-[10px] text-amber-700 mt-0.5">Daily Tasks</span>
             </Button>
 
             <Button
@@ -253,8 +251,8 @@ export default function LiveExecutiveDashboard({
               className="h-auto py-3 px-3 flex flex-col items-center text-center justify-center border-purple-200 bg-purple-50/50 hover:bg-purple-100 hover:border-purple-400 transition-all rounded-xl"
             >
               <span className="text-xl mb-1">📖</span>
-              <span className="font-bold text-xs text-purple-950">{t('liveDashboard.farmJournal') || 'Farm Expense Book'}</span>
-              <span className="text-[10px] text-purple-700 mt-0.5">{t('liveDashboard.incomeExpense') || 'Track Money Spent & Earned'}</span>
+              <span className="font-bold text-xs text-purple-950">Farm Expense Book</span>
+              <span className="text-[10px] text-purple-700 mt-0.5">Track Money Spent & Earned</span>
             </Button>
 
             <Button
@@ -263,8 +261,8 @@ export default function LiveExecutiveDashboard({
               className="h-auto py-3 px-3 flex flex-col items-center text-center justify-center border-teal-200 bg-teal-50/50 hover:bg-teal-100 hover:border-teal-400 transition-all rounded-xl col-span-2 sm:col-span-1"
             >
               <span className="text-xl mb-1">🤖</span>
-              <span className="font-bold text-xs text-teal-950">{t('liveDashboard.aiSolver') || 'Ask Doctor AI'}</span>
-              <span className="text-[10px] text-teal-700 mt-0.5">{t('liveDashboard.puzzleEngine') || 'Resource Optimizer'}</span>
+              <span className="font-bold text-xs text-teal-950">Ask Doctor AI</span>
+              <span className="text-[10px] text-teal-700 mt-0.5">Crop Disease Diagnostic</span>
             </Button>
           </div>
         </CardContent>
@@ -278,18 +276,18 @@ export default function LiveExecutiveDashboard({
             <div className="flex items-center justify-between">
               <CardTitle className="text-base font-bold text-gray-900 flex items-center gap-2">
                 <Sliders className="w-5 h-5 text-emerald-600" />
-                {t('liveDashboard.sprayHelperTitle') || '🧮 Easy Spray & Fertilizer Helper'}
+                🧮 Easy Spray & Fertilizer Helper
               </CardTitle>
               <Badge className="bg-emerald-100 text-emerald-800 text-xs">Live Calculation</Badge>
             </div>
             <CardDescription className="text-xs">
-              {t('liveDashboard.sprayHelperDesc') || 'Type your land size below to see exact fertilizer bags and spray tanks needed.'}
+              Type your land size below to see exact fertilizer bags and spray tanks needed.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center gap-4 bg-slate-50 p-3 rounded-xl border">
               <div className="flex-1">
-                <Label className="text-xs font-bold text-gray-700">{t('liveDashboard.fieldSizeLabel') || 'Field Size in Acres'}</Label>
+                <Label className="text-xs font-bold text-gray-700">Field Size in Acres</Label>
                 <div className="flex items-center gap-2 mt-1">
                   <Input
                     type="number"
@@ -298,7 +296,7 @@ export default function LiveExecutiveDashboard({
                     onChange={(e) => setQuickAcres(parseFloat(e.target.value) || 1)}
                     className="w-24 h-9 font-extrabold text-emerald-900 text-base"
                   />
-                  <span className="text-xs text-gray-500">{t('liveDashboard.acres') || 'Acres'} ({activeCrop})</span>
+                  <span className="text-xs text-gray-500">Acres ({activeCrop})</span>
                 </div>
               </div>
 
@@ -311,21 +309,21 @@ export default function LiveExecutiveDashboard({
             {/* Calculated Metrics Grid */}
             <div className="grid grid-cols-3 gap-3 text-center">
               <div className="p-3 bg-blue-50 border border-blue-200 rounded-xl">
-                <p className="text-xs text-blue-700 font-semibold">{t('liveDashboard.dapDosage') || 'DAP Fertilizer'}</p>
+                <p className="text-xs text-blue-700 font-semibold">DAP Fertilizer</p>
                 <p className="text-xl font-extrabold text-blue-900">{fertCalc.dapBags50kg} Bags</p>
                 <p className="text-[11px] text-blue-600 mt-0.5">{fertCalc.dapNeededKg} kg total (50kg bags)</p>
               </div>
 
               <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl">
-                <p className="text-xs text-emerald-700 font-semibold">{t('liveDashboard.ureaDosage') || 'Urea Fertilizer'}</p>
+                <p className="text-xs text-emerald-700 font-semibold">Urea Fertilizer</p>
                 <p className="text-xl font-extrabold text-emerald-900">{fertCalc.ureaBags50kg} Bags</p>
                 <p className="text-[11px] text-emerald-600 mt-0.5">{fertCalc.ureaNeededKg} kg total (50kg bags)</p>
               </div>
 
               <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl">
-                <p className="text-xs text-amber-700 font-semibold">{t('liveDashboard.knapsackPumps') || '15L Spray Pump Tanks'}</p>
+                <p className="text-xs text-amber-700 font-semibold">15L Spray Pump Tanks</p>
                 <p className="text-xl font-extrabold text-amber-900">{sprayCalc.total15LPumps} Tanks</p>
-                <p className="text-[11px] text-amber-700 mt-0.5">{t('liveDashboard.pumpsOf') || '15 Liters per pump'}</p>
+                <p className="text-[11px] text-amber-700 mt-0.5">15 Liters per pump</p>
               </div>
             </div>
 
@@ -333,7 +331,7 @@ export default function LiveExecutiveDashboard({
               onClick={() => onNavigateTab('roadmap', 'roadmap')}
               className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs h-9"
             >
-              {t('liveDashboard.view16WeekGuide') || 'Open Full Weekly Farm Guide →'}
+              Open Full Weekly Farm Guide →
             </Button>
           </CardContent>
         </Card>
@@ -342,7 +340,7 @@ export default function LiveExecutiveDashboard({
         <Card className="border-emerald-200 shadow-sm">
           <CardHeader className="pb-3 flex flex-row items-center justify-between">
             <div>
-              <CardTitle className="text-base font-bold text-gray-900">{t('liveDashboard.cropsAndRates') || '🏛️ Your Crops & Market Selling Rates'}</CardTitle>
+              <CardTitle className="text-base font-bold text-gray-900">🏛️ Your Crops & Market Selling Rates</CardTitle>
               <CardDescription className="text-xs">Clean profit per quintal after deducting transport vehicle cost</CardDescription>
             </div>
             <Button
@@ -351,12 +349,12 @@ export default function LiveExecutiveDashboard({
               onClick={onEditCrops}
               className="flex items-center gap-1 text-xs text-emerald-700 border-emerald-300 hover:bg-emerald-50 h-8"
             >
-              <Edit3 className="w-3.5 h-3.5" /> {t('liveDashboard.changeCrops') || 'Change Crops'}
+              <Edit3 className="w-3.5 h-3.5" /> Change Crops
             </Button>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex flex-wrap gap-2">
-              {crops.map((crop, idx) => (
+              {farmer.primaryCrops.map((crop, idx) => (
                 <Badge
                   key={crop}
                   className={`text-xs px-3 py-1.5 font-bold cursor-pointer transition-all ${
@@ -375,7 +373,7 @@ export default function LiveExecutiveDashboard({
             <div className="p-3 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-xl space-y-2">
               <div className="flex items-center justify-between text-xs font-bold text-emerald-950">
                 <span>⭐ Best Local Market: Ludhiana Mandi</span>
-                <Badge className="bg-emerald-600 text-white text-[10px]">{t('liveDashboard.sellAdvise') || 'Best Profit Rate'}</Badge>
+                <Badge className="bg-emerald-600 text-white text-[10px]">Best Profit Rate</Badge>
               </div>
               <div className="flex items-baseline justify-between text-sm">
                 <span className="text-gray-600">Market Rate: <strong>₹2,275/q</strong></span>
@@ -389,7 +387,7 @@ export default function LiveExecutiveDashboard({
               variant="outline"
               className="w-full border-blue-300 text-blue-900 hover:bg-blue-50 font-bold text-xs h-9"
             >
-              {t('liveDashboard.compareMandis') || 'Compare All Local Mandis & Vehicle Costs →'}
+              Compare All Local Mandis & Vehicle Costs →
             </Button>
           </CardContent>
         </Card>
