@@ -374,7 +374,11 @@ export default function FarmRoadmap() {
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <Badge className="bg-amber-400 text-emerald-950 font-bold px-2.5 py-0.5">
+<<<<<<< HEAD
                   {t('roadmap.aiTwinBadge')}
+=======
+                  🤖 Smart AI Farm Assistant Active
+>>>>>>> 97135bcf (fix(roadmap): convert all technical titles, cards, buttons, and API labels into simple layman farmer terms)
                 </Badge>
                 <span className="text-emerald-200 text-xs font-semibold">
                   {t('roadmap.districtVillageLabel', {
@@ -384,6 +388,7 @@ export default function FarmRoadmap() {
                 </span>
               </div>
               <h1 className="text-3xl font-extrabold text-white flex items-center gap-2">
+<<<<<<< HEAD
                 {t('roadmap.pageTitle')}
               </h1>
               <p className="text-emerald-100 text-sm">
@@ -393,6 +398,14 @@ export default function FarmRoadmap() {
                   fields: profile?.numFields || 2,
                   crop: profile?.currentCrop || 'Sugarcane',
                 })}
+=======
+                🌾 My Farm Care Guide & Daily Helper
+              </h1>
+              <p className="text-emerald-100 text-sm">
+                Farmer: <span className="font-bold text-white">{profile?.farmerName || 'Gurpreet Singh'}</span> • Field Area:{' '}
+                <span className="font-bold text-amber-300">{profile?.farmSizeAcres || 2.5} Acres</span> ({profile?.numFields || 2} Plots) • Crop:{' '}
+                <span className="font-bold text-white">{profile?.currentCrop || 'Sugarcane'}</span>
+>>>>>>> 97135bcf (fix(roadmap): convert all technical titles, cards, buttons, and API labels into simple layman farmer terms)
               </p>
             </div>
 
@@ -400,9 +413,15 @@ export default function FarmRoadmap() {
               {/* Onboarding Dialog Trigger */}
               <Dialog open={isOnboardingOpen} onOpenChange={setIsOnboardingOpen}>
                 <DialogTrigger asChild>
+<<<<<<< HEAD
                   <Button className="bg-amber-500 hover:bg-amber-600 text-emerald-950 font-bold shadow-sm">
                     <User className="w-4 h-4 mr-2" />
                     {t('roadmap.editProfile')}
+=======
+                  <Button className="bg-amber-500 hover:bg-amber-600 text-emerald-950 font-bold shadow-sm text-xs">
+                    <User className="w-4 h-4 mr-1.5" />
+                    👤 Change Farm Details
+>>>>>>> 97135bcf (fix(roadmap): convert all technical titles, cards, buttons, and API labels into simple layman farmer terms)
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto">
@@ -493,16 +512,28 @@ export default function FarmRoadmap() {
               {/* End-of-Day Check-In Trigger */}
               <Dialog open={isDiaryOpen} onOpenChange={setIsDiaryOpen}>
                 <DialogTrigger asChild>
+<<<<<<< HEAD
                   <Button variant="outline" className="border-amber-400 text-amber-300 hover:bg-emerald-950 font-bold">
                     <BookOpen className="w-4 h-4 mr-2" />
                     {t('roadmap.checkIn')}
+=======
+                  <Button variant="outline" className="border-amber-400 text-amber-300 hover:bg-emerald-950 font-bold text-xs">
+                    <BookOpen className="w-4 h-4 mr-1.5" />
+                    📖 Daily Farm Record Book
+>>>>>>> 97135bcf (fix(roadmap): convert all technical titles, cards, buttons, and API labels into simple layman farmer terms)
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="max-w-md">
                   <DialogHeader>
+<<<<<<< HEAD
                     <DialogTitle className="text-xl font-bold text-emerald-950">{t('roadmap.diaryDialog.title')}</DialogTitle>
                     <DialogDescription>
                       {t('roadmap.diaryDialog.description')}
+=======
+                    <DialogTitle className="text-xl font-bold text-emerald-950">📖 Record Today's Farm Work</DialogTitle>
+                    <DialogDescription>
+                      Check what you did in your field today so the AI can update tomorrow's plan.
+>>>>>>> 97135bcf (fix(roadmap): convert all technical titles, cards, buttons, and API labels into simple layman farmer terms)
                     </DialogDescription>
                   </DialogHeader>
 
@@ -659,13 +690,13 @@ export default function FarmRoadmap() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <Card className="border-t-4 border-t-blue-500 shadow-sm">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600 flex items-center justify-between">
-                {t('roadmap.dashboard.soilWaterBalance')}
+              <CardTitle className="text-sm font-bold text-gray-700 flex items-center justify-between">
+                💧 Water In Soil
                 <Droplets className="w-4 h-4 text-blue-600" />
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-gray-900">{dashboard.waterBalancePercent}%</div>
+              <div className="text-2xl font-bold text-gray-900">{dashboard.waterBalancePercent}% Moisture</div>
               <Progress value={dashboard.waterBalancePercent} className="h-2 mt-2 bg-gray-200" />
               <p className="text-xs text-gray-500 mt-1">{dashboard.weatherSummary}</p>
             </CardContent>
@@ -673,13 +704,13 @@ export default function FarmRoadmap() {
 
           <Card className="border-t-4 border-t-emerald-500 shadow-sm">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600 flex items-center justify-between">
-                {t('roadmap.dashboard.nutrientAvailability')}
+              <CardTitle className="text-sm font-bold text-gray-700 flex items-center justify-between">
+                🌱 Plant Food & Soil Health
                 <Zap className="w-4 h-4 text-emerald-600" />
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-gray-900">{dashboard.nutrientBalancePercent}%</div>
+              <div className="text-2xl font-bold text-gray-900">{dashboard.nutrientBalancePercent}% Healthy</div>
               <Progress value={dashboard.nutrientBalancePercent} className="h-2 mt-2 bg-gray-200" />
               <p className="text-xs text-gray-500 mt-1">{dashboard.soilSummary}</p>
             </CardContent>
@@ -687,28 +718,28 @@ export default function FarmRoadmap() {
 
           <Card className="border-t-4 border-t-amber-500 shadow-sm">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600 flex items-center justify-between">
-                {t('roadmap.dashboard.expectedTotalYield')}
+              <CardTitle className="text-sm font-bold text-gray-700 flex items-center justify-between">
+                🌾 Expected Total Harvest Produce
                 <TrendingUp className="w-4 h-4 text-amber-600" />
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-xl font-bold text-amber-900">{dashboard.yieldPrediction}</div>
-              <p className="text-xs text-gray-500 mt-1">{t('roadmap.dashboard.aiConfidence', { value: dashboard.aiConfidence })}</p>
+              <div className="text-xl font-extrabold text-amber-900">{dashboard.yieldPrediction}</div>
+              <p className="text-xs text-gray-500 mt-1">AI Accuracy: {dashboard.aiConfidence}%</p>
             </CardContent>
           </Card>
 
           <Card className="border-t-4 border-t-purple-500 shadow-sm">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600 flex items-center justify-between">
-                {t('roadmap.dashboard.expectedNetProfit')}
+              <CardTitle className="text-sm font-bold text-gray-700 flex items-center justify-between">
+                💰 Expected Net Profit Earnings
                 <ShieldCheck className="w-4 h-4 text-purple-600" />
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-purple-900">{dashboard.profitPrediction}</div>
+              <div className="text-2xl font-extrabold text-purple-900">{dashboard.profitPrediction}</div>
               <p className="text-xs text-gray-500 mt-1">
-                {t('roadmap.dashboard.harvestCountdown', { days: dashboard.harvestCountdownDays })}
+                Harvest Countdown: <span className="font-bold text-purple-700">{dashboard.harvestCountdownDays} days left</span>
               </p>
             </CardContent>
           </Card>
@@ -718,11 +749,11 @@ export default function FarmRoadmap() {
       {/* Dynamic Sections: Daily Planner, Upcoming, Timeline, Alerts & AI Assistant */}
       <Tabs defaultValue="planner" className="w-full">
         <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="planner">{t('roadmap.tabs.planner')}</TabsTrigger>
-          <TabsTrigger value="upcoming">{t('roadmap.tabs.upcoming')}</TabsTrigger>
-          <TabsTrigger value="alerts">{t('roadmap.tabs.alerts')}</TabsTrigger>
-          <TabsTrigger value="timeline">{t('roadmap.tabs.timeline')}</TabsTrigger>
-          <TabsTrigger value="assistant">{t('roadmap.tabs.assistant')}</TabsTrigger>
+          <TabsTrigger value="planner">📅 Today's Work List</TabsTrigger>
+          <TabsTrigger value="upcoming">⏳ Upcoming Work</TabsTrigger>
+          <TabsTrigger value="alerts">⚠️ Urgent Alerts</TabsTrigger>
+          <TabsTrigger value="timeline">🌾 Crop Growth Timeline</TabsTrigger>
+          <TabsTrigger value="assistant">🤖 Ask Doctor AI</TabsTrigger>
         </TabsList>
 
         {/* Today's Farm Plan Tab */}
@@ -733,29 +764,24 @@ export default function FarmRoadmap() {
                 <div>
                   <CardTitle className="text-xl font-bold text-gray-900 flex items-center gap-2">
                     <Calendar className="w-5 h-5 text-emerald-600" />
-                    {t('roadmap.planner.title')} (`GET /api/farm/today`)
+                    📅 Today's Field Work List
                   </CardTitle>
                   <CardDescription>
-                    {t('roadmap.planner.fetchedFor', {
-                      crop: profile?.currentCrop || 'Sugarcane',
-                      district: district || 'Ludhiana',
-                    })}
+                    Auto-calculated for {profile?.currentCrop || 'Sugarcane'} in {district || 'Ludhiana'}
                   </CardDescription>
                 </div>
-                <Badge className="bg-emerald-700 text-white font-bold">{t('roadmap.planner.tasksReturned', { count: todayTasks.length })}</Badge>
+                <Badge className="bg-emerald-700 text-white font-bold">{todayTasks.length} Field Tasks Today</Badge>
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
               {todayTasks.length === 0 ? (
-                <div className="p-8 text-center text-gray-500">{t('roadmap.planner.noTasks')}</div>
+                <div className="p-8 text-center text-gray-500">No active tasks for today. Check back tomorrow!</div>
               ) : (
                 todayTasks.map((t2) => (
                   <div key={t2.id} className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                       <div className="flex items-center gap-2">
-                        <Badge className={getPriorityColor(t2.priority)}>
-                          {t('roadmap.planner.prioritySuffix', { priority: t(`roadmap.priority.${t2.priority}`, t2.priority) })}
-                        </Badge>
+                        <Badge className={getPriorityColor(t2.priority)}>{t2.priority} Priority</Badge>
                         <h4 className="font-bold text-gray-900 text-base">{t2.taskName}</h4>
                       </div>
                       <div className="flex items-center gap-2">
@@ -763,7 +789,7 @@ export default function FarmRoadmap() {
                           <Clock className="w-3 h-3 mr-1" /> {t2.estimatedTime}
                         </Badge>
                         <Badge variant="outline" className="border-emerald-500 text-emerald-800">
-                          {t('roadmap.planner.dueLabel', { deadline: t2.deadline })}
+                          Complete By: {t2.deadline}
                         </Badge>
                       </div>
                     </div>
@@ -772,19 +798,19 @@ export default function FarmRoadmap() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs bg-white p-3 border rounded-lg">
                       <div>
-                        <span className="font-semibold text-gray-700">{t('roadmap.planner.aiContextLabel')}</span>
+                        <span className="font-bold text-gray-800">💡 Why this is important:</span>
                         <p className="text-gray-600 mt-0.5">{t2.reason}</p>
                       </div>
                       <div>
-                        <span className="font-semibold text-emerald-800">{t('roadmap.planner.expectedBenefitLabel')}</span>
+                        <span className="font-bold text-emerald-800">🌾 How it helps your crop:</span>
                         <p className="text-emerald-700 mt-0.5">{t2.benefits}</p>
                       </div>
                     </div>
 
                     <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
-                      <div className="text-xs text-gray-500 font-medium">
-                        {t('roadmap.planner.materialsNeeded')} <span className="font-semibold text-gray-800">{t2.requiredMaterials}</span> • {t('roadmap.planner.costLabel')}{' '}
-                        <span className="font-semibold text-amber-700">{t2.estimatedCost}</span>
+                      <div className="text-xs text-gray-600 font-medium">
+                        Items to use / buy: <span className="font-bold text-gray-900">{t2.requiredMaterials}</span> • Cost:{' '}
+                        <span className="font-bold text-amber-700">{t2.estimatedCost}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <Button
@@ -793,7 +819,7 @@ export default function FarmRoadmap() {
                           onClick={() => handleTaskAction(t2.id, 'Delayed')}
                           className="h-8 text-xs border-amber-300 text-amber-800 hover:bg-amber-50"
                         >
-                          {t('roadmap.planner.delayTask')}
+                          ⏰ Do Tomorrow
                         </Button>
                         <Button
                           size="sm"
@@ -801,7 +827,7 @@ export default function FarmRoadmap() {
                           className="h-8 text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold"
                         >
                           <CheckCircle2 className="w-3.5 h-3.5 mr-1" />
-                          {t('roadmap.planner.markCompleted')}
+                          ✅ Done Today
                         </Button>
                       </div>
                     </div>
