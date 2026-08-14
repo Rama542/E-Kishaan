@@ -226,10 +226,16 @@ export default function Index() {
           {/* Dashboard Tab */}
           <TabsContent value="dashboard" className="space-y-6">
             <LiveExecutiveDashboard
-              farmer={farmer}
+              farmer={{
+                ...farmer,
+                points: farmer.points ?? 0,
+                level: farmer.level ?? 'Beginner',
+              }}
               onNavigateTab={(tabKey, subTab) => {
                 setActiveTab(tabKey);
-                if (subTab) setRoadmapSubTab(subTab);
+                if (subTab === 'roadmap' || subTab === 'journal' || subTab === 'planner') {
+                  setRoadmapSubTab(subTab);
+                }
               }}
               onEditCrops={handleReopenCropSelection}
             />

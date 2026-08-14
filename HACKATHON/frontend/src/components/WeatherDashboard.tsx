@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -40,7 +41,7 @@ import {
   PunjabLocation,
   OpenMeteoWeatherResponse,
   fetchPunjabWeatherData,
-  getWeatherConditionText,
+  getWeatherConditionKey,
 } from '@/services/weatherService';
 import { predictWeatherMLModel, MLWeatherPredictionResult } from '@/lib/algorithms';
 import { useUserStats } from '@/contexts/UserStatsContext';
@@ -50,6 +51,7 @@ interface WeatherDashboardProps {
 }
 
 export default function WeatherDashboard({ compact = false }: WeatherDashboardProps) {
+  const { t } = useTranslation();
   const { recordWeatherCheck } = useUserStats();
   const [selectedLocationId, setSelectedLocationId] = useState<string>('ludhiana');
   const [weatherResponse, setWeatherResponse] = useState<OpenMeteoWeatherResponse | null>(null);
@@ -93,9 +95,7 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
           return;
         }
         console.error('Weather Data Fetch Error:', err);
-        setError(
-          'Unable to fetch the latest weather data. Showing the last successful update.'
-        );
+        setError(t('weather.unableToFetchError'));
       } finally {
         setLoading(false);
       }
@@ -125,12 +125,12 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
       return (
         <div className="flex items-center justify-center p-6 text-sm text-gray-500 space-x-2">
           <RefreshCw className="w-4 h-4 animate-spin text-green-600" />
-          <span>Fetching latest {currentLocation.name} district weather...</span>
+          <span>{t('weather.fetchingLatestDistrict', { district: currentLocation.name })}</span>
         </div>
       );
     }
 
-    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const dayKeys = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
     const today = new Date();
     const compactDays = activeResponse
       ? activeResponse.daily.slice(0, 3)
@@ -138,7 +138,7 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
           const d = new Date(today);
           d.setDate(d.getDate() + offset);
           return {
-            day: dayNames[d.getDay()],
+            day: dayKeys[d.getDay()],
             avgTemp: Math.round(25 + Math.sin(d.getDate()) * 4),
             weatherCode: offset === 2 ? 61 : 0,
             precipitationSum: offset === 2 ? 1.5 : 0,
@@ -153,14 +153,14 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
             {currentLocation.name} District, Punjab
           </span>
           <Badge variant="outline" className="text-[10px] bg-green-50 text-green-700 border-green-200">
-            Live Open-Meteo Data
+            {t('weather.liveOpenMeteoBadge')}
           </Badge>
         </div>
 
         <div className="grid grid-cols-3 gap-4">
           {compactDays.map((day, index) => (
             <div key={index} className="text-center p-2 rounded-lg bg-white/60 border border-gray-100">
-              <p className="text-sm font-medium">{day.day}</p>
+              <p className="text-sm font-medium">{t(`weather.days.${day.day}`)}</p>
               <div className="flex items-center justify-center my-2">
                 {day.precipitationSum > 0 || day.weatherCode >= 51 ? (
                   <CloudRain className="w-6 h-6 text-blue-500" />
@@ -170,7 +170,7 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
               </div>
               <p className="text-lg font-bold">{day.avgTemp}°C</p>
               <p className="text-xs text-gray-500">
-                {day.precipitationSum > 0 ? `${day.precipitationSum}mm rain` : 'Clear'}
+                {day.precipitationSum > 0 ? t('weather.mmRain', { value: day.precipitationSum }) : t('weather.clear')}
               </p>
             </div>
           ))}
@@ -190,19 +190,19 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
               <div className="flex flex-wrap items-center gap-2 mb-1">
                 <Badge className="bg-emerald-500/20 text-emerald-200 border-emerald-400/30 flex items-center gap-1 text-xs">
                   <Sparkles className="w-3 h-3 text-emerald-300" />
-                  District-Wise ML Prediction Engine
+                  {t('weather.engineBadge')}
                 </Badge>
                 <Badge className="bg-blue-500/20 text-blue-200 border-blue-400/30 text-xs flex items-center gap-1">
                   <Building2 className="w-3 h-3 text-blue-300" />
-                  23 Districts of Punjab Supported
+                  {t('weather.districtsSupportedBadge')}
                 </Badge>
               </div>
               <h2 className="text-2xl font-bold text-white flex items-center gap-2">
                 <MapPin className="w-6 h-6 text-emerald-400" />
-                {currentLocation.name} District Weather & ML Predictions
+                {t('weather.headerTitle', { district: currentLocation.name })}
               </h2>
               <p className="text-sm text-emerald-100/80">
-                Real-time Open-Meteo weather features dynamically fetched for {currentLocation.name} District ({currentLocation.region} Region)
+                {t('weather.headerSubtitle', { district: currentLocation.name, region: currentLocation.region })}
               </p>
             </div>
 
@@ -210,15 +210,15 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
               {/* District Select Dropdown */}
               <div className="w-64">
                 <label className="text-xs text-emerald-200 block mb-1 font-medium flex items-center justify-between">
-                  <span>Select Punjab District</span>
-                  <span className="text-[10px] text-emerald-300/80">(23 Districts)</span>
+                  <span>{t('weather.selectDistrict')}</span>
+                  <span className="text-[10px] text-emerald-300/80">{t('weather.districtsCount')}</span>
                 </label>
                 <Select
                   value={selectedLocationId}
                   onValueChange={(val) => setSelectedLocationId(val)}
                 >
                   <SelectTrigger className="bg-white/10 border-white/20 text-white hover:bg-white/20 focus:ring-emerald-400">
-                    <SelectValue placeholder="Select District" />
+                    <SelectValue placeholder={t('weather.selectDistrict')} />
                   </SelectTrigger>
                   <SelectContent className="bg-slate-900 text-white border-slate-700 max-h-72">
                     {PUNJAB_LOCATIONS.map((loc) => (
@@ -244,7 +244,7 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
                   className="bg-white/10 border-white/20 text-white hover:bg-white/20 hover:text-white"
                 >
                   <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
-                  Refresh
+                  {t('weather.refresh')}
                 </Button>
               </div>
             </div>
@@ -254,11 +254,11 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
             <div className="mt-4 pt-3 border-t border-emerald-700/50 flex flex-wrap items-center justify-between text-xs text-emerald-200">
               <span className="flex items-center gap-1.5">
                 <Clock className="w-3.5 h-3.5 text-emerald-400" />
-                Last updated: {activeResponse.fetchedAt.toLocaleTimeString()}
+                {t('weather.lastUpdated', { time: activeResponse.fetchedAt.toLocaleTimeString() })}
               </span>
               <span className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                District Coordinates: {currentLocation.lat}° N, {currentLocation.lon}° E ({currentLocation.region} Punjab)
+                {t('weather.districtCoordinates', { lat: currentLocation.lat, lon: currentLocation.lon, region: currentLocation.region })}
               </span>
             </div>
           )}
@@ -271,10 +271,10 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
           <div className="flex flex-col items-center justify-center space-y-3">
             <RefreshCw className="w-8 h-8 animate-spin text-green-600" />
             <p className="text-base font-semibold text-gray-700">
-              Fetching live weather for {currentLocation.name} District...
+              {t('weather.fetchingWeatherFor', { district: currentLocation.name })}
             </p>
             <p className="text-xs text-gray-500">
-              Connecting to Open-Meteo API for coordinates {currentLocation.lat}° N, {currentLocation.lon}° E...
+              {t('weather.connectingApi', { lat: currentLocation.lat, lon: currentLocation.lon })}
             </p>
           </div>
         </Card>
@@ -284,7 +284,7 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
       {error && (
         <Alert className="border-red-300 bg-red-50 text-red-800">
           <AlertTriangle className="h-4 w-4 text-red-600" />
-          <AlertTitle className="text-red-900 font-semibold">Weather API Connection Notice</AlertTitle>
+          <AlertTitle className="text-red-900 font-semibold">{t('weather.apiConnectionNotice')}</AlertTitle>
           <AlertDescription className="text-red-700 text-sm flex items-center justify-between">
             <span>{error}</span>
             <Button
@@ -293,7 +293,7 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
               onClick={() => loadData(currentLocation, true)}
               className="text-red-900 underline p-0 ml-2"
             >
-              Retry
+              {t('weather.retry')}
             </Button>
           </AlertDescription>
         </Alert>
@@ -324,7 +324,9 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
             }`}
           />
           <AlertTitle className="font-bold flex items-center gap-2 text-sm">
-            <span>{mlResult.alertTitle} — {currentLocation.name} District</span>
+            <span>
+              {t(`weather.alerts.${mlResult.alertKey}.title`)} {t('weather.districtSuffix', { district: currentLocation.name })}
+            </span>
             <Badge
               className={`text-[10px] border-0 ${
                 mlResult.riskLevel === 'severe'
@@ -336,13 +338,13 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
                   : 'bg-green-200 text-green-900'
               }`}
             >
-              ML Risk: {mlResult.riskLevel.toUpperCase()}
+              {t('weather.mlRiskLabel', { level: mlResult.riskLevel.toUpperCase() })}
             </Badge>
           </AlertTitle>
           <AlertDescription className="text-sm mt-1">
-            {mlResult.alertDescription}
+            {t(`weather.alerts.${mlResult.alertKey}.description`, mlResult.alertParams)}
             <span className="block text-[11px] mt-1 opacity-70">
-              Predicted at: {mlResult.predictedAt.toLocaleTimeString()} · Source: Open-Meteo API
+              {t('weather.predictedAt', { time: mlResult.predictedAt.toLocaleTimeString() })}
             </span>
           </AlertDescription>
         </Alert>
@@ -354,10 +356,10 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
               <Thermometer className="w-5 h-5 text-red-500" />
-              Current Weather Data ({currentLocation.name} District)
+              {t('weather.currentWeatherDataTitle', { district: currentLocation.name })}
             </h3>
             <Badge variant="outline" className="text-xs bg-slate-100 text-slate-700">
-              {getWeatherConditionText(activeResponse.current.weatherCode)}
+              {t(`weather.codes.${getWeatherConditionKey(activeResponse.current.weatherCode)}`)}
             </Badge>
           </div>
 
@@ -365,7 +367,7 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
             <Card className="hover:shadow-md transition-shadow">
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium text-gray-500 flex items-center justify-between">
-                  <span>Temperature</span>
+                  <span>{t('weather.temperature')}</span>
                   <Thermometer className="w-4 h-4 text-red-500" />
                 </CardTitle>
               </CardHeader>
@@ -374,7 +376,7 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
                   {activeResponse.current.temperature}°C
                 </div>
                 <p className="text-xs text-gray-500 mt-1">
-                  Feels like {activeResponse.current.apparentTemperature}°C
+                  {t('weather.feelsLike', { temp: activeResponse.current.apparentTemperature })}
                 </p>
               </CardContent>
             </Card>
@@ -382,7 +384,7 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
             <Card className="hover:shadow-md transition-shadow">
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium text-gray-500 flex items-center justify-between">
-                  <span>Relative Humidity</span>
+                  <span>{t('weather.relativeHumidity')}</span>
                   <Droplets className="w-4 h-4 text-blue-500" />
                 </CardTitle>
               </CardHeader>
@@ -392,8 +394,8 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
                 </div>
                 <p className="text-xs text-gray-500 mt-1">
                   {activeResponse.current.humidity > 70
-                    ? 'High humidity environment'
-                    : 'Optimal for field crops'}
+                    ? t('weather.highHumidityEnv')
+                    : t('weather.optimalFieldCrops')}
                 </p>
               </CardContent>
             </Card>
@@ -401,7 +403,7 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
             <Card className="hover:shadow-md transition-shadow">
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium text-gray-500 flex items-center justify-between">
-                  <span>Wind Speed</span>
+                  <span>{t('weather.windSpeed')}</span>
                   <Wind className="w-4 h-4 text-gray-500" />
                 </CardTitle>
               </CardHeader>
@@ -410,7 +412,7 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
                   {activeResponse.current.windSpeed} km/h
                 </div>
                 <p className="text-xs text-gray-500 mt-1">
-                  Direction: {activeResponse.current.windDirection}°
+                  {t('weather.direction', { deg: activeResponse.current.windDirection })}
                 </p>
               </CardContent>
             </Card>
@@ -418,7 +420,7 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
             <Card className="hover:shadow-md transition-shadow">
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium text-gray-500 flex items-center justify-between">
-                  <span>Precipitation</span>
+                  <span>{t('weather.precipitation')}</span>
                   <CloudRain className="w-4 h-4 text-blue-600" />
                 </CardTitle>
               </CardHeader>
@@ -427,7 +429,7 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
                   {activeResponse.current.precipitation} mm
                 </div>
                 <p className="text-xs text-gray-500 mt-1">
-                  Surface Pressure: {activeResponse.current.surfacePressure} hPa
+                  {t('weather.surfacePressure', { value: activeResponse.current.surfacePressure })}
                 </p>
               </CardContent>
             </Card>
@@ -443,14 +445,14 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
               <div>
                 <CardTitle className="text-lg font-bold text-emerald-950 flex items-center gap-2">
                   <Sparkles className="w-5 h-5 text-emerald-600" />
-                  ML Weather Model Predictions ({currentLocation.name} District)
+                  {t('weather.mlPredictionsTitle', { district: currentLocation.name })}
                 </CardTitle>
                 <CardDescription className="text-xs text-emerald-800/70">
-                  Outputs produced by running live Open-Meteo features through the district ML predictor pipeline
+                  {t('weather.mlPredictionsSubtitle')}
                 </CardDescription>
               </div>
               <Badge className="bg-emerald-600 text-white self-start sm:self-auto text-xs px-2.5 py-1">
-                Model Confidence: {mlResult.modelConfidence}%
+                {t('weather.modelConfidence', { value: mlResult.modelConfidence })}
               </Badge>
             </div>
           </CardHeader>
@@ -466,16 +468,16 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
                   </Badge>
                   <div>
                     <span className="text-2xl font-bold text-gray-900">{item.predictedTemp}°C</span>
-                    <p className="text-xs text-gray-500">{item.predictedHumidity}% Humidity</p>
+                    <p className="text-xs text-gray-500">{t('weather.humiditySuffix', { value: item.predictedHumidity })}</p>
                   </div>
                   <div className="pt-1 border-t border-gray-100 text-xs">
-                    <span className="text-blue-600 font-semibold">{item.rainfallProbability}% Rain Risk</span>
-                    <p className="text-[11px] text-gray-500 truncate mt-0.5" title={item.conditionText}>
-                      {item.conditionText}
+                    <span className="text-blue-600 font-semibold">{t('weather.rainRisk', { value: item.rainfallProbability })}</span>
+                    <p className="text-[11px] text-gray-500 truncate mt-0.5" title={t(`weather.conditions.${item.conditionKey}`)}>
+                      {t(`weather.conditions.${item.conditionKey}`)}
                     </p>
                   </div>
                   <div className="text-[10px] text-emerald-600 font-medium">
-                    {item.confidenceScore}% Model Score
+                    {t('weather.modelScore', { value: item.confidenceScore })}
                   </div>
                 </div>
               ))}
@@ -489,46 +491,41 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
-              <CardTitle className="text-lg font-bold">7-Day Weather Forecast ({currentLocation.name} District)</CardTitle>
-              <CardDescription>Live daily temperature and rainfall forecast from Open-Meteo</CardDescription>
+              <CardTitle className="text-lg font-bold">{t('weather.sevenDayForecastTitle', { district: currentLocation.name })}</CardTitle>
+              <CardDescription>{t('weather.sevenDayForecastSubtitle')}</CardDescription>
             </div>
             <Badge variant="outline" className="text-xs">
-              District Forecast
+              {t('weather.districtForecastBadge')}
             </Badge>
           </CardHeader>
           <CardContent>
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={activeResponse.daily}>
+                <LineChart data={activeResponse.daily.map((d) => ({ ...d, day: t(`weather.days.${d.day}`) }))}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="day" />
                   <YAxis />
-                  <Tooltip
-                    formatter={(value: any, name: string) => [
-                      `${value} ${name.includes('Temp') ? '°C' : 'mm'}`,
-                      name,
-                    ]}
-                  />
+                  <Tooltip />
                   <Line
                     type="monotone"
                     dataKey="maxTemp"
                     stroke="#ef4444"
                     strokeWidth={2}
-                    name="Max Temp (°C)"
+                    name={t('weather.chart.maxTemp')}
                   />
                   <Line
                     type="monotone"
                     dataKey="minTemp"
                     stroke="#3b82f6"
                     strokeWidth={2}
-                    name="Min Temp (°C)"
+                    name={t('weather.chart.minTemp')}
                   />
                   <Line
                     type="monotone"
                     dataKey="precipitationSum"
                     stroke="#10b981"
                     strokeWidth={2}
-                    name="Rainfall (mm)"
+                    name={t('weather.chart.rainfall')}
                   />
                 </LineChart>
               </ResponsiveContainer>
@@ -541,8 +538,8 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
       {activeResponse && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg font-bold">6-Month Dynamic Climate Forecast ({currentLocation.name} District)</CardTitle>
-            <CardDescription>Long-term dynamic monthly temperature & rainfall patterns for {currentLocation.name} crops</CardDescription>
+            <CardTitle className="text-lg font-bold">{t('weather.sixMonthForecastTitle', { district: currentLocation.name })}</CardTitle>
+            <CardDescription>{t('weather.sixMonthForecastSubtitle', { district: currentLocation.name })}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="h-64">
@@ -551,14 +548,9 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="month" />
                   <YAxis />
-                  <Tooltip
-                    formatter={(value: any, name: string) => [
-                      `${value} ${name.includes('Temp') ? '°C' : 'mm'}`,
-                      name,
-                    ]}
-                  />
-                  <Bar dataKey="avgTemp" fill="#f59e0b" name="Avg Temp (°C)" />
-                  <Bar dataKey="rainfall" fill="#3b82f6" name="Expected Rain (mm)" />
+                  <Tooltip />
+                  <Bar dataKey="avgTemp" fill="#f59e0b" name={t('weather.chart.avgTemp')} />
+                  <Bar dataKey="rainfall" fill="#3b82f6" name={t('weather.chart.expectedRain')} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -569,39 +561,28 @@ export default function WeatherDashboard({ compact = false }: WeatherDashboardPr
       {/* Weather-Based District Farming Recommendations */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg font-bold">ML Weather Advice ({currentLocation.name} District)</CardTitle>
+          <CardTitle className="text-lg font-bold">{t('weather.mlWeatherAdviceTitle', { district: currentLocation.name })}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-3">
               <Badge variant="secondary" className="bg-emerald-100 text-emerald-800 font-semibold">
-                Weekly Field Action Plan
+                {t('weather.weeklyFieldActionPlan')}
               </Badge>
               <ul className="space-y-2 text-sm text-gray-700">
-                {mlResult && mlResult.weeklyRecommendations.length > 0 ? (
-                  mlResult.weeklyRecommendations.map((rec, i) => <li key={i}>{rec}</li>)
-                ) : (
-                  <>
-                    <li>• Perform routine field inspections during clear morning hours</li>
-                    <li>• Regulate irrigation according to active crop requirements</li>
-                    <li>• Check for pest infestations in humid field patches</li>
-                  </>
-                )}
+                {(mlResult?.weeklyRecommendationKeys || ['scheduledFertilizer', 'soilMoisture', 'pestScouting']).map((key) => (
+                  <li key={key}>• {t(`weather.recommendations.${key}`)}</li>
+                ))}
               </ul>
             </div>
             <div className="space-y-3">
               <Badge variant="secondary" className="bg-blue-100 text-blue-800 font-semibold">
-                Monthly Strategic Planning
+                {t('weather.monthlyStrategicPlanning')}
               </Badge>
               <ul className="space-y-2 text-sm text-gray-700">
-                {mlResult && mlResult.monthlyRecommendations.length > 0 ? (
-                  mlResult.monthlyRecommendations.map((rec, i) => <li key={i}>{rec}</li>)
-                ) : (
-                  <>
-                    <li>• Plan crop sowing schedules aligned with seasonal forecasts</li>
-                    <li>• Manage field canal maintenance ahead of rainy periods</li>
-                  </>
-                )}
+                {(mlResult?.monthlyRecommendationKeys || ['seasonalSowing', 'waterStorage']).map((key) => (
+                  <li key={key}>• {t(`weather.recommendations.${key}`)}</li>
+                ))}
               </ul>
             </div>
           </div>

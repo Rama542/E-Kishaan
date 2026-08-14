@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
@@ -55,6 +56,7 @@ function LoadingSkeleton() {
 }
 
 export default function CropGrowth() {
+  const { t } = useTranslation();
   const [districts, setDistricts] = useState<DistrictSummary[]>([]);
   const [selectedDistrict, setSelectedDistrict] = useState<string>('Ludhiana');
   const [cropData, setCropData] = useState<CropRecommendationResponse | null>(null);
@@ -89,13 +91,29 @@ export default function CropGrowth() {
 
   const radarChartData = topCrop
     ? [
-        { subject: 'Soil Match', A: topCrop.factors.soilMatch, fullMark: 100 },
-        { subject: 'Nutrient Balance', A: topCrop.factors.nutrientBalance, fullMark: 100 },
-        { subject: 'Climate Suitability', A: topCrop.factors.climateSuitability, fullMark: 100 },
-        { subject: 'Seasonal Fit', A: topCrop.factors.seasonalFit, fullMark: 100 },
-        { subject: 'Market Potential', A: topCrop.factors.marketPotential, fullMark: 100 },
+        { subject: t('crop.visualizations.factors.soilMatch'), A: topCrop.factors.soilMatch, fullMark: 100 },
+        { subject: t('crop.visualizations.factors.nutrientBalance'), A: topCrop.factors.nutrientBalance, fullMark: 100 },
+        { subject: t('crop.visualizations.factors.climateSuitability'), A: topCrop.factors.climateSuitability, fullMark: 100 },
+        { subject: t('crop.visualizations.factors.seasonalFit'), A: topCrop.factors.seasonalFit, fullMark: 100 },
+        { subject: t('crop.visualizations.factors.marketPotential'), A: topCrop.factors.marketPotential, fullMark: 100 },
       ]
     : [];
+
+  const translatedAdvisory = cropData && topCrop
+    ? t('crop.advisory', {
+        district: cropData.district,
+        ph: cropData.soilHealth.ph,
+        oc: cropData.soilHealth.oc,
+        nitrogen: cropData.soilHealth.nitrogen,
+        temp: cropData.weather.temp,
+        moisture: cropData.weather.moisture,
+        crop: topCrop.crop,
+        season: t(`crop.seasons.${cropData.season}`, cropData.season),
+        score: topCrop.score,
+        yield: topCrop.expectedYield,
+        risk: t(`crop.disease.riskLevels.${topCrop.risk}`, topCrop.risk).toLowerCase(),
+      })
+    : '';
 
   if (isLoading && !cropData) {
     return <LoadingSkeleton />;
@@ -113,31 +131,31 @@ export default function CropGrowth() {
               <div className="flex items-center gap-2">
                 <Sprout className="w-7 h-7 text-emerald-600" />
                 <CardTitle className="text-2xl font-bold text-gray-900">
-                  AI Crop Recommendation & Agronomic Advisory
+                  {t('crop.headerTitle')}
                 </CardTitle>
               </div>
               <CardDescription className="text-gray-600 mt-1">
-                Data-driven crop selection combining live Soil NPK, real-time Open-Meteo climate, and ICAR agricultural standards
+                {t('crop.headerSubtitle')}
               </CardDescription>
             </div>
 
             <div className="flex items-center gap-3">
               <Badge className="bg-emerald-600 text-white text-sm py-1.5 px-3">
-                Season: {cropData.season}
+                {t('crop.seasonLabel', { season: t(`crop.seasons.${cropData.season}`, cropData.season) })}
               </Badge>
 
               {cropData.source === 'live' ? (
                 <Badge variant="outline" className="gap-1 text-xs border-emerald-300 text-emerald-700">
-                  <Wifi className="w-3 h-3" /> Live
+                  <Wifi className="w-3 h-3" /> {t('crop.liveBadge')}
                 </Badge>
               ) : (
-                <Badge variant="outline" className="gap-1 text-xs border-amber-300 text-amber-700" title="The live recommendation engine wasn't reachable, so this is computed locally from this district's curated soil baseline.">
-                  <WifiOff className="w-3 h-3" /> Estimated
+                <Badge variant="outline" className="gap-1 text-xs border-amber-300 text-amber-700" title={t('crop.estimatedTooltip')}>
+                  <WifiOff className="w-3 h-3" /> {t('crop.estimatedBadge')}
                 </Badge>
               )}
 
               <div className="flex items-center gap-2">
-                <Label className="text-sm font-semibold text-gray-700">District:</Label>
+                <Label className="text-sm font-semibold text-gray-700">{t('crop.districtLabel')}</Label>
                 <select
                   value={selectedDistrict}
                   onChange={(e) => setSelectedDistrict(e.target.value)}
@@ -160,10 +178,10 @@ export default function CropGrowth() {
       <Alert className="bg-gradient-to-r from-emerald-50 to-teal-50 border-emerald-300 shadow-sm">
         <Sparkles className="h-5 w-5 text-emerald-600" />
         <AlertTitle className="text-emerald-950 font-bold text-lg flex items-center gap-2">
-          AI Agricultural Advisor for {cropData.district}
+          {t('crop.advisoryTitle', { district: cropData.district })}
         </AlertTitle>
         <AlertDescription className="text-emerald-900 mt-1 text-base leading-relaxed font-medium">
-          {cropData.aiAdvisory}
+          {translatedAdvisory}
         </AlertDescription>
       </Alert>
 
@@ -176,32 +194,32 @@ export default function CropGrowth() {
                 <div className="flex items-center gap-2">
                   <Award className="w-6 h-6 text-amber-400" />
                   <span className="text-emerald-200 text-sm font-semibold uppercase tracking-wider">
-                    #1 Top Recommended Crop
+                    {t('crop.topCropBadge')}
                   </span>
                 </div>
                 <h2 className="text-3xl font-extrabold text-white">{topCrop.crop}</h2>
                 <p className="text-emerald-100 text-sm">
-                  {topCrop.category} • Expected Yield: <span className="font-bold text-amber-300">{topCrop.expectedYield}</span>
+                  {topCrop.category} • {t('crop.rankings.expectedYield')}: <span className="font-bold text-amber-300">{topCrop.expectedYield}</span>
                 </p>
               </div>
 
               <div className="flex flex-wrap items-center gap-6">
                 <div className="text-center bg-emerald-950/60 p-3 rounded-xl border border-emerald-700/50">
-                  <div className="text-xs text-emerald-300">Suitability Score</div>
+                  <div className="text-xs text-emerald-300">{t('crop.suitabilityScore')}</div>
                   <div className="text-3xl font-bold text-amber-400">{topCrop.score} / 100</div>
                   <Badge className="mt-1 bg-emerald-600">{topCrop.status}</Badge>
                 </div>
 
                 <div className="text-center bg-emerald-950/60 p-3 rounded-xl border border-emerald-700/50">
-                  <div className="text-xs text-emerald-300">Confidence Index</div>
+                  <div className="text-xs text-emerald-300">{t('crop.confidenceIndex')}</div>
                   <div className="text-3xl font-bold text-emerald-300">{topCrop.confidence}%</div>
-                  <div className="text-[11px] text-emerald-200 mt-1">AI Verified</div>
+                  <div className="text-[11px] text-emerald-200 mt-1">{t('crop.aiVerified')}</div>
                 </div>
 
                 <div className="text-center bg-emerald-950/60 p-3 rounded-xl border border-emerald-700/50">
-                  <div className="text-xs text-emerald-300">Expected Market Price</div>
+                  <div className="text-xs text-emerald-300">{t('crop.expectedMarketPrice')}</div>
                   <div className="text-2xl font-bold text-white">{topCrop.expectedPrice}</div>
-                  <div className="text-[11px] text-emerald-200 mt-1">Demand: {topCrop.marketDemand}</div>
+                  <div className="text-[11px] text-emerald-200 mt-1">{t('crop.demandLabel', { demand: topCrop.marketDemand })}</div>
                 </div>
               </div>
             </div>
@@ -212,10 +230,10 @@ export default function CropGrowth() {
       {/* Analytics Tabs */}
       <Tabs defaultValue="rankings" className="w-full">
         <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="rankings">Top 5 Crop Rankings</TabsTrigger>
-          <TabsTrigger value="visualizations">Suitability Charts</TabsTrigger>
-          <TabsTrigger value="timeline">Growth Stage Timeline</TabsTrigger>
-          <TabsTrigger value="disease">Disease & Pest Alerts</TabsTrigger>
+          <TabsTrigger value="rankings">{t('crop.tabs.rankings')}</TabsTrigger>
+          <TabsTrigger value="visualizations">{t('crop.tabs.visualizations')}</TabsTrigger>
+          <TabsTrigger value="timeline">{t('crop.tabs.timeline')}</TabsTrigger>
+          <TabsTrigger value="disease">{t('crop.tabs.disease')}</TabsTrigger>
         </TabsList>
 
         {/* Rankings Tab */}
@@ -234,35 +252,35 @@ export default function CropGrowth() {
                 </CardHeader>
                 <CardContent className="space-y-3 text-sm">
                   <div className="flex justify-between items-center py-1 border-b">
-                    <span className="text-gray-500">Expected Yield</span>
+                    <span className="text-gray-500">{t('crop.rankings.expectedYield')}</span>
                     <span className="font-semibold text-gray-900">{c.expectedYield}</span>
                   </div>
 
                   <div className="flex justify-between items-center py-1 border-b">
-                    <span className="text-gray-500">Water Requirement</span>
+                    <span className="text-gray-500">{t('crop.rankings.waterRequirement')}</span>
                     <span className="font-semibold text-blue-600">{c.waterRequirement}</span>
                   </div>
 
                   <div className="flex justify-between items-center py-1 border-b">
-                    <span className="text-gray-500">Fertilizer Dose</span>
+                    <span className="text-gray-500">{t('crop.rankings.fertilizerDose')}</span>
                     <span className="font-semibold text-emerald-800 text-xs">{c.fertilizer}</span>
                   </div>
 
                   <div className="flex justify-between items-center py-1 border-b">
-                    <span className="text-gray-500">Market Price Trend</span>
+                    <span className="text-gray-500">{t('crop.rankings.marketPriceTrend')}</span>
                     <span className="font-bold text-amber-700">{c.expectedPrice}</span>
                   </div>
 
                   <div className="flex justify-between items-center pt-1">
-                    <span className="text-gray-500">Risk Profile</span>
+                    <span className="text-gray-500">{t('crop.rankings.riskProfile')}</span>
                     <Badge className={c.risk === 'Low' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}>
-                      {c.risk} Risk
+                      {t('crop.rankings.riskSuffix', { risk: t(`crop.disease.riskLevels.${c.risk}`, c.risk) })}
                     </Badge>
                   </div>
 
                   <div className="space-y-1 pt-2">
                     <div className="flex justify-between text-xs text-gray-500">
-                      <span>AI Model Confidence</span>
+                      <span>{t('crop.rankings.aiModelConfidence')}</span>
                       <span className="font-bold text-gray-800">{c.confidence}%</span>
                     </div>
                     <Progress value={c.confidence} className="h-1.5 bg-gray-200" />
@@ -280,9 +298,9 @@ export default function CropGrowth() {
               <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
                   <BarChart3 className="w-5 h-5 text-emerald-600" />
-                  Crop Suitability Scores Comparison (0-100)
+                  {t('crop.visualizations.chartTitle')}
                 </CardTitle>
-                <CardDescription>Multi-factor score ranking for {selectedDistrict}</CardDescription>
+                <CardDescription>{t('crop.visualizations.chartDesc', { district: selectedDistrict })}</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="h-72">
@@ -293,8 +311,8 @@ export default function CropGrowth() {
                       <YAxis domain={[0, 100]} />
                       <Tooltip />
                       <Legend />
-                      <Bar dataKey="score" fill="#059669" name="Suitability Score" />
-                      <Bar dataKey="profitability" fill="#d97706" name="Profitability Index" />
+                      <Bar dataKey="score" fill="#059669" name={t('crop.visualizations.suitabilityScoreLegend')} />
+                      <Bar dataKey="profitability" fill="#d97706" name={t('crop.visualizations.profitabilityIndexLegend')} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -305,9 +323,9 @@ export default function CropGrowth() {
               <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
                   <ShieldCheck className="w-5 h-5 text-teal-600" />
-                  Top Crop Factor Analysis (Live Computed)
+                  {t('crop.visualizations.factorAnalysisTitle')}
                 </CardTitle>
-                <CardDescription>Real agronomic sub-scores for {topCrop?.crop || 'the top crop'}</CardDescription>
+                <CardDescription>{t('crop.visualizations.factorAnalysisDesc', { crop: topCrop?.crop || t('crop.visualizations.theTopCrop') })}</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="h-72">
@@ -332,10 +350,10 @@ export default function CropGrowth() {
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <Clock className="w-5 h-5 text-emerald-600" />
-                Agronomic Growth Timeline ({topCrop?.crop || 'Top Crop'})
+                {t('crop.timeline.title', { crop: topCrop?.crop || t('crop.timeline.topCrop') })}
               </CardTitle>
               <CardDescription>
-                Stages sized from {topCrop?.crop || 'this crop'}'s actual {topCrop?.growingDays ?? '–'}-day growing cycle, with dosing computed from this district's live soil nutrients
+                {t('crop.timeline.description', { crop: topCrop?.crop || t('crop.visualizations.theTopCrop'), days: topCrop?.growingDays ?? '–' })}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -357,7 +375,7 @@ export default function CropGrowth() {
                       {stage.stage}
                     </div>
                     <div className="font-bold text-gray-900">{stage.name}</div>
-                    <div className="text-xs text-gray-500">Day {stage.dayStart} - {stage.dayEnd}</div>
+                    <div className="text-xs text-gray-500">{t('crop.timeline.dayRange', { start: stage.dayStart, end: stage.dayEnd })}</div>
                     <p className={`text-[11px] ${stage.stage === topCrop?.growthStages.length ? 'text-amber-800' : 'text-emerald-800'}`}>
                       {stage.advice}
                     </p>
@@ -371,7 +389,7 @@ export default function CropGrowth() {
             <CardContent className="p-4 flex items-start gap-3">
               <Droplets className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
               <p className="text-sm text-blue-900">
-                Total seasonal water requirement for {topCrop?.crop}: <span className="font-bold">{topCrop?.waterRequirement}</span> over {topCrop?.growingDays} days — irrigation scheduling above is derived from this figure, not a fixed template.
+                {t('crop.timeline.waterFooter', { crop: topCrop?.crop, water: topCrop?.waterRequirement, days: topCrop?.growingDays })}
               </p>
             </CardContent>
           </Card>
@@ -381,11 +399,15 @@ export default function CropGrowth() {
         <TabsContent value="disease" className="space-y-4">
           <Alert className="bg-gradient-to-r from-red-50 to-orange-50 border-red-200 shadow-sm">
             <Bug className="h-5 w-5 text-red-600" />
-            <AlertTitle className="text-red-950 font-bold">Weather & Soil-Based Disease Risk Forecast</AlertTitle>
+            <AlertTitle className="text-red-950 font-bold">{t('crop.disease.alertTitle')}</AlertTitle>
             <AlertDescription className="text-red-900 mt-1 text-sm leading-relaxed">
-              Risk levels below are computed from live temperature ({cropData.weather?.temp}°C), humidity ({cropData.weather?.humidity}%),
-              rainfall ({cropData.weather?.rainfall}mm) and soil nitrogen ({cropData.soilHealth?.nitrogen} kg/ha) for {selectedDistrict}.
-              Always confirm with your local agriculture extension officer before applying any chemical.
+              {t('crop.disease.alertDescription', {
+                temp: cropData.weather?.temp,
+                humidity: cropData.weather?.humidity,
+                rainfall: cropData.weather?.rainfall,
+                nitrogen: cropData.soilHealth?.nitrogen,
+                district: selectedDistrict,
+              })}
             </AlertDescription>
           </Alert>
 
@@ -425,7 +447,7 @@ export default function CropGrowth() {
                                 : 'bg-gray-400 text-white'
                             }
                           >
-                            {d.riskLevel} Risk
+                            {t('crop.disease.riskSuffix', { risk: t(`crop.disease.riskLevels.${d.riskLevel}`, d.riskLevel) })}
                           </Badge>
                         </div>
                         <p className="text-xs text-gray-500 mt-1">{d.type} • {d.symptoms}</p>
@@ -434,22 +456,22 @@ export default function CropGrowth() {
                         <div className="mt-3 space-y-1.5 text-sm">
                           <div className="flex items-start gap-2">
                             <FlaskConical className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
-                            <span><span className="font-semibold text-gray-800">Pesticide: </span>{d.pesticide}</span>
+                            <span><span className="font-semibold text-gray-800">{t('crop.disease.pesticideLabel')} </span>{d.pesticide}</span>
                           </div>
                           <div className="flex items-start gap-2">
                             <LeafOrganic className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                            <span><span className="font-semibold text-gray-800">Organic option: </span>{d.organicAlternative}</span>
+                            <span><span className="font-semibold text-gray-800">{t('crop.disease.organicLabel')} </span>{d.organicAlternative}</span>
                           </div>
                           <div className="flex items-start gap-2">
                             <ShieldCheck className="w-4 h-4 text-gray-500 shrink-0 mt-0.5" />
-                            <span><span className="font-semibold text-gray-800">Precaution: </span>{d.precaution}</span>
+                            <span><span className="font-semibold text-gray-800">{t('crop.disease.precautionLabel')} </span>{d.precaution}</span>
                           </div>
                         </div>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-sm text-gray-500">No common disease/pest data available for this crop yet.</p>
+                  <p className="text-sm text-gray-500">{t('crop.disease.noData')}</p>
                 )}
               </CardContent>
             </Card>

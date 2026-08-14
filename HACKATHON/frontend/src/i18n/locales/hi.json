@@ -21,12 +21,30 @@
       "cropsTracked": "ट्रैक की गई फसलें"
     },
     "features": {
-      "weather": { "title": "मौसम और जलवायु", "description": "स्वचालित अलर्ट के साथ 7-दिन का पूर्वानुमान और 6-माह की जलवायु योजना।" },
-      "soil": { "title": "मिट्टी की उर्वरता", "description": "एनपीके ट्रैकिंग, पीएच संतुलन और उर्वरक सिफारिशें।" },
-      "crop": { "title": "फसल वृद्धि", "description": "बुवाई से कटाई तक विकास-चरण ट्रैकिंग और एआई उपज पूर्वानुमान।" },
-      "market": { "title": "बाज़ार और आरओआई", "description": "मूल्य पूर्वानुमान, बिक्री का सर्वोत्तम समय और लाभ ट्रैकिंग।" },
-      "solver": { "title": "एआई सॉल्वर", "description": "समस्या-समाधान कौशल बनाने वाला संसाधन-योजना पहेली इंजन।" },
-      "profile": { "title": "किसान प्रोफ़ाइल", "description": "उपलब्धियां, खेत का विवरण और पर्यावरणीय प्रभाव ट्रैकिंग।" }
+      "weather": {
+        "title": "मौसम और जलवायु",
+        "description": "स्वचालित अलर्ट के साथ 7-दिन का पूर्वानुमान और 6-माह की जलवायु योजना।"
+      },
+      "soil": {
+        "title": "मिट्टी की उर्वरता",
+        "description": "एनपीके ट्रैकिंग, पीएच संतुलन और उर्वरक सिफारिशें।"
+      },
+      "crop": {
+        "title": "फसल वृद्धि",
+        "description": "बुवाई से कटाई तक विकास-चरण ट्रैकिंग और एआई उपज पूर्वानुमान।"
+      },
+      "market": {
+        "title": "बाज़ार और आरओआई",
+        "description": "मूल्य पूर्वानुमान, बिक्री का सर्वोत्तम समय और लाभ ट्रैकिंग।"
+      },
+      "solver": {
+        "title": "एआई सॉल्वर",
+        "description": "समस्या-समाधान कौशल बनाने वाला संसाधन-योजना पहेली इंजन।"
+      },
+      "profile": {
+        "title": "किसान प्रोफ़ाइल",
+        "description": "उपलब्धियां, खेत का विवरण और पर्यावरणीय प्रभाव ट्रैकिंग।"
+      }
     },
     "heroTitlePrefix": "स्मार्ट तरीके से खेती करें",
     "heroTitleHighlight": "एआई-संचालित कृषि के साथ",
@@ -88,8 +106,20 @@
       "farmingJourney": "आपकी कृषि यात्रा",
       "achievement1": "फ्रेंकस्टीन चैलेंज लेवल 5 पूरा किया",
       "achievement2": "30 दिनों तक इष्टतम मिट्टी प्रबंधन",
-      "achievement3": "पिछले मौसम में 20%+ आरओआई हासिल किया"
+      "achievement3": "पिछले मौसम में 20%+ आरओआई हासिल किया",
+      "yourCrops": "आपकी फसलें",
+      "yourCropsDesc": "इस मौसम में आप जो फसलें उगाने की योजना बना रहे हैं",
+      "changeCrops": "फसलें बदलें",
+      "goToMarketPrefix": "अपनी फसलों के लिए लाइव कीमतें और बिक्री सलाह देखने के लिए",
+      "goToMarketSuffix": "टैब पर जाएं।"
     }
+  },
+  "onboarding": {
+    "title": "आप कौन सी फसलें उगाते हैं?",
+    "subtitle": "जो भी लागू हो चुनें — आप इसे बाद में बदल सकते हैं",
+    "selectAtLeastOne": "जारी रखने से पहले कृपया कम से कम एक फसल चुनें।",
+    "settingUp": "आपका डैशबोर्ड सेट किया जा रहा है… 🎉",
+    "startFarming": "खेती शुरू करें 🌾"
   },
   "notFound": {
     "title": "404",
@@ -97,5 +127,548 @@
     "description": "आप जो पृष्ठ खोज रहे हैं वह मौजूद नहीं है या स्थानांतरित कर दिया गया हो सकता है।",
     "backHome": "होम पर वापस जाएं",
     "goBack": "वापस जाएं"
+  },
+  "weather": {
+    "engineBadge": "जिला-वार एमएल पूर्वानुमान इंजन",
+    "districtsSupportedBadge": "पंजाब के 23 जिले समर्थित",
+    "headerTitle": "{{district}} जिला मौसम और एमएल पूर्वानुमान",
+    "headerSubtitle": "{{district}} जिले ({{region}} क्षेत्र) के लिए गतिशील रूप से प्राप्त वास्तविक समय ओपन-मीटियो मौसम विशेषताएं",
+    "selectDistrict": "पंजाब जिला चुनें",
+    "districtsCount": "(23 जिले)",
+    "refresh": "रिफ्रेश करें",
+    "lastUpdated": "अंतिम अद्यतन: {{time}}",
+    "districtCoordinates": "जिला निर्देशांक: {{lat}}° N, {{lon}}° E ({{region}} पंजाब)",
+    "fetchingWeatherFor": "{{district}} जिले के लिए लाइव मौसम प्राप्त किया जा रहा है...",
+    "connectingApi": "निर्देशांक {{lat}}° N, {{lon}}° E के लिए ओपन-मीटियो एपीआई से जुड़ रहे हैं...",
+    "fetchingLatestDistrict": "नवीनतम {{district}} जिला मौसम प्राप्त किया जा रहा है...",
+    "apiConnectionNotice": "मौसम एपीआई कनेक्शन सूचना",
+    "unableToFetchError": "नवीनतम मौसम डेटा प्राप्त करने में असमर्थ। अंतिम सफल अपडेट दिखाया जा रहा है।",
+    "retry": "पुनः प्रयास करें",
+    "mlRiskLabel": "एमएल जोखिम: {{level}}",
+    "districtSuffix": "— {{district}} जिला",
+    "predictedAt": "पूर्वानुमान समय: {{time}} · स्रोत: ओपन-मीटियो एपीआई",
+    "currentWeatherDataTitle": "वर्तमान मौसम डेटा ({{district}} जिला)",
+    "temperature": "तापमान",
+    "feelsLike": "महसूस होता है {{temp}}°C",
+    "relativeHumidity": "सापेक्ष आर्द्रता",
+    "highHumidityEnv": "उच्च आर्द्रता वाला वातावरण",
+    "optimalFieldCrops": "खेत की फसलों के लिए इष्टतम",
+    "windSpeed": "हवा की गति",
+    "direction": "दिशा: {{deg}}°",
+    "precipitation": "वर्षा",
+    "surfacePressure": "सतही दबाव: {{value}} hPa",
+    "mlPredictionsTitle": "एमएल मौसम मॉडल पूर्वानुमान ({{district}} जिला)",
+    "mlPredictionsSubtitle": "जिला एमएल पूर्वानुमान पाइपलाइन के माध्यम से लाइव ओपन-मीटियो विशेषताओं को चलाकर प्राप्त परिणाम",
+    "modelConfidence": "मॉडल विश्वास: {{value}}%",
+    "humiditySuffix": "{{value}}% आर्द्रता",
+    "rainRisk": "{{value}}% वर्षा जोखिम",
+    "modelScore": "{{value}}% मॉडल स्कोर",
+    "sevenDayForecastTitle": "7-दिन मौसम पूर्वानुमान ({{district}} जिला)",
+    "sevenDayForecastSubtitle": "ओपन-मीटियो से लाइव दैनिक तापमान और वर्षा पूर्वानुमान",
+    "districtForecastBadge": "जिला पूर्वानुमान",
+    "sixMonthForecastTitle": "6-माह गतिशील जलवायु पूर्वानुमान ({{district}} जिला)",
+    "sixMonthForecastSubtitle": "{{district}} फसलों के लिए दीर्घकालिक मासिक तापमान और वर्षा पैटर्न",
+    "mlWeatherAdviceTitle": "एमएल मौसम सलाह ({{district}} जिला)",
+    "weeklyFieldActionPlan": "साप्ताहिक क्षेत्र कार्य योजना",
+    "monthlyStrategicPlanning": "मासिक रणनीतिक योजना",
+    "liveOpenMeteoBadge": "लाइव ओपन-मीटियो डेटा",
+    "clear": "साफ़",
+    "mmRain": "{{value}}mm वर्षा",
+    "chart": {
+      "maxTemp": "अधिकतम तापमान (°C)",
+      "minTemp": "न्यूनतम तापमान (°C)",
+      "rainfall": "वर्षा (mm)",
+      "avgTemp": "औसत तापमान (°C)",
+      "expectedRain": "अपेक्षित वर्षा (mm)"
+    },
+    "days": {
+      "sun": "रवि",
+      "mon": "सोम",
+      "tue": "मंगल",
+      "wed": "बुध",
+      "thu": "गुरु",
+      "fri": "शुक्र",
+      "sat": "शनि"
+    },
+    "codes": {
+      "clearSky": "साफ़ आसमान",
+      "mainlyClear": "मुख्यतः साफ़",
+      "partlyCloudy": "आंशिक रूप से बादल",
+      "overcast": "घने बादल",
+      "foggy": "कोहरा",
+      "rimeFog": "पाला जमाने वाला कोहरा",
+      "lightDrizzle": "हल्की बूंदाबांदी",
+      "moderateDrizzle": "मध्यम बूंदाबांदी",
+      "denseDrizzle": "घनी बूंदाबांदी",
+      "slightRain": "हल्की बारिश",
+      "moderateRain": "मध्यम बारिश",
+      "heavyRain": "भारी बारिश",
+      "slightSnow": "हल्की बर्फ़बारी",
+      "moderateSnow": "मध्यम बर्फ़बारी",
+      "heavySnow": "भारी बर्फ़बारी",
+      "slightRainShowers": "हल्की बौछारें",
+      "moderateRainShowers": "मध्यम बौछारें",
+      "violentRainShowers": "तेज़ बौछारें",
+      "thunderstorm": "आंधी-तूफ़ान",
+      "thunderstormSlightHail": "हल्के ओलों के साथ तूफ़ान",
+      "thunderstormHeavyHail": "भारी ओलों के साथ तूफ़ान"
+    },
+    "conditions": {
+      "clearStable": "साफ़ और स्थिर",
+      "heavyRain": "भारी बारिश का पूर्वानुमान",
+      "lightShowers": "हल्की बौछारों की संभावना",
+      "highHumidityFoggy": "उच्च आर्द्रता / कोहरा",
+      "heatwaveWarning": "लू की चेतावनी",
+      "pleasantCool": "सुहावना / ठंडा"
+    },
+    "alerts": {
+      "optimal": {
+        "title": "इष्टतम कृषि स्थितियां",
+        "description": "आपके जिले में वर्तमान स्थिति साफ़ और स्थिर है ({{temp}}°C, {{humidity}}% आर्द्रता, {{wind}} km/h हवा)। खेत कार्य सामान्य रूप से जारी रह सकते हैं।"
+      },
+      "heavyRainfallFlooding": {
+        "title": "भारी वर्षा और बाढ़ का खतरा",
+        "description": "एमएल मॉडल उच्च वर्षा जोखिम का पता लगाता है ({{maxRainProb}}% संभावना, ~{{maxRain}}mm अपेक्षित)। खेत की जल निकासी सुनिश्चित करें, कीटनाशक छिड़काव से बचें, और निचले क्षेत्रों की फसलों की रक्षा करें।"
+      },
+      "moderateRainfall": {
+        "title": "मध्यम वर्षा की संभावना",
+        "description": "आने वाले घंटों में वर्षा संभावित है (~{{maxRain}}mm, {{maxRainProb}}% संभावना)। पत्तियों पर उर्वरक छिड़काव स्थगित करें और बारिश से पहले गहरी सिंचाई से बचें।"
+      },
+      "highWind": {
+        "title": "तेज़ हवा की चेतावनी",
+        "description": "{{wind}} km/h की हवा दर्ज की गई (झोंके {{maxWind}} km/h तक अपेक्षित)। ग्रीनहाउस संरचनाओं को सुरक्षित करें और लंबी फसलों को अतिरिक्त सहारा दें।"
+      },
+      "highTemperature": {
+        "title": "उच्च तापमान और गर्मी तनाव जोखिम",
+        "description": "तापमान {{temp}}°C ({{feelsLike}}°C जैसा महसूस)। फसल की गर्मी तनाव और पत्ती झुलसने से बचाव के लिए शाम की सिंचाई बढ़ाएं।"
+      },
+      "highHumidityFog": {
+        "title": "उच्च आर्द्रता और कोहरा / रोग जोखिम",
+        "description": "आर्द्रता {{humidity}}% (शिखर {{maxHumidity}}%)। अधिक नमी धान, गेहूं और कपास में फफूंद रोग का खतरा बढ़ाती है। आवश्यकता होने पर निवारक फफूंदनाशक लगाएं।"
+      },
+      "denseFog": {
+        "title": "घने कोहरे की सलाह",
+        "description": "कोहरे की स्थिति का पता चला (मौसम कोड {{weatherCode}})। दृश्यता कम हो सकती है। कोहरा साफ़ होने तक खेत छिड़काव कार्य स्थगित करें।"
+      }
+    },
+    "recommendations": {
+      "clearDrainage": "जलभराव से बचने के लिए खेतों में जल निकासी चैनल साफ़ करें",
+      "suspendSpray": "बारिश से पहले तरल नाइट्रोजन और कीटनाशकों का छिड़काव रोकें",
+      "inspectFungal": "फफूंद बीजाणु वृद्धि के लिए खड़ी धान/गेहूं की फसलों का निरीक्षण करें",
+      "scheduledFertilizer": "कम हवा वाली सुबह के घंटों में निर्धारित उर्वरक लगाएं",
+      "soilMoisture": "सक्रिय फसलों के लिए मानक मिट्टी नमी स्तर बनाए रखें",
+      "pestScouting": "फसल सीमाओं पर नियमित कीट निरीक्षण करें",
+      "shadeNetting": "युवा सब्जी नर्सरी बेड के लिए छाया जाल तैयार करें",
+      "dripIrrigation": "सुबह जल्दी ड्रिप सिंचाई निर्धारित करें",
+      "seasonalSowing": "स्थिर मिट्टी तापमान के आधार पर मौसमी बुवाई की योजना बनाएं",
+      "waterStorage": "मौसमी बदलावों से पहले जल भंडारण को अनुकूलित करें"
+    }
+  },
+  "solver": {
+    "title": "फ्रेंकस्टीन ऑर्ब चैलेंज",
+    "subtitle": "अंक अर्जित करने और तार्किक सोच सुधारने के लिए एल्गोरिदमिक पहेलियां हल करें",
+    "points": "{{count}} अंक",
+    "problemsSolved": "हल की गई समस्याएं: {{count}}",
+    "tabs": {
+      "solver": "एआई सॉल्वर",
+      "challenges": "चुनौतियां",
+      "tutorial": "यह कैसे काम करता है"
+    },
+    "input": {
+      "title": "समस्या इनपुट",
+      "description": "आवश्यक न्यूनतम जादुई ऑर्ब जानने के लिए अपनी पोशन रेसिपी और लक्ष्य पोशन दर्ज करें",
+      "recipesLabel": "पोशन रेसिपी (प्रति पंक्ति एक)",
+      "recipesHint": "प्रारूप: potion_name = ingredient1 + ingredient2",
+      "targetLabel": "लक्ष्य पोशन",
+      "solving": "हल किया जा रहा है...",
+      "solve": "समस्या हल करें"
+    },
+    "solution": {
+      "title": "समाधान",
+      "description": "चरण-दर-चरण विवरण के साथ एआई-संचालित समाधान",
+      "minOrbsLabel": "आवश्यक न्यूनतम जादुई ऑर्ब",
+      "stepsTitle": "समाधान चरण:",
+      "explanationTitle": "व्याख्या",
+      "errorTitle": "त्रुटि",
+      "emptyState": "समाधान देखने के लिए अपनी समस्या दर्ज करें और \"समस्या हल करें\" पर क्लिक करें",
+      "invalidFormat": "समस्या हल करने में असमर्थ। कृपया अपना रेसिपी प्रारूप जांचें।"
+    },
+    "step": {
+      "top": "{{ingredients}} का उपयोग करके {{potion}} बनाएं ({{orbs}} कुल ऑर्ब)",
+      "nested": "{{ingredients}} से {{potion}} बनाएं ({{orbs}} ऑर्ब)"
+    },
+    "explanation": {
+      "basicIngredient": "{{potion}} एक मूल सामग्री है जिसकी कीमत 1 जादुई ऑर्ब है।",
+      "composedBase": "{{potion}} बनाने के लिए, हमें {{ingredients}} चाहिए।",
+      "basicNote": "मूल सामग्री ({{basicIngredients}}) की कीमत प्रत्येक 1 ऑर्ब है।",
+      "complexNote": "जटिल सामग्री ({{complexIngredients}}) को अपनी खुद की रेसिपी चाहिए।",
+      "totalNote": "कुल लागत में सामग्री ऑर्ब के साथ संयोजन प्रक्रिया के लिए 1 ऑर्ब शामिल है, जिसके परिणामस्वरूप {{minOrbs}} जादुई ऑर्ब होते हैं।",
+      "error": "त्रुटि: {{message}}"
+    },
+    "challenges": {
+      "recipesLabel": "रेसिपी:",
+      "andMore": "... और अधिक",
+      "targetLabel": "लक्ष्य:",
+      "solvedBadge": "✓ हल हो गया",
+      "tryChallenge": "यह चुनौती आज़माएं"
+    },
+    "difficulty": {
+      "easy": "आसान",
+      "medium": "मध्यम",
+      "hard": "कठिन"
+    },
+    "samples": {
+      "basic": {
+        "title": "बेसिक अवेकनिंग पोशन",
+        "description": "न्यूनतम जादुई ऑर्ब का उपयोग करके एक अवेकनिंग पोशन बनाएं"
+      },
+      "complex": {
+        "title": "जटिल परिवर्तन",
+        "description": "मध्यवर्ती सामग्री के साथ बहु-चरण पोशन निर्माण"
+      },
+      "master": {
+        "title": "मास्टर अल्केमिस्ट चैलेंज",
+        "description": "कई मार्गों के साथ परम अमृत बनाएं"
+      }
+    },
+    "tutorial": {
+      "title": "फ्रेंकस्टीन ऑर्ब चैलेंज कैसे काम करता है",
+      "subtitle": "एल्गोरिदम और समस्या-समाधान दृष्टिकोण को समझना",
+      "overviewTitle": "समस्या अवलोकन",
+      "overviewText": "फ्रेंकस्टीन ऑर्ब चैलेंज ग्राफ़ सिद्धांत और डायनामिक प्रोग्रामिंग से प्रेरित है। आपको पोशन रेसिपी का एक सेट (एक निर्भरता ग्राफ़ की तरह) दिया जाता है और लक्ष्य पोशन बनाने के लिए आवश्यक न्यूनतम जादुई ऑर्ब की संख्या खोजनी होती है।",
+      "approachTitle": "एल्गोरिदम दृष्टिकोण",
+      "approach1": "निर्भरता ग्राफ़ बनाने के लिए रेसिपी पार्स करें",
+      "approach2": "उप-समस्याओं की पुनर्गणना से बचने के लिए मेमोइज़ेशन का उपयोग करें",
+      "approach3": "अनुकूलन के साथ डेप्थ-फर्स्ट सर्च लागू करें",
+      "approach4": "न्यूनतम ऑर्ब और इष्टतम पथ लौटाएं",
+      "recipeFormatTitle": "रेसिपी प्रारूप",
+      "educationalTitle": "शैक्षिक मूल्य",
+      "educationalIntro": "यह चुनौती किसानों और छात्रों को समझने में मदद करती है:",
+      "eduPoint1": "ग्राफ़ सिद्धांत और निर्भरता समाधान",
+      "eduPoint2": "डायनामिक प्रोग्रामिंग अनुकूलन",
+      "eduPoint3": "संसाधन आवंटन और योजना",
+      "eduPoint4": "तार्किक सोच और समस्या विभाजन",
+      "realWorldTitle": "वास्तविक-विश्व अनुप्रयोग",
+      "realWorldText": "इसी तरह के एल्गोरिदम आधुनिक कृषि में फसल चक्र योजना, आपूर्ति श्रृंखला अनुकूलन और संसाधन आवंटन में उपयोग किए जाते हैं!"
+    }
+  },
+  "soil": {
+    "headerTitle": "गतिशील मिट्टी स्वास्थ्य इंटेलिजेंस सिस्टम",
+    "headerSubtitle": "पंजाब के सभी 23 जिलों में वास्तविक समय आईसीएआर और मृदा स्वास्थ्य कार्ड विश्लेषण",
+    "districtLabel": "जिला:",
+    "refreshDatasets": "सरकारी डेटासेट रिफ्रेश करें",
+    "syncingEtl": "ईटीएल सिंक हो रहा है...",
+    "toast": {
+      "syncSuccess": "पंजाब के सभी 23 जिलों में सरकारी मृदा स्वास्थ्य डेटासेट रिफ्रेश किए गए!",
+      "syncError": "डेटासेट सिंक ट्रिगर करने में विफल।",
+      "fertilizerEmptyError": "कृपया कम से कम एक उर्वरक मात्रा दर्ज करें (N, P, या K)।",
+      "fertilizerSuccess": "{{district}} के लिए उर्वरक लॉग दर्ज किया गया!",
+      "fertilizerError": "उर्वरक लॉग दर्ज करने में विफल।"
+    },
+    "cards": {
+      "soilHealthScore": "मिट्टी स्वास्थ्य स्कोर",
+      "icarBenchmark": "आईसीएआर प्रमाणित बेंचमार्क",
+      "soilTypeTexture": "मिट्टी प्रकार और बनावट",
+      "soilPhSalinity": "मिट्टी पीएच और लवणता (EC)",
+      "organicCarbon": "जैविक कार्बन (OC)",
+      "organicCarbonTarget": "लक्ष्य: इष्टतम उर्वरता के लिए >0.75%"
+    },
+    "tabs": {
+      "overview": "पोषक तत्व अवलोकन",
+      "history": "ऐतिहासिक रुझान",
+      "recommendations": "एआई उर्वरक और फसल सलाह",
+      "compare": "जिला तुलना"
+    },
+    "overview": {
+      "macronutrientsTitle": "स्थूल पोषक तत्व (NPK) बनाम बेंचमार्क",
+      "macronutrientsDesc": "{{district}} में उपलब्ध N, P, K स्तर (kg/ha)",
+      "radarTitle": "पोषक तत्व संतुलन रडार",
+      "radarDesc": "बहु-पैरामीटर मिट्टी उर्वरता सूचकांक",
+      "currentLevel": "वर्तमान स्तर",
+      "idealBenchmark": "आदर्श बेंचमार्क",
+      "micronutrientsTitle": "आवश्यक सूक्ष्म पोषक तत्व और द्वितीयक खनिज विवरण",
+      "nitrogen": "नाइट्रोजन (N)",
+      "phosphorus": "फास्फोरस (P)",
+      "potassium": "पोटेशियम (K)",
+      "sulphur": "सल्फर (S)",
+      "zinc": "जिंक (Zn)",
+      "iron": "आयरन (Fe)",
+      "copper": "कॉपर (Cu)",
+      "manganese": "मैंगनीज",
+      "boron": "बोरॉन (B)",
+      "calcium": "कैल्शियम (Ca)",
+      "magnesium": "मैग्नीशियम"
+    },
+    "history": {
+      "title": "ऐतिहासिक मिट्टी स्वास्थ्य और NPK रुझान",
+      "description": "{{district}} के लिए बहु-मासिक प्रगति",
+      "chart": {
+        "nitrogen": "नाइट्रोजन (kg/ha)",
+        "phosphorus": "फास्फोरस (kg/ha)",
+        "potassium": "पोटेशियम (kg/ha)",
+        "healthScore": "स्वास्थ्य स्कोर"
+      },
+      "loggerTitle": "नया उर्वरक अनुप्रयोग लॉग दर्ज करें",
+      "nitrogenAdded": "जोड़ा गया नाइट्रोजन (kg/acre)",
+      "phosphorusAdded": "जोड़ा गया फास्फोरस (kg/acre)",
+      "potassiumAdded": "जोड़ा गया पोटेशियम (kg/acre)",
+      "applicationDate": "प्रयोग तिथि",
+      "recordLogEntry": "लॉग प्रविष्टि दर्ज करें"
+    },
+    "recommendations": {
+      "fertilizerDosageTitle": "गतिशील एआई उर्वरक खुराक (kg/acre)",
+      "fertilizerDosageDesc": "आईसीएआर सिफारिशों के आधार पर {{district}} के लिए अनुकूलित",
+      "irrigationTitle": "ओपन-मीटियो मौसम और सिंचाई अनुसूची",
+      "recommendedIrrigation": "अनुशंसित सिंचाई",
+      "liveTemperature": "लाइव तापमान",
+      "soilMoisture": "मिट्टी की नमी",
+      "topRecommendedCrop": "शीर्ष अनुशंसित फसल"
+    },
+    "compare": {
+      "title": "जिला साइड-बाय-साइड मिट्टी तुलना",
+      "description": "किन्हीं भी 2 पंजाब जिलों के बीच मिट्टी स्वास्थ्य मापदंडों की तुलना करें",
+      "vs": "बनाम",
+      "soilType": "मिट्टी प्रकार:",
+      "ph": "पीएच:",
+      "organicCarbon": "जैविक कार्बन:",
+      "nitrogen": "नाइट्रोजन:",
+      "recommendedCrop": "अनुशंसित फसल:",
+      "loading": "तुलना मेट्रिक्स लोड हो रहे हैं..."
+    }
+  },
+  "crop": {
+    "headerTitle": "एआई फसल सिफारिश और कृषि सलाह",
+    "headerSubtitle": "लाइव मिट्टी NPK, वास्तविक समय ओपन-मीटियो जलवायु, और आईसीएआर कृषि मानकों को मिलाकर डेटा-संचालित फसल चयन",
+    "seasonLabel": "मौसम: {{season}}",
+    "seasons": {
+      "Rabi": "रबी",
+      "Kharif": "खरीफ",
+      "Zaid": "जायद"
+    },
+    "liveBadge": "लाइव",
+    "estimatedBadge": "अनुमानित",
+    "estimatedTooltip": "लाइव सिफारिश इंजन तक पहुंच नहीं हो सकी, इसलिए यह इस जिले के क्यूरेटेड मिट्टी आधारभूत डेटा से स्थानीय रूप से गणना की गई है।",
+    "districtLabel": "जिला:",
+    "advisoryTitle": "{{district}} के लिए एआई कृषि सलाहकार",
+    "advisory": "वर्तमान आईसीएआर मानकों के आधार पर, {{district}} की मिट्टी पीएच ({{ph}}), जैविक कार्बन ({{oc}}%), उपलब्ध नाइट्रोजन ({{nitrogen}} kg/ha), और लाइव मौसम स्थितियों ({{temp}}°C, {{moisture}}% नमी) को देखते हुए, इस {{season}} मौसम में {{crop}} की खेती के लिए {{score}}/100 उपयुक्तता स्कोर के साथ अत्यधिक सिफारिश की जाती है। अपेक्षित उपज {{yield}} है जिसमें {{risk}} जोखिम है।",
+    "topCropBadge": "#1 शीर्ष अनुशंसित फसल",
+    "suitabilityScore": "उपयुक्तता स्कोर",
+    "confidenceIndex": "विश्वास सूचकांक",
+    "aiVerified": "एआई सत्यापित",
+    "expectedMarketPrice": "अपेक्षित बाज़ार मूल्य",
+    "demandLabel": "मांग: {{demand}}",
+    "tabs": {
+      "rankings": "शीर्ष 5 फसल रैंकिंग",
+      "visualizations": "उपयुक्तता चार्ट",
+      "timeline": "फसल वृद्धि चरण समयरेखा",
+      "disease": "रोग और कीट अलर्ट"
+    },
+    "rankings": {
+      "expectedYield": "अपेक्षित उपज",
+      "waterRequirement": "पानी की आवश्यकता",
+      "fertilizerDose": "उर्वरक खुराक",
+      "marketPriceTrend": "बाज़ार मूल्य रुझान",
+      "riskProfile": "जोखिम प्रोफ़ाइल",
+      "riskSuffix": "{{risk}} जोखिम",
+      "aiModelConfidence": "एआई मॉडल विश्वास"
+    },
+    "visualizations": {
+      "chartTitle": "फसल उपयुक्तता स्कोर तुलना (0-100)",
+      "chartDesc": "{{district}} के लिए बहु-कारक स्कोर रैंकिंग",
+      "suitabilityScoreLegend": "उपयुक्तता स्कोर",
+      "profitabilityIndexLegend": "लाभप्रदता सूचकांक",
+      "factorAnalysisTitle": "शीर्ष फसल कारक विश्लेषण (लाइव गणना)",
+      "factorAnalysisDesc": "{{crop}} के लिए वास्तविक कृषि उप-स्कोर",
+      "theTopCrop": "शीर्ष फसल",
+      "factors": {
+        "soilMatch": "मिट्टी मेल",
+        "nutrientBalance": "पोषक तत्व संतुलन",
+        "climateSuitability": "जलवायु उपयुक्तता",
+        "seasonalFit": "मौसमी फिट",
+        "marketPotential": "बाज़ार क्षमता"
+      }
+    },
+    "timeline": {
+      "title": "कृषि वृद्धि समयरेखा ({{crop}})",
+      "description": "{{crop}} के वास्तविक {{days}}-दिवसीय विकास चक्र के अनुसार चरण, इस जिले के लाइव मिट्टी पोषक तत्वों से गणना की गई खुराक के साथ",
+      "dayRange": "दिन {{start}} - {{end}}",
+      "waterFooter": "{{crop}} के लिए कुल मौसमी पानी की आवश्यकता: {{water}} {{days}} दिनों में — ऊपर सिंचाई शेड्यूलिंग इसी आंकड़े से प्राप्त की गई है, न कि किसी निश्चित टेम्पलेट से।",
+      "topCrop": "शीर्ष फसल"
+    },
+    "disease": {
+      "alertTitle": "मौसम और मिट्टी आधारित रोग जोखिम पूर्वानुमान",
+      "alertDescription": "नीचे दिए गए जोखिम स्तर लाइव तापमान ({{temp}}°C), आर्द्रता ({{humidity}}%), वर्षा ({{rainfall}}mm) और {{district}} के लिए मिट्टी नाइट्रोजन ({{nitrogen}} kg/ha) से गणना किए गए हैं। कोई भी रसायन लगाने से पहले हमेशा अपने स्थानीय कृषि विस्तार अधिकारी से पुष्टि करें।",
+      "riskSuffix": "{{risk}} जोखिम",
+      "pesticideLabel": "कीटनाशक:",
+      "organicLabel": "जैविक विकल्प:",
+      "precautionLabel": "सावधानी:",
+      "noData": "इस फसल के लिए अभी तक कोई सामान्य रोग/कीट डेटा उपलब्ध नहीं है।",
+      "riskLevels": {
+        "High": "उच्च",
+        "Medium": "मध्यम",
+        "Low": "निम्न"
+      }
+    }
+  },
+  "roadmap": {
+    "aiTwinBadge": "एआई डिजिटल फार्म ट्विन सक्रिय",
+    "districtVillageLabel": "जिला: {{district}} • गांव: {{village}}",
+    "pageTitle": "🌾 मेरी खेत योजना और बुद्धिमान सलाह",
+    "farmerLine": "किसान: {{name}} • भूमि: {{acres}} एकड़ ({{fields}} खेत) • फसल: {{crop}}",
+    "editProfile": "प्रोफ़ाइल और लक्ष्य संपादित करें",
+    "checkIn": "दिन के अंत की जांच",
+    "profileDialog": {
+      "title": "किसान प्रोफ़ाइल सेटअप",
+      "description": "एक विशिष्ट एआई रोडमैप बनाने के लिए अपने खेत का विवरण अनुकूलित करें।",
+      "farmerName": "किसान का नाम",
+      "district": "जिला",
+      "village": "गांव",
+      "landArea": "कुल भूमि क्षेत्र (एकड़)",
+      "currentCrop": "वर्तमान फसल",
+      "growthStage": "वृद्धि चरण",
+      "save": "प्रोफ़ाइल सहेजें और बैकएंड रोडमैप रिफ्रेश करें"
+    },
+    "diaryDialog": {
+      "title": "दैनिक डिजिटल फार्म डायरी",
+      "description": "अपने एआई रोडमैप को गतिशील रूप से अपडेट करने के लिए आज आपके खेत में क्या हुआ, दर्ज करें।",
+      "irrigatedQuestion": "क्या आपने आज सिंचाई की?",
+      "fertilizerQuestion": "क्या आपने आज उर्वरक डाला?",
+      "fertilizerDetailsLabel": "उर्वरक विवरण (मात्रा और प्रकार)",
+      "fertilizerPlaceholder": "जैसे 25kg नीम यूरिया",
+      "pestsQuestion": "कीट या रोग के लक्षण देखे गए?",
+      "laborersLabel": "काम करने वाले मजदूरों की संख्या",
+      "notesLabel": "अतिरिक्त क्षेत्र नोट्स",
+      "notesPlaceholder": "जैसे फसल तेज़ी से हरी हो रही है",
+      "submit": "दैनिक चेक-इन सबमिट करें"
+    },
+    "toast": {
+      "profileUpdated": "खेत प्रोफ़ाइल अपडेट की गई!",
+      "profileUpdateFailed": "प्रोफ़ाइल अपडेट करने में विफल।",
+      "diarySuccess": "दिन के अंत की जांच दर्ज की गई! अनुकूली रोडमैप अपडेट किया गया।",
+      "diaryFailed": "डायरी सबमिट करने में विफल।",
+      "taskStatusSuccess": "कार्य को {{status}} के रूप में चिह्नित किया गया! अनुकूली योजना पुनर्गणना की गई।",
+      "taskStatusFailed": "कार्य स्थिति अपडेट करने में विफल।",
+      "backendError": "बैकएंड एपीआई से कनेक्ट करने में त्रुटि।"
+    },
+    "filters": {
+      "label": "गतिशील एपीआई फ़िल्टर:",
+      "district": "जिला:",
+      "field": "खेत:",
+      "allFields": "सभी खेत",
+      "field1": "खेत 1 (सामने का प्लॉट)",
+      "field2": "खेत 2 (नहर किनारे)",
+      "crop": "फसल:",
+      "allCrops": "सभी फसलें"
+    },
+    "soilInput": {
+      "title": "लाइव किसान मिट्टी और उपज इनपुट नियंत्रक",
+      "badge": "रीयल-टाइम गतिशील गणित इंजन",
+      "description": "सभी खुराक और कार्यों की गतिशील रूप से पुनर्गणना करने के लिए नीचे मिट्टी NPK और खेत पैरामीटर समायोजित करें।",
+      "districtLabel": "जिला स्थान",
+      "nitrogenLabel": "मिट्टी नाइट्रोजन N (kg/ha)",
+      "phosphorusLabel": "मिट्टी फास्फोरस P (kg/ha)",
+      "potassiumLabel": "मिट्टी पोटेशियम K (kg/ha)",
+      "targetYieldLabel": "लक्ष्य उपज (q/acre)",
+      "aiTitle": "आसान खेत और स्थान सेटिंग्स",
+      "aiBadge": "एआई मिट्टी इंटेलिजेंस सक्रिय",
+      "aiDescription": "रासायनिक परीक्षण की जरूरत नहीं! एआई आपके जिले और फसल इतिहास से मिट्टी के पोषक तत्वों का स्वतः अनुमान लगाता है।",
+      "previousCropLabel": "खेत में पहले उगाई गई फसल",
+      "previousCropOptions": {
+        "legumes": "दलहन / मूंग (प्राकृतिक नाइट्रोजन)",
+        "paddy": "धान / चावल (भारी नाइट्रोजन उपयोगकर्ता)",
+        "wheatMaize": "गेहूं / मक्का",
+        "sugarcaneCotton": "गन्ना / कपास",
+        "fallow": "परती / खाली खेत"
+      },
+      "targetYieldLabelAi": "लक्षित उपज (क्विंटल / एकड़)",
+      "aiStatusPrefix": "{{district}} के लिए एआई मिट्टी स्थिति:",
+      "aiStatusSuffix": "{{crop}} के अनुसार समायोजित अनुमानित एनपीके पोषक तत्वों के साथ आधारभूत जलोढ़ दोमट मिट्टी।",
+      "aiStatusFooter": "100% स्वचालित • किसी मैनुअल मिट्टी परीक्षण की आवश्यकता नहीं"
+    },
+    "dashboard": {
+      "soilWaterBalance": "मिट्टी जल संतुलन",
+      "nutrientAvailability": "पोषक तत्व उपलब्धता",
+      "expectedTotalYield": "अपेक्षित कुल उपज",
+      "aiConfidence": "एआई विश्वास: {{value}}%",
+      "expectedNetProfit": "अपेक्षित शुद्ध लाभ",
+      "harvestCountdown": "कटाई तक शेष: {{days}} दिन"
+    },
+    "tabs": {
+      "planner": "आज की खेत योजना",
+      "upcoming": "आगामी कार्य",
+      "alerts": "एआई स्मार्ट अलर्ट",
+      "timeline": "रोडमैप समयरेखा",
+      "charts": "एपीआई चार्ट",
+      "assistant": "एआई सहायक"
+    },
+    "planner": {
+      "title": "आज की कार्रवाई योग्य खेत योजना",
+      "fetchedFor": "{{district}} में {{crop}} के लिए गतिशील रूप से प्राप्त किया गया",
+      "tasksReturned": "{{count}} कार्य लौटाए गए",
+      "noTasks": "आज के लिए कोई सक्रिय कार्य नहीं। कल फिर से जांचें!",
+      "prioritySuffix": "{{priority}} प्राथमिकता",
+      "dueLabel": "देय: {{deadline}}",
+      "aiContextLabel": "एआई संदर्भ और कारण:",
+      "expectedBenefitLabel": "अपेक्षित लाभ:",
+      "consequenceLabel": "⚠️ छोड़ने पर परिणाम: {{risk}}",
+      "completedBadge": "✓ पूर्ण",
+      "markCompleted": "पूर्ण चिह्नित करें",
+      "skip": "छोड़ें",
+      "delay": "विलंब करें",
+      "materialsNeeded": "आवश्यक सामग्री:",
+      "costLabel": "लागत:",
+      "delayTask": "कार्य में देरी करें"
+    },
+    "upcoming": {
+      "title": "आगामी रोडमैप कार्य",
+      "materialsLabel": "सामग्री:"
+    },
+    "alerts": {
+      "title": "रीयल-टाइम एआई स्मार्ट अलर्ट",
+      "whyLabel": "क्यों:",
+      "recommendedActionLabel": "अनुशंसित कार्रवाई:",
+      "impactLabel": "अनदेखा करने पर क्या होगा:",
+      "severitySuffix": "{{severity}} गंभीरता"
+    },
+    "timeline": {
+      "title": "बहु-चरण वृद्धि समयरेखा",
+      "phaseLabel": "चरण {{num}}: {{name}}",
+      "aiStrategyLabel": "एआई रणनीति:"
+    },
+    "charts": {
+      "taskCompletionTitle": "कार्य पूर्णता रुझान",
+      "completedLegend": "पूर्ण",
+      "targetLegend": "लक्ष्य",
+      "yieldTrendTitle": "उपज पूर्वानुमान रुझान (क्विंटल/एकड़)",
+      "predictedYieldLegend": "अनुमानित उपज (q/acre)"
+    },
+    "assistant": {
+      "title": "एआई कृषि वैज्ञानिक सहायक",
+      "inputPlaceholder": "फसल छिड़काव, उर्वरक खुराक, रोग लक्षणों के बारे में कोई भी सवाल पूछें...",
+      "askAi": "एआई से पूछें",
+      "greeting": "नमस्ते {{name}}! मैं {{district}} के लिए आपका एआई कृषि सहायक हूं। आपके रीयल-टाइम इनपुट ({{acres}} एकड़ {{crop}}, मिट्टी NPK {{npk}}) के आधार पर, मैं आज आपके खेत के काम में कैसे मार्गदर्शन कर सकता हूं?",
+      "waterBalanceAnswer": "{{name}} के लिए बैकएंड मेट्रिक्स के आधार पर, मिट्टी की नमी {{value}}% है। सब कुछ इष्टतम है।",
+      "telemetryAnswer": "{{name}} के लिए बैकएंड टेलीमेट्री के आधार पर, {{district}} में मिट्टी की नमी {{value}}% है। {{crop}} के लिए फसल NPK आवश्यकता की गतिशील रूप से गणना की जाती है।",
+      "irrigateAnswer": "{{district}} के लिए ओपन-मीटियो मौसम एपीआई टेलीमेट्री के आधार पर, मिट्टी जल संतुलन 82% है। अगली सिंचाई 3 दिनों में अनुशंसित है।",
+      "fertilizerAnswer": "आपकी फसल वर्तमान में {{stage}} में है। टॉप-ड्रेसिंग यूरिया आवेदन देय है।",
+      "fertilizerDynamicAnswer": "गतिशील NPK गणित: {{acres}} एकड़ के लिए, {{dapBags}} बैग DAP ({{dapKg}}kg) और {{ureaBags}} बैग यूरिया ({{ureaKg}}kg) लगाएं।",
+      "todayAnswer": "आज का प्राथमिकता कार्य है: {{task}}।",
+      "defaultTaskName": "मिट्टी की नमी जांचें",
+      "defaultFarmerName": "किसान",
+      "defaultGrowthStage": "वानस्पतिक चरण"
+    },
+    "priority": {
+      "Critical": "गंभीर",
+      "High": "उच्च",
+      "Medium": "मध्यम",
+      "Low": "निम्न"
+    },
+    "status": {
+      "Completed": "पूर्ण",
+      "In Progress": "प्रगति में",
+      "Pending": "लंबित",
+      "Skipped": "छोड़ा गया",
+      "Delayed": "विलंबित"
+    }
   }
 }

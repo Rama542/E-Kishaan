@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -8,68 +9,57 @@ import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Zap, Brain, Trophy, Play, RotateCcw, Lightbulb, Target } from 'lucide-react';
-import { solveFrankensteinProblem } from '@/lib/algorithms';
+import { solveFrankensteinProblem, type Solution } from '@/lib/algorithms';
 import { useUserStats } from '@/contexts/UserStatsContext';
 
-interface Solution {
-  minOrbs: number;
-  steps: string[];
-  explanation: string;
-}
-
 interface SampleProblem {
-  title: string;
-  description: string;
+  key: 'basic' | 'complex' | 'master';
   recipes: string[];
   target: string;
-  difficulty: string;
+  difficulty: 'easy' | 'medium' | 'hard';
 }
 
 const sampleProblems: SampleProblem[] = [
   {
-    title: "Basic Awakening Potion",
-    description: "Create an awakening potion using the minimum magical orbs",
-    recipes: [
-      "awakening = snakefangs + wolfbane"
-    ],
-    target: "awakening",
-    difficulty: "Easy"
+    key: 'basic',
+    recipes: ['awakening = snakefangs + wolfbane'],
+    target: 'awakening',
+    difficulty: 'easy',
   },
   {
-    title: "Complex Transformation",
-    description: "Multi-step potion creation with intermediate ingredients",
+    key: 'complex',
     recipes: [
-      "strengthening = awakening + moonstone",
-      "awakening = snakefangs + wolfbane",
-      "healing = moonstone + herbs"
+      'strengthening = awakening + moonstone',
+      'awakening = snakefangs + wolfbane',
+      'healing = moonstone + herbs',
     ],
-    target: "strengthening",
-    difficulty: "Medium"
+    target: 'strengthening',
+    difficulty: 'medium',
   },
   {
-    title: "Master Alchemist Challenge",
-    description: "Create the ultimate elixir with multiple pathways",
+    key: 'master',
     recipes: [
-      "elixir = strengthening + healing + wisdom",
-      "strengthening = awakening + moonstone",
-      "awakening = snakefangs + wolfbane",
-      "healing = moonstone + herbs",
-      "wisdom = ancient_scroll + meditation_crystal",
-      "meditation_crystal = moonstone + starlight"
+      'elixir = strengthening + healing + wisdom',
+      'strengthening = awakening + moonstone',
+      'awakening = snakefangs + wolfbane',
+      'healing = moonstone + herbs',
+      'wisdom = ancient_scroll + meditation_crystal',
+      'meditation_crystal = moonstone + starlight',
     ],
-    target: "elixir",
-    difficulty: "Hard"
-  }
+    target: 'elixir',
+    difficulty: 'hard',
+  },
 ];
 
 export default function FrankensteinSolver() {
+  const { t } = useTranslation();
   const { stats, recordProblemSolved } = useUserStats();
   const [recipes, setRecipes] = useState<string>('');
   const [targetPotion, setTargetPotion] = useState<string>('');
   const [solution, setSolution] = useState<Solution | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedProblem, setSelectedProblem] = useState<SampleProblem | null>(null);
-  const [solvedProblems, setSolvedProblems] = useState<string[]>(['Basic Awakening Potion']);
+  const [solvedProblems, setSolvedProblems] = useState<string[]>(['basic']);
 
   const handleSolve = async () => {
     if (!recipes.trim() || !targetPotion.trim()) {
@@ -77,32 +67,32 @@ export default function FrankensteinSolver() {
     }
 
     setIsLoading(true);
-    
+
     try {
       // Simulate AI processing time
       await new Promise(resolve => setTimeout(resolve, 800));
-      
+
       const result = solveFrankensteinProblem(recipes, targetPotion);
       setSolution(result);
-      
+
       if (result.minOrbs > 0) {
-        const points = selectedProblem?.difficulty === 'Easy' ? 50 : 
-                       selectedProblem?.difficulty === 'Medium' ? 100 : 
-                       selectedProblem?.difficulty === 'Hard' ? 200 : 75;
-        
-        recordProblemSolved(points, selectedProblem?.title || targetPotion);
-        if (selectedProblem && !solvedProblems.includes(selectedProblem.title)) {
-          setSolvedProblems((prev: string[]) => [...prev, selectedProblem.title]);
+        const points = selectedProblem?.difficulty === 'easy' ? 50 :
+                       selectedProblem?.difficulty === 'medium' ? 100 :
+                       selectedProblem?.difficulty === 'hard' ? 200 : 75;
+
+        recordProblemSolved(points, selectedProblem ? t(`solver.samples.${selectedProblem.key}.title`) : targetPotion);
+        if (selectedProblem && !solvedProblems.includes(selectedProblem.key)) {
+          setSolvedProblems((prev: string[]) => [...prev, selectedProblem.key]);
         }
       }
     } catch (error) {
       setSolution({
         minOrbs: -1,
         steps: [],
-        explanation: "Error: Unable to solve the problem. Please check your recipe format."
+        explanation: { key: 'error', params: { message: 'Unable to solve the problem. Please check your recipe format.' } },
       });
     }
-    
+
     setIsLoading(false);
   };
 
@@ -120,14 +110,26 @@ export default function FrankensteinSolver() {
     setSelectedProblem(null);
   };
 
-  const getDifficultyColor = (difficulty: string) => {
+  const getDifficultyColor = (difficulty: SampleProblem['difficulty']) => {
     switch (difficulty) {
-      case 'Easy': return 'bg-green-500';
-      case 'Medium': return 'bg-yellow-500';
-      case 'Hard': return 'bg-red-500';
+      case 'easy': return 'bg-green-500';
+      case 'medium': return 'bg-yellow-500';
+      case 'hard': return 'bg-red-500';
       default: return 'bg-gray-500';
     }
   };
+
+  function renderExplanation(explanation: Solution['explanation']): string {
+    const { key, params } = explanation;
+    if (key === 'error') return t('solver.explanation.error', params);
+    if (key === 'basicIngredient') return t('solver.explanation.basicIngredient', params);
+
+    let text = t('solver.explanation.composedBase', params);
+    if (params.hasBasic) text += ' ' + t('solver.explanation.basicNote', params);
+    if (params.hasComplex) text += ' ' + t('solver.explanation.complexNote', params);
+    text += ' ' + t('solver.explanation.totalNote', params);
+    return text;
+  }
 
   return (
     <div className="space-y-6">
@@ -136,24 +138,24 @@ export default function FrankensteinSolver() {
         <div>
           <h2 className="text-2xl font-bold flex items-center gap-2">
             <Zap className="w-6 h-6 text-purple-500" />
-            Frankenstein Orb Challenge
+            {t('solver.title')}
           </h2>
-          <p className="text-gray-600">Solve algorithmic puzzles to earn points and improve logical thinking</p>
+          <p className="text-gray-600">{t('solver.subtitle')}</p>
         </div>
         <div className="text-right">
           <div className="flex items-center gap-2">
             <Trophy className="w-5 h-5 text-yellow-500" />
-            <span className="text-lg font-bold">{stats.userPoints} Points</span>
+            <span className="text-lg font-bold">{t('solver.points', { count: stats.userPoints })}</span>
           </div>
-          <Badge variant="secondary">Problems Solved: {solvedProblems.length}</Badge>
+          <Badge variant="secondary">{t('solver.problemsSolved', { count: solvedProblems.length })}</Badge>
         </div>
       </div>
 
       <Tabs defaultValue="solver" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="solver">AI Solver</TabsTrigger>
-          <TabsTrigger value="challenges">Challenges</TabsTrigger>
-          <TabsTrigger value="tutorial">How It Works</TabsTrigger>
+          <TabsTrigger value="solver">{t('solver.tabs.solver')}</TabsTrigger>
+          <TabsTrigger value="challenges">{t('solver.tabs.challenges')}</TabsTrigger>
+          <TabsTrigger value="tutorial">{t('solver.tabs.tutorial')}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="solver" className="space-y-4">
@@ -163,15 +165,15 @@ export default function FrankensteinSolver() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Brain className="w-5 h-5" />
-                  Problem Input
+                  {t('solver.input.title')}
                 </CardTitle>
                 <CardDescription>
-                  Enter your potion recipes and target potion to find the minimum magical orbs needed
+                  {t('solver.input.description')}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label htmlFor="recipes">Potion Recipes (one per line)</Label>
+                  <Label htmlFor="recipes">{t('solver.input.recipesLabel')}</Label>
                   <Textarea
                     id="recipes"
                     placeholder="awakening = snakefangs + wolfbane&#10;strengthening = awakening + moonstone"
@@ -180,12 +182,12 @@ export default function FrankensteinSolver() {
                     className="min-h-32"
                   />
                   <p className="text-xs text-gray-500 mt-1">
-                    Format: potion_name = ingredient1 + ingredient2
+                    {t('solver.input.recipesHint')}
                   </p>
                 </div>
 
                 <div>
-                  <Label htmlFor="target">Target Potion</Label>
+                  <Label htmlFor="target">{t('solver.input.targetLabel')}</Label>
                   <Input
                     id="target"
                     placeholder="awakening"
@@ -195,20 +197,20 @@ export default function FrankensteinSolver() {
                 </div>
 
                 <div className="flex gap-2">
-                  <Button 
-                    onClick={handleSolve} 
+                  <Button
+                    onClick={handleSolve}
                     disabled={isLoading || !recipes.trim() || !targetPotion.trim()}
                     className="flex-1"
                   >
                     {isLoading ? (
                       <>
                         <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                        Solving...
+                        {t('solver.input.solving')}
                       </>
                     ) : (
                       <>
                         <Play className="w-4 h-4 mr-2" />
-                        Solve Problem
+                        {t('solver.input.solve')}
                       </>
                     )}
                   </Button>
@@ -224,10 +226,10 @@ export default function FrankensteinSolver() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Target className="w-5 h-5" />
-                  Solution
+                  {t('solver.solution.title')}
                 </CardTitle>
                 <CardDescription>
-                  AI-powered solution with step-by-step breakdown
+                  {t('solver.solution.description')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -239,18 +241,24 @@ export default function FrankensteinSolver() {
                           <div className="text-3xl font-bold text-purple-600 mb-2">
                             {solution.minOrbs}
                           </div>
-                          <p className="text-gray-700">Minimum Magical Orbs Required</p>
+                          <p className="text-gray-700">{t('solver.solution.minOrbsLabel')}</p>
                         </div>
 
                         <div>
-                          <h4 className="font-medium mb-2">Solution Steps:</h4>
+                          <h4 className="font-medium mb-2">{t('solver.solution.stepsTitle')}</h4>
                           <div className="space-y-2">
-                            {solution.steps.map((step: string, index: number) => (
+                            {solution.steps.map((step, index) => (
                               <div key={index} className="flex items-center gap-3 p-2 bg-gray-50 rounded">
                                 <Badge variant="outline" className="min-w-8 h-6 flex items-center justify-center">
                                   {index + 1}
                                 </Badge>
-                                <span className="text-sm">{step}</span>
+                                <span className="text-sm">
+                                  {t(step.depth === 0 ? 'solver.step.top' : 'solver.step.nested', {
+                                    potion: step.potion,
+                                    ingredients: step.ingredients.join(' + '),
+                                    orbs: step.orbs,
+                                  })}
+                                </span>
                               </div>
                             ))}
                           </div>
@@ -258,21 +266,21 @@ export default function FrankensteinSolver() {
 
                         <Alert>
                           <Lightbulb className="h-4 w-4" />
-                          <AlertTitle>Explanation</AlertTitle>
-                          <AlertDescription>{solution.explanation}</AlertDescription>
+                          <AlertTitle>{t('solver.solution.explanationTitle')}</AlertTitle>
+                          <AlertDescription>{renderExplanation(solution.explanation)}</AlertDescription>
                         </Alert>
                       </>
                     ) : (
                       <Alert variant="destructive">
-                        <AlertTitle>Error</AlertTitle>
-                        <AlertDescription>{solution.explanation}</AlertDescription>
+                        <AlertTitle>{t('solver.solution.errorTitle')}</AlertTitle>
+                        <AlertDescription>{renderExplanation(solution.explanation)}</AlertDescription>
                       </Alert>
                     )}
                   </div>
                 ) : (
                   <div className="text-center py-12 text-gray-500">
                     <Zap className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                    <p>Enter your problem and click "Solve Problem" to see the solution</p>
+                    <p>{t('solver.solution.emptyState')}</p>
                   </div>
                 )}
               </CardContent>
@@ -286,42 +294,42 @@ export default function FrankensteinSolver() {
               <Card key={index} className="cursor-pointer hover:shadow-md transition-shadow">
                 <CardHeader>
                   <div className="flex justify-between items-start">
-                    <CardTitle className="text-lg">{problem.title}</CardTitle>
+                    <CardTitle className="text-lg">{t(`solver.samples.${problem.key}.title`)}</CardTitle>
                     <Badge className={`${getDifficultyColor(problem.difficulty)} text-white`}>
-                      {problem.difficulty}
+                      {t(`solver.difficulty.${problem.difficulty}`)}
                     </Badge>
                   </div>
-                  <CardDescription>{problem.description}</CardDescription>
+                  <CardDescription>{t(`solver.samples.${problem.key}.description`)}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
                     <div>
-                      <p className="text-sm font-medium mb-1">Recipes:</p>
+                      <p className="text-sm font-medium mb-1">{t('solver.challenges.recipesLabel')}</p>
                       <div className="text-xs bg-gray-50 p-2 rounded">
                         {problem.recipes.slice(0, 2).map((recipe, i) => (
                           <div key={i}>{recipe}</div>
                         ))}
-                        {problem.recipes.length > 2 && <div>... and more</div>}
+                        {problem.recipes.length > 2 && <div>{t('solver.challenges.andMore')}</div>}
                       </div>
                     </div>
-                    
+
                     <div className="flex justify-between items-center">
                       <span className="text-sm">
-                        Target: <code className="bg-gray-100 px-1 rounded">{problem.target}</code>
+                        {t('solver.challenges.targetLabel')} <code className="bg-gray-100 px-1 rounded">{problem.target}</code>
                       </span>
-                      {solvedProblems.includes(problem.title) && (
+                      {solvedProblems.includes(problem.key) && (
                         <Badge variant="secondary" className="bg-green-100 text-green-800">
-                          ✓ Solved
+                          {t('solver.challenges.solvedBadge')}
                         </Badge>
                       )}
                     </div>
-                    
-                    <Button 
+
+                    <Button
                       onClick={() => loadSampleProblem(problem)}
-                      variant="outline" 
+                      variant="outline"
                       className="w-full"
                     >
-                      Try This Challenge
+                      {t('solver.challenges.tryChallenge')}
                     </Button>
                   </div>
                 </CardContent>
@@ -333,43 +341,31 @@ export default function FrankensteinSolver() {
         <TabsContent value="tutorial" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>How the Frankenstein Orb Challenge Works</CardTitle>
-              <CardDescription>Understanding the algorithm and problem-solving approach</CardDescription>
+              <CardTitle>{t('solver.tutorial.title')}</CardTitle>
+              <CardDescription>{t('solver.tutorial.subtitle')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
-                <h4 className="font-medium mb-2">Problem Overview</h4>
+                <h4 className="font-medium mb-2">{t('solver.tutorial.overviewTitle')}</h4>
                 <p className="text-sm text-gray-600">
-                  The Frankenstein Orb Challenge is inspired by graph theory and dynamic programming. 
-                  You're given a set of potion recipes (like a dependency graph) and need to find the 
-                  minimum number of magical orbs required to create a target potion.
+                  {t('solver.tutorial.overviewText')}
                 </p>
               </div>
 
               <div>
-                <h4 className="font-medium mb-2">Algorithm Approach</h4>
+                <h4 className="font-medium mb-2">{t('solver.tutorial.approachTitle')}</h4>
                 <div className="space-y-2 text-sm">
-                  <div className="flex items-start gap-2">
-                    <Badge variant="outline" className="min-w-6 h-6 flex items-center justify-center text-xs">1</Badge>
-                    <span>Parse recipes to build a dependency graph</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Badge variant="outline" className="min-w-6 h-6 flex items-center justify-center text-xs">2</Badge>
-                    <span>Use memoization to avoid recalculating subproblems</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Badge variant="outline" className="min-w-6 h-6 flex items-center justify-center text-xs">3</Badge>
-                    <span>Apply depth-first search with optimization</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Badge variant="outline" className="min-w-6 h-6 flex items-center justify-center text-xs">4</Badge>
-                    <span>Return minimum orbs and optimal path</span>
-                  </div>
+                  {[1, 2, 3, 4].map((n) => (
+                    <div key={n} className="flex items-start gap-2">
+                      <Badge variant="outline" className="min-w-6 h-6 flex items-center justify-center text-xs">{n}</Badge>
+                      <span>{t(`solver.tutorial.approach${n}`)}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
 
               <div>
-                <h4 className="font-medium mb-2">Recipe Format</h4>
+                <h4 className="font-medium mb-2">{t('solver.tutorial.recipeFormatTitle')}</h4>
                 <div className="bg-gray-50 p-3 rounded text-sm font-mono">
                   <div>potion_name = ingredient1 + ingredient2</div>
                   <div>awakening = snakefangs + wolfbane</div>
@@ -378,24 +374,22 @@ export default function FrankensteinSolver() {
               </div>
 
               <div>
-                <h4 className="font-medium mb-2">Educational Value</h4>
+                <h4 className="font-medium mb-2">{t('solver.tutorial.educationalTitle')}</h4>
                 <p className="text-sm text-gray-600">
-                  This challenge helps farmers and students understand:
+                  {t('solver.tutorial.educationalIntro')}
                 </p>
                 <ul className="text-sm text-gray-600 mt-2 space-y-1">
-                  <li>• Graph theory and dependency resolution</li>
-                  <li>• Dynamic programming optimization</li>
-                  <li>• Resource allocation and planning</li>
-                  <li>• Logical thinking and problem decomposition</li>
+                  {[1, 2, 3, 4].map((n) => (
+                    <li key={n}>• {t(`solver.tutorial.eduPoint${n}`)}</li>
+                  ))}
                 </ul>
               </div>
 
               <Alert>
                 <Lightbulb className="h-4 w-4" />
-                <AlertTitle>Real-world Application</AlertTitle>
+                <AlertTitle>{t('solver.tutorial.realWorldTitle')}</AlertTitle>
                 <AlertDescription>
-                  Similar algorithms are used in crop rotation planning, supply chain optimization, 
-                  and resource allocation in modern agriculture!
+                  {t('solver.tutorial.realWorldText')}
                 </AlertDescription>
               </Alert>
             </CardContent>
