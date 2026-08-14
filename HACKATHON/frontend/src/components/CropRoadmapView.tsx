@@ -110,25 +110,6 @@ export default function CropRoadmapView({ cropName = 'Wheat', areaAcres = 2.5 }:
   const fetchRoadmap = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/roadmap/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          crop_name: selectedCrop,
-          area_acres: acres,
-          sowing_date: sowingDate,
-          soil_type: soilType,
-          budget_inr: budget,
-        }),
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        setRoadmap(data);
-      } else {
-        throw new Error('Fallback to deterministic engine');
-      }
-      // Dynamic Agronomic Engine with Pure Mathematical Calculation
       const fertCalc = calculateFertilizerDosage(selectedCrop, acres, 2.2, 40, 15, 80);
       const sprayCalc = calculateKnapsackPumpDosage(acres, 2.0);
 
@@ -180,9 +161,33 @@ export default function CropRoadmapView({ cropName = 'Wheat', areaAcres = 2.5 }:
         sowing_date: sowingDate,
         total_gdd_target: 1650,
         estimated_total_cost_inr: Math.round(45000 * acres),
-        estimated_yield_q_per_acre: 24.5,
+        estimated_yield_q_per_acre: Number((24.5 * acres).toFixed(1)),
         execution_steps: steps,
       });
+
+      // Try server endpoint if available
+      try {
+        const res = await fetch('/api/roadmap/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            crop_name: selectedCrop,
+            area_acres: acres,
+            sowing_date: sowingDate,
+            soil_type: soilType,
+            budget_inr: budget,
+          }),
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.execution_steps && data.execution_steps.length) {
+            setRoadmap(data);
+          }
+        }
+      } catch {
+        // Keep local dynamic calculation
+      }
     } finally {
       setLoading(false);
     }
@@ -190,7 +195,7 @@ export default function CropRoadmapView({ cropName = 'Wheat', areaAcres = 2.5 }:
 
   useEffect(() => {
     fetchRoadmap();
-  }, []);
+  }, [selectedCrop, acres]);
 
   const toggleWeek = (weekNum: number) => {
     setExpandedWeeks((prev) => ({ ...prev, [weekNum]: !prev[weekNum] }));
@@ -204,9 +209,13 @@ export default function CropRoadmapView({ cropName = 'Wheat', areaAcres = 2.5 }:
     });
   };
 
-  const currentStep = roadmap?.execution_steps.find((s) => s.week_number === activeWeek) || roadmap?.execution_steps[3];
+  const currentStep = roadmap?.execution_steps?.find((s) => s.week_number === activeWeek) || roadmap?.execution_steps?.[3];
   const simpleCurrent = getSimpleStageName(activeWeek, selectedCrop);
-  const gddProgressPct = roadmap ? Math.min(100, Math.round(((currentStep?.gdd_target_accumulated || 310) / roadmap.total_gdd_target) * 100)) : 25;
+  const gddProgressPct = roadmap ? Math.min(100, Math.round(((currentStep?.gdd_target_accumulated || 310) / (roadmap.total_gdd_target || 1650)) * 100)) : 25;
+
+  const weeklyExpenseINR = currentStep?.estimated_cost_inr ?? Math.round(2500 * acres * (activeWeek === 1 || activeWeek === 15 ? 1.5 : 0.8));
+  const laborMandays = currentStep?.labor_mandays_required ?? Number((2.0 * Math.sqrt(acres)).toFixed(1));
+  const targetYieldQ = roadmap?.estimated_yield_q_per_acre ?? Number((24.5 * acres).toFixed(1));
 
   return (
     <div className="space-y-6">
@@ -268,6 +277,7 @@ export default function CropRoadmapView({ cropName = 'Wheat', areaAcres = 2.5 }:
 
           <div className="flex items-center gap-2">
             <Button
+              type="button"
               onClick={() => setConfigModalOpen(true)}
               className="bg-white text-emerald-900 hover:bg-emerald-50 font-semibold shadow-md text-xs h-10 px-4"
             >
@@ -275,11 +285,12 @@ export default function CropRoadmapView({ cropName = 'Wheat', areaAcres = 2.5 }:
               Change Crop / Acres
             </Button>
             <Button
-              variant="outline"
+              type="button"
               onClick={() => window.print()}
-              className="border-emerald-300/40 text-white hover:bg-emerald-700/50 text-xs h-10 px-3"
+              className="bg-emerald-900/60 hover:bg-emerald-900 text-white border border-emerald-400/40 text-xs h-10 px-3 flex items-center justify-center shadow-sm"
+              title="Print Farm Guide"
             >
-              <Printer className="w-4 h-4" />
+              <Printer className="w-4 h-4 text-white" />
             </Button>
           </div>
         </div>
@@ -297,19 +308,19 @@ export default function CropRoadmapView({ cropName = 'Wheat', areaAcres = 2.5 }:
 
           <div className="bg-emerald-900/40 backdrop-blur-sm p-3.5 rounded-2xl border border-emerald-500/30">
             <p className="text-xs text-emerald-200 font-medium">Weekly Expense</p>
-            <p className="text-lg font-bold text-amber-300 mt-0.5">₹{currentStep?.estimated_cost_inr.toLocaleString('en-IN')}</p>
+            <p className="text-lg font-bold text-amber-300 mt-0.5">₹{weeklyExpenseINR.toLocaleString('en-IN')}</p>
             <p className="text-[11px] text-emerald-300">For total {acres} acres</p>
           </div>
 
           <div className="bg-emerald-900/40 backdrop-blur-sm p-3.5 rounded-2xl border border-emerald-500/30">
             <p className="text-xs text-emerald-200 font-medium">Labor Needed</p>
-            <p className="text-lg font-bold text-white mt-0.5">{currentStep?.labor_mandays_required} Mandays</p>
+            <p className="text-lg font-bold text-white mt-0.5">{laborMandays} Mandays</p>
             <p className="text-[11px] text-emerald-300">Worker days this week</p>
           </div>
 
           <div className="bg-emerald-900/40 backdrop-blur-sm p-3.5 rounded-2xl border border-emerald-500/30">
             <p className="text-xs text-emerald-200 font-medium">Target Harvest Yield</p>
-            <p className="text-lg font-bold text-emerald-300 mt-0.5">{roadmap?.estimated_yield_q_per_acre} Quintals</p>
+            <p className="text-lg font-bold text-emerald-300 mt-0.5">{targetYieldQ} Quintals</p>
             <p className="text-[11px] text-emerald-300">Total expected produce</p>
           </div>
         </div>
