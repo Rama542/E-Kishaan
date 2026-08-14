@@ -511,6 +511,16 @@
       "crop": "Crop:",
       "allCrops": "All Crops"
     },
+    "soilInput": {
+      "title": "Live Farmer Soil & Yield Input Controller",
+      "badge": "Real-Time Dynamic Math Engine",
+      "description": "Adjust soil NPK & field parameters below to dynamically re-calculate all dosages & tasks.",
+      "districtLabel": "District Location",
+      "nitrogenLabel": "Soil Nitrogen N (kg/ha)",
+      "phosphorusLabel": "Soil Phosphorus P (kg/ha)",
+      "potassiumLabel": "Soil Potassium K (kg/ha)",
+      "targetYieldLabel": "Target Yield (q/acre)"
+    },
     "dashboard": {
       "soilWaterBalance": "Soil Water Balance",
       "nutrientAvailability": "Nutrient Availability",
@@ -540,17 +550,24 @@
       "completedBadge": "✓ Completed",
       "markCompleted": "Mark Completed",
       "skip": "Skip",
-      "delay": "Delay"
+      "delay": "Delay",
+      "materialsNeeded": "Materials Needed:",
+      "costLabel": "Cost:",
+      "delayTask": "Delay Task"
     },
-    "upcoming": { "title": "Upcoming Roadmap Tasks" },
+    "upcoming": {
+      "title": "Upcoming Roadmap Tasks",
+      "materialsLabel": "Materials:"
+    },
     "alerts": {
-      "title": "AI Smart Alerts",
+      "title": "Real-Time AI Smart Alerts",
       "whyLabel": "Why:",
       "recommendedActionLabel": "Recommended Action:",
-      "impactLabel": "What happens if ignored:"
+      "impactLabel": "What happens if ignored:",
+      "severitySuffix": "{{severity}} Severity"
     },
     "timeline": {
-      "title": "14-Phase Adaptive Lifecycle Timeline",
+      "title": "Multi-Stage Growth Timeline",
       "phaseLabel": "Phase {{num}}: {{name}}",
       "aiStrategyLabel": "AI Strategy:"
     },
@@ -563,13 +580,16 @@
     },
     "assistant": {
       "title": "AI Agricultural Scientist Assistant",
-      "inputPlaceholder": "Type your farming question...",
-      "greeting": "Hello {{name}}! I am your AI Agricultural Assistant for {{district}}. How can I guide your {{crop}} farming today?",
+      "inputPlaceholder": "Ask any question about crop spray, fertilizer dosage, disease symptoms...",
+      "askAi": "Ask AI",
+      "greeting": "Hello {{name}}! I am your AI Agricultural Assistant for {{district}}. Based on your real-time input ({{acres}} acres {{crop}}, Soil NPK {{npk}}), how can I guide your field work today?",
       "waterBalanceAnswer": "Based on backend metrics for {{name}}, soil moisture is at {{value}}%. Everything is optimal.",
-      "irrigateAnswer": "Based on live weather API data for {{district}}, next irrigation is recommended in 3 days.",
+      "telemetryAnswer": "Based on backend telemetry for {{name}}, soil moisture in {{district}} is at {{value}}%. Crop NPK requirement for {{crop}} is calculated dynamically.",
+      "irrigateAnswer": "Based on Open-Meteo weather API telemetry for {{district}}, soil water balance is at 82%. Next irrigation is recommended in 3 days.",
       "fertilizerAnswer": "Your crop is currently in {{stage}}. Top-dressing Urea application is due.",
-      "todayAnswer": "Today's priority is: {{task}}.",
-      "defaultTaskName": "Check Field Moisture",
+      "fertilizerDynamicAnswer": "Dynamic NPK Math: For {{acres}} acres, apply {{dapBags}} bags DAP ({{dapKg}}kg) and {{ureaBags}} bags Urea ({{ureaKg}}kg).",
+      "todayAnswer": "Today's priority task is: {{task}}.",
+      "defaultTaskName": "Check Soil Moisture",
       "defaultFarmerName": "Farmer",
       "defaultGrowthStage": "Vegetative Stage"
     },

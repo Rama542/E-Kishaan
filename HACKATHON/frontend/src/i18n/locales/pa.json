@@ -511,6 +511,16 @@
       "crop": "ਫ਼ਸਲ:",
       "allCrops": "ਸਾਰੀਆਂ ਫ਼ਸਲਾਂ"
     },
+    "soilInput": {
+      "title": "ਲਾਈਵ ਕਿਸਾਨ ਮਿੱਟੀ ਅਤੇ ਝਾੜ ਇਨਪੁੱਟ ਕੰਟਰੋਲਰ",
+      "badge": "ਰੀਅਲ-ਟਾਈਮ ਗਤੀਸ਼ੀਲ ਗਣਿਤ ਇੰਜਣ",
+      "description": "ਸਾਰੀਆਂ ਖੁਰਾਕਾਂ ਅਤੇ ਕੰਮਾਂ ਦੀ ਗਤੀਸ਼ੀਲ ਤੌਰ 'ਤੇ ਮੁੜ ਗਣਨਾ ਕਰਨ ਲਈ ਹੇਠਾਂ ਮਿੱਟੀ NPK ਅਤੇ ਖੇਤ ਪੈਰਾਮੀਟਰ ਅਨੁਕੂਲ ਕਰੋ।",
+      "districtLabel": "ਜ਼ਿਲ੍ਹਾ ਸਥਾਨ",
+      "nitrogenLabel": "ਮਿੱਟੀ ਨਾਈਟ੍ਰੋਜਨ N (kg/ha)",
+      "phosphorusLabel": "ਮਿੱਟੀ ਫਾਸਫੋਰਸ P (kg/ha)",
+      "potassiumLabel": "ਮਿੱਟੀ ਪੋਟਾਸ਼ੀਅਮ K (kg/ha)",
+      "targetYieldLabel": "ਟੀਚਾ ਝਾੜ (q/acre)"
+    },
     "dashboard": {
       "soilWaterBalance": "ਮਿੱਟੀ ਜਲ ਸੰਤੁਲਨ",
       "nutrientAvailability": "ਪੋਸ਼ਕ ਤੱਤ ਉਪਲਬਧਤਾ",
@@ -540,17 +550,24 @@
       "completedBadge": "✓ ਪੂਰਾ",
       "markCompleted": "ਪੂਰਾ ਚਿੰਨ੍ਹਿਤ ਕਰੋ",
       "skip": "ਛੱਡੋ",
-      "delay": "ਦੇਰੀ ਕਰੋ"
+      "delay": "ਦੇਰੀ ਕਰੋ",
+      "materialsNeeded": "ਲੋੜੀਂਦਾ ਸਮਾਨ:",
+      "costLabel": "ਲਾਗਤ:",
+      "delayTask": "ਕੰਮ ਵਿੱਚ ਦੇਰੀ ਕਰੋ"
     },
-    "upcoming": { "title": "ਆਉਣ ਵਾਲੇ ਰੋਡਮੈਪ ਕੰਮ" },
+    "upcoming": {
+      "title": "ਆਉਣ ਵਾਲੇ ਰੋਡਮੈਪ ਕੰਮ",
+      "materialsLabel": "ਸਮਾਨ:"
+    },
     "alerts": {
-      "title": "ਏਆਈ ਸਮਾਰਟ ਅਲਰਟ",
+      "title": "ਰੀਅਲ-ਟਾਈਮ ਏਆਈ ਸਮਾਰਟ ਅਲਰਟ",
       "whyLabel": "ਕਿਉਂ:",
       "recommendedActionLabel": "ਸਿਫਾਰਸ਼ੀ ਕਾਰਵਾਈ:",
-      "impactLabel": "ਨਜ਼ਰਅੰਦਾਜ਼ ਕਰਨ 'ਤੇ ਕੀ ਹੋਵੇਗਾ:"
+      "impactLabel": "ਨਜ਼ਰਅੰਦਾਜ਼ ਕਰਨ 'ਤੇ ਕੀ ਹੋਵੇਗਾ:",
+      "severitySuffix": "{{severity}} ਗੰਭੀਰਤਾ"
     },
     "timeline": {
-      "title": "14-ਪੜਾਅ ਅਨੁਕੂਲ ਜੀਵਨ ਚੱਕਰ ਸਮਾਂਰੇਖਾ",
+      "title": "ਬਹੁ-ਪੜਾਅ ਵਾਧਾ ਸਮਾਂਰੇਖਾ",
       "phaseLabel": "ਪੜਾਅ {{num}}: {{name}}",
       "aiStrategyLabel": "ਏਆਈ ਰਣਨੀਤੀ:"
     },
@@ -563,13 +580,16 @@
     },
     "assistant": {
       "title": "ਏਆਈ ਖੇਤੀਬਾੜੀ ਵਿਗਿਆਨੀ ਸਹਾਇਕ",
-      "inputPlaceholder": "ਆਪਣਾ ਖੇਤੀ ਸਵਾਲ ਟਾਈਪ ਕਰੋ...",
-      "greeting": "ਸਤ ਸ੍ਰੀ ਅਕਾਲ {{name}}! ਮੈਂ {{district}} ਲਈ ਤੁਹਾਡਾ ਏਆਈ ਖੇਤੀਬਾੜੀ ਸਹਾਇਕ ਹਾਂ। ਮੈਂ ਅੱਜ ਤੁਹਾਡੀ {{crop}} ਖੇਤੀ ਵਿੱਚ ਕਿਵੇਂ ਮਾਰਗਦਰਸ਼ਨ ਕਰ ਸਕਦਾ ਹਾਂ?",
+      "inputPlaceholder": "ਫ਼ਸਲ ਛਿੜਕਾਅ, ਖਾਦ ਖੁਰਾਕ, ਰੋਗ ਲੱਛਣਾਂ ਬਾਰੇ ਕੋਈ ਵੀ ਸਵਾਲ ਪੁੱਛੋ...",
+      "askAi": "ਏਆਈ ਤੋਂ ਪੁੱਛੋ",
+      "greeting": "ਸਤ ਸ੍ਰੀ ਅਕਾਲ {{name}}! ਮੈਂ {{district}} ਲਈ ਤੁਹਾਡਾ ਏਆਈ ਖੇਤੀਬਾੜੀ ਸਹਾਇਕ ਹਾਂ। ਤੁਹਾਡੇ ਰੀਅਲ-ਟਾਈਮ ਇਨਪੁੱਟ ({{acres}} ਏਕੜ {{crop}}, ਮਿੱਟੀ NPK {{npk}}) ਦੇ ਆਧਾਰ 'ਤੇ, ਮੈਂ ਅੱਜ ਤੁਹਾਡੇ ਖੇਤ ਦੇ ਕੰਮ ਵਿੱਚ ਕਿਵੇਂ ਮਾਰਗਦਰਸ਼ਨ ਕਰ ਸਕਦਾ ਹਾਂ?",
       "waterBalanceAnswer": "{{name}} ਲਈ ਬੈਕਐਂਡ ਮੈਟ੍ਰਿਕਸ ਦੇ ਆਧਾਰ 'ਤੇ, ਮਿੱਟੀ ਦੀ ਨਮੀ {{value}}% ਹੈ। ਸਭ ਕੁਝ ਸਰਵੋਤਮ ਹੈ।",
-      "irrigateAnswer": "{{district}} ਲਈ ਲਾਈਵ ਮੌਸਮ ਏਪੀਆਈ ਡਾਟੇ ਦੇ ਆਧਾਰ 'ਤੇ, ਅਗਲੀ ਸਿੰਚਾਈ 3 ਦਿਨਾਂ ਵਿੱਚ ਸਿਫਾਰਸ਼ੀ ਹੈ।",
+      "telemetryAnswer": "{{name}} ਲਈ ਬੈਕਐਂਡ ਟੈਲੀਮੈਟਰੀ ਦੇ ਆਧਾਰ 'ਤੇ, {{district}} ਵਿੱਚ ਮਿੱਟੀ ਦੀ ਨਮੀ {{value}}% ਹੈ। {{crop}} ਲਈ ਫ਼ਸਲ NPK ਲੋੜ ਗਤੀਸ਼ੀਲ ਤੌਰ 'ਤੇ ਗਿਣੀ ਜਾਂਦੀ ਹੈ।",
+      "irrigateAnswer": "{{district}} ਲਈ ਓਪਨ-ਮੀਟਿਓ ਮੌਸਮ ਏਪੀਆਈ ਟੈਲੀਮੈਟਰੀ ਦੇ ਆਧਾਰ 'ਤੇ, ਮਿੱਟੀ ਜਲ ਸੰਤੁਲਨ 82% ਹੈ। ਅਗਲੀ ਸਿੰਚਾਈ 3 ਦਿਨਾਂ ਵਿੱਚ ਸਿਫਾਰਸ਼ੀ ਹੈ।",
       "fertilizerAnswer": "ਤੁਹਾਡੀ ਫ਼ਸਲ ਇਸ ਵੇਲੇ {{stage}} ਵਿੱਚ ਹੈ। ਟਾਪ-ਡਰੈਸਿੰਗ ਯੂਰੀਆ ਐਪਲੀਕੇਸ਼ਨ ਦੇਣੀ ਬਾਕੀ ਹੈ।",
-      "todayAnswer": "ਅੱਜ ਦੀ ਤਰਜੀਹ ਹੈ: {{task}}।",
-      "defaultTaskName": "ਖੇਤ ਦੀ ਨਮੀ ਜਾਂਚੋ",
+      "fertilizerDynamicAnswer": "ਗਤੀਸ਼ੀਲ NPK ਗਣਿਤ: {{acres}} ਏਕੜ ਲਈ, {{dapBags}} ਬੈਗ DAP ({{dapKg}}kg) ਅਤੇ {{ureaBags}} ਬੈਗ ਯੂਰੀਆ ({{ureaKg}}kg) ਲਗਾਓ।",
+      "todayAnswer": "ਅੱਜ ਦਾ ਤਰਜੀਹੀ ਕੰਮ ਹੈ: {{task}}।",
+      "defaultTaskName": "ਮਿੱਟੀ ਦੀ ਨਮੀ ਜਾਂਚੋ",
       "defaultFarmerName": "ਕਿਸਾਨ",
       "defaultGrowthStage": "ਬਨਸਪਤੀ ਪੜਾਅ"
     },

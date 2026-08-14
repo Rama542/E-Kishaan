@@ -511,6 +511,16 @@
       "crop": "फसल:",
       "allCrops": "सभी फसलें"
     },
+    "soilInput": {
+      "title": "लाइव किसान मिट्टी और उपज इनपुट नियंत्रक",
+      "badge": "रीयल-टाइम गतिशील गणित इंजन",
+      "description": "सभी खुराक और कार्यों की गतिशील रूप से पुनर्गणना करने के लिए नीचे मिट्टी NPK और खेत पैरामीटर समायोजित करें।",
+      "districtLabel": "जिला स्थान",
+      "nitrogenLabel": "मिट्टी नाइट्रोजन N (kg/ha)",
+      "phosphorusLabel": "मिट्टी फास्फोरस P (kg/ha)",
+      "potassiumLabel": "मिट्टी पोटेशियम K (kg/ha)",
+      "targetYieldLabel": "लक्ष्य उपज (q/acre)"
+    },
     "dashboard": {
       "soilWaterBalance": "मिट्टी जल संतुलन",
       "nutrientAvailability": "पोषक तत्व उपलब्धता",
@@ -540,17 +550,24 @@
       "completedBadge": "✓ पूर्ण",
       "markCompleted": "पूर्ण चिह्नित करें",
       "skip": "छोड़ें",
-      "delay": "विलंब करें"
+      "delay": "विलंब करें",
+      "materialsNeeded": "आवश्यक सामग्री:",
+      "costLabel": "लागत:",
+      "delayTask": "कार्य में देरी करें"
     },
-    "upcoming": { "title": "आगामी रोडमैप कार्य" },
+    "upcoming": {
+      "title": "आगामी रोडमैप कार्य",
+      "materialsLabel": "सामग्री:"
+    },
     "alerts": {
-      "title": "एआई स्मार्ट अलर्ट",
+      "title": "रीयल-टाइम एआई स्मार्ट अलर्ट",
       "whyLabel": "क्यों:",
       "recommendedActionLabel": "अनुशंसित कार्रवाई:",
-      "impactLabel": "अनदेखा करने पर क्या होगा:"
+      "impactLabel": "अनदेखा करने पर क्या होगा:",
+      "severitySuffix": "{{severity}} गंभीरता"
     },
     "timeline": {
-      "title": "14-चरण अनुकूली जीवनचक्र समयरेखा",
+      "title": "बहु-चरण वृद्धि समयरेखा",
       "phaseLabel": "चरण {{num}}: {{name}}",
       "aiStrategyLabel": "एआई रणनीति:"
     },
@@ -563,13 +580,16 @@
     },
     "assistant": {
       "title": "एआई कृषि वैज्ञानिक सहायक",
-      "inputPlaceholder": "अपना खेती संबंधी सवाल टाइप करें...",
-      "greeting": "नमस्ते {{name}}! मैं {{district}} के लिए आपका एआई कृषि सहायक हूं। मैं आज आपकी {{crop}} खेती में कैसे मार्गदर्शन कर सकता हूं?",
+      "inputPlaceholder": "फसल छिड़काव, उर्वरक खुराक, रोग लक्षणों के बारे में कोई भी सवाल पूछें...",
+      "askAi": "एआई से पूछें",
+      "greeting": "नमस्ते {{name}}! मैं {{district}} के लिए आपका एआई कृषि सहायक हूं। आपके रीयल-टाइम इनपुट ({{acres}} एकड़ {{crop}}, मिट्टी NPK {{npk}}) के आधार पर, मैं आज आपके खेत के काम में कैसे मार्गदर्शन कर सकता हूं?",
       "waterBalanceAnswer": "{{name}} के लिए बैकएंड मेट्रिक्स के आधार पर, मिट्टी की नमी {{value}}% है। सब कुछ इष्टतम है।",
-      "irrigateAnswer": "{{district}} के लिए लाइव मौसम एपीआई डेटा के आधार पर, अगली सिंचाई 3 दिनों में अनुशंसित है।",
+      "telemetryAnswer": "{{name}} के लिए बैकएंड टेलीमेट्री के आधार पर, {{district}} में मिट्टी की नमी {{value}}% है। {{crop}} के लिए फसल NPK आवश्यकता की गतिशील रूप से गणना की जाती है।",
+      "irrigateAnswer": "{{district}} के लिए ओपन-मीटियो मौसम एपीआई टेलीमेट्री के आधार पर, मिट्टी जल संतुलन 82% है। अगली सिंचाई 3 दिनों में अनुशंसित है।",
       "fertilizerAnswer": "आपकी फसल वर्तमान में {{stage}} में है। टॉप-ड्रेसिंग यूरिया आवेदन देय है।",
-      "todayAnswer": "आज की प्राथमिकता है: {{task}}।",
-      "defaultTaskName": "खेत की नमी जांचें",
+      "fertilizerDynamicAnswer": "गतिशील NPK गणित: {{acres}} एकड़ के लिए, {{dapBags}} बैग DAP ({{dapKg}}kg) और {{ureaBags}} बैग यूरिया ({{ureaKg}}kg) लगाएं।",
+      "todayAnswer": "आज का प्राथमिकता कार्य है: {{task}}।",
+      "defaultTaskName": "मिट्टी की नमी जांचें",
       "defaultFarmerName": "किसान",
       "defaultGrowthStage": "वानस्पतिक चरण"
     },
