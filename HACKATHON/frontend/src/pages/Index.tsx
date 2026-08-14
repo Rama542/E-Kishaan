@@ -19,6 +19,7 @@ import FarmJournalView from '@/components/FarmJournalView';
 import FarmerOnboarding, { clearProfile } from '@/components/FarmerOnboarding';
 import AlertsCenter, { AlertItem } from '@/components/AlertsCenter';
 import OfflineBanner from '@/components/OfflineBanner';
+import LiveExecutiveDashboard from '@/components/LiveExecutiveDashboard';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/components/ui/sonner';
 
@@ -224,88 +225,14 @@ export default function Index() {
 
           {/* Dashboard Tab */}
           <TabsContent value="dashboard" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <Card className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-lg">{t('dashboard.overview.todaysWeather') || "Today's Weather"}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">28°C</div>
-                  <p className="text-blue-100">{t('dashboard.overview.partlyCloudy') || 'Partly Cloudy'}</p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-gradient-to-r from-green-500 to-green-600 text-white">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-lg">{t('dashboard.overview.soilHealth') || 'Soil Health'}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">85%</div>
-                  <p className="text-green-100">{t('dashboard.overview.excellent') || 'Excellent'}</p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-gradient-to-r from-orange-500 to-orange-600 text-white">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-lg">{t('dashboard.overview.cropStatus') || 'Crop Status'}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{farmer.primaryCrops.length}</div>
-                  <p className="text-orange-100 font-medium">{farmer.primaryCrops.join(', ')}</p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-gradient-to-r from-purple-500 to-purple-600 text-white">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-lg">{t('dashboard.overview.expectedRoi') || 'Expected ROI'}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">24%</div>
-                  <p className="text-purple-100">{t('dashboard.overview.thisSeason') || 'This Season'}</p>
-                </CardContent>
-              </Card>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>{t('dashboard.overview.quickWeatherOverview') || 'Quick Weather Overview'}</CardTitle>
-                  <CardDescription>{t('dashboard.overview.next7Days') || 'Next 7 days forecast'}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <WeatherDashboard compact={true} />
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between">
-                  <div>
-                    <CardTitle>Your Crops</CardTitle>
-                    <CardDescription>Crops you plan to grow this season</CardDescription>
-                  </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleReopenCropSelection}
-                    className="flex items-center gap-1.5 text-xs text-green-700 border-green-300 hover:bg-green-50"
-                  >
-                    <Edit3 className="w-3.5 h-3.5" /> Change Crops
-                  </Button>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    {farmer.primaryCrops.map((crop) => (
-                      <Badge key={crop} className="bg-green-100 text-green-800 text-sm px-3 py-1 font-medium">
-                        🌾 {crop}
-                      </Badge>
-                    ))}
-                  </div>
-                  <p className="text-sm text-gray-500 mt-3">
-                    Go to <strong>Market</strong> tab to see live prices and sell advice for your crops.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
+            <LiveExecutiveDashboard
+              farmer={farmer}
+              onNavigateTab={(tabKey, subTab) => {
+                setActiveTab(tabKey);
+                if (subTab) setRoadmapSubTab(subTab);
+              }}
+              onEditCrops={handleReopenCropSelection}
+            />
           </TabsContent>
 
           <TabsContent value="weather">
