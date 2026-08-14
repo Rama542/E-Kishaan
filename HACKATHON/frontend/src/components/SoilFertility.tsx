@@ -313,50 +313,6 @@ export default function SoilFertility() {
 
         {/* Overview Tab */}
         <TabsContent value="overview" className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">{t('soil.overview.macronutrientsTitle')}</CardTitle>
-                <CardDescription>{t('soil.overview.macronutrientsDesc', { district: selectedDistrict })}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="h-72">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={npkBarData}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="name" />
-                      <YAxis />
-                      <Tooltip />
-                      <Legend />
-                      <Bar dataKey="current" fill="#059669" name={t('soil.overview.currentLevel')} />
-                      <Bar dataKey="benchmark" fill="#94a3b8" name={t('soil.overview.idealBenchmark')} />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">{t('soil.overview.radarTitle')}</CardTitle>
-                <CardDescription>{t('soil.overview.radarDesc')}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="h-72">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart data={radarData}>
-                      <PolarGrid />
-                      <PolarAngleAxis dataKey="subject" />
-                      <PolarRadiusAxis angle={30} domain={[0, 100]} />
-                      <Radar name={selectedDistrict} dataKey="A" stroke="#059669" fill="#10b981" fillOpacity={0.5} />
-                      <Tooltip />
-                    </RadarChart>
-                  </ResponsiveContainer>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
           {/* Micronutrients Breakdown Grid */}
           <Card>
             <CardHeader>
