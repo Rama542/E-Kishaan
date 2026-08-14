@@ -21,12 +21,30 @@
       "cropsTracked": "Crops tracked"
     },
     "features": {
-      "weather": { "title": "Weather & Climate", "description": "7-day forecasts and 6-month climate planning with automated alerts." },
-      "soil": { "title": "Soil Fertility", "description": "NPK tracking, pH balance, and fertilizer recommendations." },
-      "crop": { "title": "Crop Growth", "description": "Growth-stage tracking and AI yield predictions from planting to harvest." },
-      "market": { "title": "Market & ROI", "description": "Price forecasts, optimal selling times, and profit tracking." },
-      "solver": { "title": "AI Solver", "description": "A resource-planning puzzle engine that builds problem-solving skills." },
-      "profile": { "title": "Farmer Profile", "description": "Achievements, farm details, and environmental impact tracking." }
+      "weather": {
+        "title": "Weather & Climate",
+        "description": "7-day forecasts and 6-month climate planning with automated alerts."
+      },
+      "soil": {
+        "title": "Soil Fertility",
+        "description": "NPK tracking, pH balance, and fertilizer recommendations."
+      },
+      "crop": {
+        "title": "Crop Growth",
+        "description": "Growth-stage tracking and AI yield predictions from planting to harvest."
+      },
+      "market": {
+        "title": "Market & ROI",
+        "description": "Price forecasts, optimal selling times, and profit tracking."
+      },
+      "solver": {
+        "title": "AI Solver",
+        "description": "A resource-planning puzzle engine that builds problem-solving skills."
+      },
+      "profile": {
+        "title": "Farmer Profile",
+        "description": "Achievements, farm details, and environmental impact tracking."
+      }
     },
     "heroTitlePrefix": "Grow smarter with",
     "heroTitleHighlight": "AI-powered farming",
@@ -164,7 +182,13 @@
       "expectedRain": "Expected Rain (mm)"
     },
     "days": {
-      "sun": "Sun", "mon": "Mon", "tue": "Tue", "wed": "Wed", "thu": "Thu", "fri": "Fri", "sat": "Sat"
+      "sun": "Sun",
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat"
     },
     "codes": {
       "clearSky": "Clear Sky",
@@ -245,7 +269,11 @@
     "subtitle": "Solve algorithmic puzzles to earn points and improve logical thinking",
     "points": "{{count}} Points",
     "problemsSolved": "Problems Solved: {{count}}",
-    "tabs": { "solver": "AI Solver", "challenges": "Challenges", "tutorial": "How It Works" },
+    "tabs": {
+      "solver": "AI Solver",
+      "challenges": "Challenges",
+      "tutorial": "How It Works"
+    },
     "input": {
       "title": "Problem Input",
       "description": "Enter your potion recipes and target potion to find the minimum magical orbs needed",
@@ -284,11 +312,24 @@
       "solvedBadge": "✓ Solved",
       "tryChallenge": "Try This Challenge"
     },
-    "difficulty": { "easy": "Easy", "medium": "Medium", "hard": "Hard" },
+    "difficulty": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
     "samples": {
-      "basic": { "title": "Basic Awakening Potion", "description": "Create an awakening potion using the minimum magical orbs" },
-      "complex": { "title": "Complex Transformation", "description": "Multi-step potion creation with intermediate ingredients" },
-      "master": { "title": "Master Alchemist Challenge", "description": "Create the ultimate elixir with multiple pathways" }
+      "basic": {
+        "title": "Basic Awakening Potion",
+        "description": "Create an awakening potion using the minimum magical orbs"
+      },
+      "complex": {
+        "title": "Complex Transformation",
+        "description": "Multi-step potion creation with intermediate ingredients"
+      },
+      "master": {
+        "title": "Master Alchemist Challenge",
+        "description": "Create the ultimate elixir with multiple pathways"
+      }
     },
     "tutorial": {
       "title": "How the Frankenstein Orb Challenge Works",
@@ -399,7 +440,11 @@
     "headerTitle": "AI Crop Recommendation & Agronomic Advisory",
     "headerSubtitle": "Data-driven crop selection combining live Soil NPK, real-time Open-Meteo climate, and ICAR agricultural standards",
     "seasonLabel": "Season: {{season}}",
-    "seasons": { "Rabi": "Rabi", "Kharif": "Kharif", "Zaid": "Zaid" },
+    "seasons": {
+      "Rabi": "Rabi",
+      "Kharif": "Kharif",
+      "Zaid": "Zaid"
+    },
     "liveBadge": "Live",
     "estimatedBadge": "Estimated",
     "estimatedTooltip": "The live recommendation engine wasn't reachable, so this is computed locally from this district's curated soil baseline.",
@@ -458,7 +503,11 @@
       "organicLabel": "Organic option:",
       "precautionLabel": "Precaution:",
       "noData": "No common disease/pest data available for this crop yet.",
-      "riskLevels": { "High": "High", "Medium": "Medium", "Low": "Low" }
+      "riskLevels": {
+        "High": "High",
+        "Medium": "Medium",
+        "Low": "Low"
+      }
     }
   },
   "roadmap": {
@@ -519,7 +568,22 @@
       "nitrogenLabel": "Soil Nitrogen N (kg/ha)",
       "phosphorusLabel": "Soil Phosphorus P (kg/ha)",
       "potassiumLabel": "Soil Potassium K (kg/ha)",
-      "targetYieldLabel": "Target Yield (q/acre)"
+      "targetYieldLabel": "Target Yield (q/acre)",
+      "aiTitle": "Easy Farm & Location Settings",
+      "aiBadge": "AI Soil Intelligence Active",
+      "aiDescription": "No chemical testing needed! The AI automatically estimates soil nutrients from your district location & crop history.",
+      "previousCropLabel": "Previous Crop Grown in Field",
+      "previousCropOptions": {
+        "legumes": "Legumes / Moong / Pulses (Natural Nitrogen)",
+        "paddy": "Paddy / Rice (Heavy Nitrogen Feeder)",
+        "wheatMaize": "Wheat / Maize",
+        "sugarcaneCotton": "Sugarcane / Cotton",
+        "fallow": "Rested / Fallow Field"
+      },
+      "targetYieldLabelAi": "Target Harvest Yield (Quintals / Acre)",
+      "aiStatusPrefix": "AI Soil Status for {{district}}:",
+      "aiStatusSuffix": "Baseline Alluvial Loam with estimated NPK nutrients auto-adjusted for {{crop}}.",
+      "aiStatusFooter": "100% Automated • No Manual Soil Test Needed"
     },
     "dashboard": {
       "soilWaterBalance": "Soil Water Balance",
@@ -593,7 +657,18 @@
       "defaultFarmerName": "Farmer",
       "defaultGrowthStage": "Vegetative Stage"
     },
-    "priority": { "Critical": "Critical", "High": "High", "Medium": "Medium", "Low": "Low" },
-    "status": { "Completed": "Completed", "In Progress": "In Progress", "Pending": "Pending", "Skipped": "Skipped", "Delayed": "Delayed" }
+    "priority": {
+      "Critical": "Critical",
+      "High": "High",
+      "Medium": "Medium",
+      "Low": "Low"
+    },
+    "status": {
+      "Completed": "Completed",
+      "In Progress": "In Progress",
+      "Pending": "Pending",
+      "Skipped": "Skipped",
+      "Delayed": "Delayed"
+    }
   }
 }

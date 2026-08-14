@@ -98,42 +98,21 @@ export default function Login() {
             <CardDescription className="text-lg">{t('auth.login.subtitle')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            {!isSupabaseConfigured && (
-              <Alert className="border-blue-300 bg-blue-50 text-blue-900">
-                <Info className="h-5 w-5 text-blue-600" />
-                <AlertTitle className="font-semibold text-blue-950">Supabase Backend Unconfigured</AlertTitle>
-                <AlertDescription className="text-sm mt-1 space-y-3">
-                  <p className="text-blue-800">
-                    Supabase keys are not set in <code className="bg-blue-100 px-1 py-0.5 rounded text-xs font-mono text-blue-900">.env.local</code>. You can access all dashboard modules directly in Guest/Demo Mode!
-                  </p>
-                  <Button
-                    type="button"
-                    onClick={handleGuestLogin}
-                    className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-medium flex items-center justify-center gap-2"
-                  >
-                    <span>Continue to Dashboard (Guest Mode)</span>
-                    <ArrowRight className="w-5 h-5" />
-                  </Button>
-                </AlertDescription>
-              </Alert>
-            )}
-
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-lg">{t('auth.login.emailLabel')}</Label>
+                <Label htmlFor="email" className="text-lg">{t('auth.login.emailLabel') || 'Email'}</Label>
                 <Input
                   id="email"
                   type="email"
                   placeholder="you@example.com"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  required={isSupabaseConfigured}
                   className="text-lg h-12"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-lg">{t('auth.login.passwordLabel')}</Label>
+                <Label htmlFor="password" className="text-lg">{t('auth.login.passwordLabel') || 'Password'}</Label>
                 <div className="relative">
                   <Input
                     id="password"
@@ -141,7 +120,6 @@ export default function Login() {
                     placeholder="Enter your password"
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                    required={isSupabaseConfigured}
                     className="text-lg h-12 pr-11"
                   />
                   <button
@@ -165,24 +143,13 @@ export default function Login() {
                 </button>
               </div>
 
-              <div className="space-y-3">
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full h-12 text-lg bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700"
-                >
-                  {isSubmitting ? t('auth.login.submitting') : isSupabaseConfigured ? t('auth.login.submit') : t('common.openDashboard')}
-                </Button>
-
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={handleGuestLogin}
-                  className="w-full h-12 text-lg border-emerald-300 text-emerald-800 hover:bg-emerald-50"
-                >
-                  Quick Guest / Demo Login
-                </Button>
-              </div>
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full h-12 text-lg font-bold bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-md"
+              >
+                {isSubmitting ? (t('auth.login.submitting') || 'Logging In...') : (t('auth.login.submit') || 'Log In')}
+              </Button>
             </form>
 
             <p className="mt-6 text-center text-lg text-gray-600">
