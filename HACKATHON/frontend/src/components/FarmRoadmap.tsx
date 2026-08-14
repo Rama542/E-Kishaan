@@ -238,7 +238,7 @@ export default function FarmRoadmap() {
               district,
               acres,
               crop: currentCrop,
-              npk: `${farmerSoilN}-${farmerSoilP}-${farmerSoilK}`,
+              npk: `${aiSoilN}-${aiSoilP}-${aiSoilK}`,
             }),
           },
         ]);
@@ -319,7 +319,15 @@ export default function FarmRoadmap() {
       if (qLower.includes('irrigate') || qLower.includes('water')) {
         aiAns = t('roadmap.assistant.irrigateAnswer', { district });
       } else if (qLower.includes('fertilizer') || qLower.includes('urea') || qLower.includes('dap')) {
-        const fertCalc = calculateFertilizerDosage(profile?.currentCrop || 'Sugarcane', profile?.farmSizeAcres || 2.5, targetYieldQ, farmerSoilN, farmerSoilP, farmerSoilK);
+        const districtSoilData = PUNJAB_DATASET_FALLBACK[district] || PUNJAB_DATASET_FALLBACK['Ludhiana'];
+        let chatSoilN = districtSoilData?.nutrients?.nitrogen || 95;
+        const chatSoilP = districtSoilData?.nutrients?.phosphorus || 29;
+        const chatSoilK = districtSoilData?.nutrients?.potassium || 185;
+        if (previousCropHistory.includes('Legumes')) chatSoilN += 25;
+        else if (previousCropHistory.includes('Paddy')) chatSoilN = Math.max(20, chatSoilN - 15);
+        else if (previousCropHistory.includes('Sugarcane')) chatSoilN = Math.max(20, chatSoilN - 20);
+        else if (previousCropHistory.includes('Fallow')) chatSoilN += 10;
+        const fertCalc = calculateFertilizerDosage(profile?.currentCrop || 'Sugarcane', profile?.farmSizeAcres || 2.5, targetYieldQ, chatSoilN, chatSoilP, chatSoilK);
         aiAns = t('roadmap.assistant.fertilizerDynamicAnswer', {
           acres: profile?.farmSizeAcres || 2.5,
           dapBags: fertCalc.dapBags50kg,
