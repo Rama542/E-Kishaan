@@ -88,8 +88,20 @@
       "farmingJourney": "Your farming journey",
       "achievement1": "Completed Frankenstein Challenge Level 5",
       "achievement2": "Optimal soil management for 30 days",
-      "achievement3": "Achieved 20%+ ROI last season"
+      "achievement3": "Achieved 20%+ ROI last season",
+      "yourCrops": "Your Crops",
+      "yourCropsDesc": "Crops you plan to grow this season",
+      "changeCrops": "Change Crops",
+      "goToMarketPrefix": "Go to",
+      "goToMarketSuffix": "tab to see live prices and sell advice for your crops."
     }
+  },
+  "onboarding": {
+    "title": "Which crops do you grow?",
+    "subtitle": "Select all that apply — you can change this later",
+    "selectAtLeastOne": "Please select at least one crop before continuing.",
+    "settingUp": "Setting up your dashboard… 🎉",
+    "startFarming": "Start Farming 🌾"
   },
   "notFound": {
     "title": "404",
@@ -97,5 +109,471 @@
     "description": "The page you're looking for doesn't exist or may have been moved.",
     "backHome": "Return Home",
     "goBack": "Go Back"
+  },
+  "weather": {
+    "engineBadge": "District-Wise ML Prediction Engine",
+    "districtsSupportedBadge": "23 Districts of Punjab Supported",
+    "headerTitle": "{{district}} District Weather & ML Predictions",
+    "headerSubtitle": "Real-time Open-Meteo weather features dynamically fetched for {{district}} District ({{region}} Region)",
+    "selectDistrict": "Select Punjab District",
+    "districtsCount": "(23 Districts)",
+    "refresh": "Refresh",
+    "lastUpdated": "Last updated: {{time}}",
+    "districtCoordinates": "District Coordinates: {{lat}}° N, {{lon}}° E ({{region}} Punjab)",
+    "fetchingWeatherFor": "Fetching live weather for {{district}} District...",
+    "connectingApi": "Connecting to Open-Meteo API for coordinates {{lat}}° N, {{lon}}° E...",
+    "fetchingLatestDistrict": "Fetching latest {{district}} district weather...",
+    "apiConnectionNotice": "Weather API Connection Notice",
+    "unableToFetchError": "Unable to fetch the latest weather data. Showing the last successful update.",
+    "retry": "Retry",
+    "mlRiskLabel": "ML Risk: {{level}}",
+    "districtSuffix": "— {{district}} District",
+    "predictedAt": "Predicted at: {{time}} · Source: Open-Meteo API",
+    "currentWeatherDataTitle": "Current Weather Data ({{district}} District)",
+    "temperature": "Temperature",
+    "feelsLike": "Feels like {{temp}}°C",
+    "relativeHumidity": "Relative Humidity",
+    "highHumidityEnv": "High humidity environment",
+    "optimalFieldCrops": "Optimal for field crops",
+    "windSpeed": "Wind Speed",
+    "direction": "Direction: {{deg}}°",
+    "precipitation": "Precipitation",
+    "surfacePressure": "Surface Pressure: {{value}} hPa",
+    "mlPredictionsTitle": "ML Weather Model Predictions ({{district}} District)",
+    "mlPredictionsSubtitle": "Outputs produced by running live Open-Meteo features through the district ML predictor pipeline",
+    "modelConfidence": "Model Confidence: {{value}}%",
+    "humiditySuffix": "{{value}}% Humidity",
+    "rainRisk": "{{value}}% Rain Risk",
+    "modelScore": "{{value}}% Model Score",
+    "sevenDayForecastTitle": "7-Day Weather Forecast ({{district}} District)",
+    "sevenDayForecastSubtitle": "Live daily temperature and rainfall forecast from Open-Meteo",
+    "districtForecastBadge": "District Forecast",
+    "sixMonthForecastTitle": "6-Month Dynamic Climate Forecast ({{district}} District)",
+    "sixMonthForecastSubtitle": "Long-term dynamic monthly temperature & rainfall patterns for {{district}} crops",
+    "mlWeatherAdviceTitle": "ML Weather Advice ({{district}} District)",
+    "weeklyFieldActionPlan": "Weekly Field Action Plan",
+    "monthlyStrategicPlanning": "Monthly Strategic Planning",
+    "liveOpenMeteoBadge": "Live Open-Meteo Data",
+    "clear": "Clear",
+    "mmRain": "{{value}}mm rain",
+    "chart": {
+      "maxTemp": "Max Temp (°C)",
+      "minTemp": "Min Temp (°C)",
+      "rainfall": "Rainfall (mm)",
+      "avgTemp": "Avg Temp (°C)",
+      "expectedRain": "Expected Rain (mm)"
+    },
+    "days": {
+      "sun": "Sun", "mon": "Mon", "tue": "Tue", "wed": "Wed", "thu": "Thu", "fri": "Fri", "sat": "Sat"
+    },
+    "codes": {
+      "clearSky": "Clear Sky",
+      "mainlyClear": "Mainly Clear",
+      "partlyCloudy": "Partly Cloudy",
+      "overcast": "Overcast",
+      "foggy": "Foggy",
+      "rimeFog": "Depositing Rime Fog",
+      "lightDrizzle": "Light Drizzle",
+      "moderateDrizzle": "Moderate Drizzle",
+      "denseDrizzle": "Dense Drizzle",
+      "slightRain": "Slight Rain",
+      "moderateRain": "Moderate Rain",
+      "heavyRain": "Heavy Rain",
+      "slightSnow": "Slight Snow",
+      "moderateSnow": "Moderate Snow",
+      "heavySnow": "Heavy Snow",
+      "slightRainShowers": "Slight Rain Showers",
+      "moderateRainShowers": "Moderate Rain Showers",
+      "violentRainShowers": "Violent Rain Showers",
+      "thunderstorm": "Thunderstorm",
+      "thunderstormSlightHail": "Thunderstorm with Slight Hail",
+      "thunderstormHeavyHail": "Thunderstorm with Heavy Hail"
+    },
+    "conditions": {
+      "clearStable": "Clear & Stable",
+      "heavyRain": "Heavy Rain Forecasted",
+      "lightShowers": "Light Showers Expected",
+      "highHumidityFoggy": "High Humidity / Foggy",
+      "heatwaveWarning": "Heatwave Warning",
+      "pleasantCool": "Pleasant / Cool"
+    },
+    "alerts": {
+      "optimal": {
+        "title": "Optimal Farming Conditions",
+        "description": "Current conditions in your district are clear and stable ({{temp}}°C, {{humidity}}% humidity, {{wind}} km/h wind). Field operations can proceed normally."
+      },
+      "heavyRainfallFlooding": {
+        "title": "Heavy Rainfall & Flooding Risk Detected",
+        "description": "ML model detects high precipitation risk ({{maxRainProb}}% probability, ~{{maxRain}}mm expected). Ensure field drainage, avoid pesticide spraying, and protect low-lying crops."
+      },
+      "moderateRainfall": {
+        "title": "Moderate Rainfall Expected",
+        "description": "Rainfall likely in upcoming hours (~{{maxRain}}mm, {{maxRainProb}}% chance). Postpone foliar fertilization and avoid deep irrigation before rain arrives."
+      },
+      "highWind": {
+        "title": "High Wind Speed Alert",
+        "description": "Wind speeds of {{wind}} km/h recorded (gusts up to {{maxWind}} km/h expected). Secure greenhouse structures and provide additional support for tall crops."
+      },
+      "highTemperature": {
+        "title": "High Temperature & Heat Stress Risk",
+        "description": "Temperature at {{temp}}°C (feels like {{feelsLike}}°C). Increase evening irrigation cycles to prevent crop thermal stress and leaf scorch."
+      },
+      "highHumidityFog": {
+        "title": "High Humidity & Fog / Disease Risk",
+        "description": "Humidity at {{humidity}}% (peak {{maxHumidity}}%). High moisture increases fungal disease risk in Paddy, Wheat, and Cotton. Apply preventive fungicide if needed."
+      },
+      "denseFog": {
+        "title": "Dense Fog Advisory",
+        "description": "Foggy conditions detected (weather code {{weatherCode}}). Visibility may be reduced. Delay field spraying operations until fog clears after mid-morning."
+      }
+    },
+    "recommendations": {
+      "clearDrainage": "Clear drainage channels in fields to avoid waterlogging",
+      "suspendSpray": "Suspend spray of liquid nitrogen and insecticides prior to rain",
+      "inspectFungal": "Inspect standing Paddy/Wheat fields for fungal spore growth",
+      "scheduledFertilizer": "Apply scheduled fertilizers during low-wind morning hours",
+      "soilMoisture": "Maintain standard soil moisture levels for active crops",
+      "pestScouting": "Conduct routine pest scouting across crop borders",
+      "shadeNetting": "Prepare shade netting for young vegetable nursery beds",
+      "dripIrrigation": "Schedule drip irrigation during early morning hours",
+      "seasonalSowing": "Plan seasonal sowing based on stable soil temperatures",
+      "waterStorage": "Optimize water storage ahead of seasonal weather shifts"
+    }
+  },
+  "solver": {
+    "title": "Frankenstein Orb Challenge",
+    "subtitle": "Solve algorithmic puzzles to earn points and improve logical thinking",
+    "points": "{{count}} Points",
+    "problemsSolved": "Problems Solved: {{count}}",
+    "tabs": { "solver": "AI Solver", "challenges": "Challenges", "tutorial": "How It Works" },
+    "input": {
+      "title": "Problem Input",
+      "description": "Enter your potion recipes and target potion to find the minimum magical orbs needed",
+      "recipesLabel": "Potion Recipes (one per line)",
+      "recipesHint": "Format: potion_name = ingredient1 + ingredient2",
+      "targetLabel": "Target Potion",
+      "solving": "Solving...",
+      "solve": "Solve Problem"
+    },
+    "solution": {
+      "title": "Solution",
+      "description": "AI-powered solution with step-by-step breakdown",
+      "minOrbsLabel": "Minimum Magical Orbs Required",
+      "stepsTitle": "Solution Steps:",
+      "explanationTitle": "Explanation",
+      "errorTitle": "Error",
+      "emptyState": "Enter your problem and click \"Solve Problem\" to see the solution",
+      "invalidFormat": "Unable to solve the problem. Please check your recipe format."
+    },
+    "step": {
+      "top": "Create {{potion}} using {{ingredients}} ({{orbs}} orbs total)",
+      "nested": "Create {{potion}} from {{ingredients}} ({{orbs}} orbs)"
+    },
+    "explanation": {
+      "basicIngredient": "{{potion}} is a basic ingredient that costs 1 magical orb.",
+      "composedBase": "To create {{potion}}, we need {{ingredients}}.",
+      "basicNote": "Basic ingredients ({{basicIngredients}}) cost 1 orb each.",
+      "complexNote": "Complex ingredients ({{complexIngredients}}) require their own recipes.",
+      "totalNote": "The total cost includes ingredient orbs plus 1 orb for the combination process, resulting in {{minOrbs}} magical orbs.",
+      "error": "Error: {{message}}"
+    },
+    "challenges": {
+      "recipesLabel": "Recipes:",
+      "andMore": "... and more",
+      "targetLabel": "Target:",
+      "solvedBadge": "✓ Solved",
+      "tryChallenge": "Try This Challenge"
+    },
+    "difficulty": { "easy": "Easy", "medium": "Medium", "hard": "Hard" },
+    "samples": {
+      "basic": { "title": "Basic Awakening Potion", "description": "Create an awakening potion using the minimum magical orbs" },
+      "complex": { "title": "Complex Transformation", "description": "Multi-step potion creation with intermediate ingredients" },
+      "master": { "title": "Master Alchemist Challenge", "description": "Create the ultimate elixir with multiple pathways" }
+    },
+    "tutorial": {
+      "title": "How the Frankenstein Orb Challenge Works",
+      "subtitle": "Understanding the algorithm and problem-solving approach",
+      "overviewTitle": "Problem Overview",
+      "overviewText": "The Frankenstein Orb Challenge is inspired by graph theory and dynamic programming. You're given a set of potion recipes (like a dependency graph) and need to find the minimum number of magical orbs required to create a target potion.",
+      "approachTitle": "Algorithm Approach",
+      "approach1": "Parse recipes to build a dependency graph",
+      "approach2": "Use memoization to avoid recalculating subproblems",
+      "approach3": "Apply depth-first search with optimization",
+      "approach4": "Return minimum orbs and optimal path",
+      "recipeFormatTitle": "Recipe Format",
+      "educationalTitle": "Educational Value",
+      "educationalIntro": "This challenge helps farmers and students understand:",
+      "eduPoint1": "Graph theory and dependency resolution",
+      "eduPoint2": "Dynamic programming optimization",
+      "eduPoint3": "Resource allocation and planning",
+      "eduPoint4": "Logical thinking and problem decomposition",
+      "realWorldTitle": "Real-world Application",
+      "realWorldText": "Similar algorithms are used in crop rotation planning, supply chain optimization, and resource allocation in modern agriculture!"
+    }
+  },
+  "soil": {
+    "headerTitle": "Dynamic Soil Health Intelligence System",
+    "headerSubtitle": "Real-time ICAR & Soil Health Card analytics across all 23 districts of Punjab",
+    "districtLabel": "District:",
+    "refreshDatasets": "Refresh Government Datasets",
+    "syncingEtl": "Syncing ETL...",
+    "toast": {
+      "syncSuccess": "Government Soil Health Datasets refreshed across all 23 Punjab districts!",
+      "syncError": "Failed to trigger dataset sync.",
+      "fertilizerEmptyError": "Please enter at least one fertilizer amount (N, P, or K).",
+      "fertilizerSuccess": "Fertilizer log recorded for {{district}}!",
+      "fertilizerError": "Failed to record fertilizer log."
+    },
+    "cards": {
+      "soilHealthScore": "Soil Health Score",
+      "icarBenchmark": "ICAR Certified Benchmark",
+      "soilTypeTexture": "Soil Type & Texture",
+      "soilPhSalinity": "Soil pH & Salinity (EC)",
+      "organicCarbon": "Organic Carbon (OC)",
+      "organicCarbonTarget": "Target: >0.75% for optimal fertility"
+    },
+    "tabs": {
+      "overview": "Nutrient Overview",
+      "history": "Historical Trends",
+      "recommendations": "AI Fertilizer & Crop Advice",
+      "compare": "District Comparison"
+    },
+    "overview": {
+      "macronutrientsTitle": "Macronutrients (NPK) vs Benchmark",
+      "macronutrientsDesc": "Available N, P, K levels in {{district}} (kg/ha)",
+      "radarTitle": "Nutrient Balance Radar",
+      "radarDesc": "Multi-parameter soil fertility index",
+      "currentLevel": "Current Level",
+      "idealBenchmark": "Ideal Benchmark",
+      "micronutrientsTitle": "Essential Micronutrient & Secondary Mineral Breakdown",
+      "nitrogen": "Nitrogen (N)",
+      "phosphorus": "Phosphorus (P)",
+      "potassium": "Potassium (K)",
+      "sulphur": "Sulphur (S)",
+      "zinc": "Zinc (Zn)",
+      "iron": "Iron (Fe)",
+      "copper": "Copper (Cu)",
+      "manganese": "Manganese",
+      "boron": "Boron (B)",
+      "calcium": "Calcium (Ca)",
+      "magnesium": "Magnesium"
+    },
+    "history": {
+      "title": "Historical Soil Health & NPK Trends",
+      "description": "Multi-month progression for {{district}}",
+      "chart": {
+        "nitrogen": "Nitrogen (kg/ha)",
+        "phosphorus": "Phosphorus (kg/ha)",
+        "potassium": "Potassium (kg/ha)",
+        "healthScore": "Health Score"
+      },
+      "loggerTitle": "Record New Fertilizer Application Log",
+      "nitrogenAdded": "Nitrogen Added (kg/acre)",
+      "phosphorusAdded": "Phosphorus Added (kg/acre)",
+      "potassiumAdded": "Potassium Added (kg/acre)",
+      "applicationDate": "Application Date",
+      "recordLogEntry": "Record Log Entry"
+    },
+    "recommendations": {
+      "fertilizerDosageTitle": "Dynamic AI Fertilizer Dosage (kg/acre)",
+      "fertilizerDosageDesc": "Tailored for {{district}} based on ICAR recommendations",
+      "irrigationTitle": "Open-Meteo Weather & Irrigation Schedule",
+      "recommendedIrrigation": "Recommended Irrigation",
+      "liveTemperature": "Live Temperature",
+      "soilMoisture": "Soil Moisture",
+      "topRecommendedCrop": "Top Recommended Crop"
+    },
+    "compare": {
+      "title": "District Side-by-Side Soil Comparison",
+      "description": "Compare soil health parameters between any 2 Punjab districts",
+      "vs": "vs",
+      "soilType": "Soil Type:",
+      "ph": "pH:",
+      "organicCarbon": "Organic Carbon:",
+      "nitrogen": "Nitrogen:",
+      "recommendedCrop": "Recommended Crop:",
+      "loading": "Loading comparison metrics..."
+    }
+  },
+  "crop": {
+    "headerTitle": "AI Crop Recommendation & Agronomic Advisory",
+    "headerSubtitle": "Data-driven crop selection combining live Soil NPK, real-time Open-Meteo climate, and ICAR agricultural standards",
+    "seasonLabel": "Season: {{season}}",
+    "seasons": { "Rabi": "Rabi", "Kharif": "Kharif", "Zaid": "Zaid" },
+    "liveBadge": "Live",
+    "estimatedBadge": "Estimated",
+    "estimatedTooltip": "The live recommendation engine wasn't reachable, so this is computed locally from this district's curated soil baseline.",
+    "districtLabel": "District:",
+    "advisoryTitle": "AI Agricultural Advisor for {{district}}",
+    "advisory": "Based on current ICAR standards, {{district}}'s soil pH ({{ph}}), organic carbon ({{oc}}%), available nitrogen ({{nitrogen}} kg/ha), and live weather conditions ({{temp}}°C, {{moisture}}% moisture), {{crop}} is highly recommended for cultivation this {{season}} season with a suitability score of {{score}}/100. Expected yield is {{yield}} with {{risk}} risk.",
+    "topCropBadge": "#1 Top Recommended Crop",
+    "suitabilityScore": "Suitability Score",
+    "confidenceIndex": "Confidence Index",
+    "aiVerified": "AI Verified",
+    "expectedMarketPrice": "Expected Market Price",
+    "demandLabel": "Demand: {{demand}}",
+    "tabs": {
+      "rankings": "Top 5 Crop Rankings",
+      "visualizations": "Suitability Charts",
+      "timeline": "Growth Stage Timeline",
+      "disease": "Disease & Pest Alerts"
+    },
+    "rankings": {
+      "expectedYield": "Expected Yield",
+      "waterRequirement": "Water Requirement",
+      "fertilizerDose": "Fertilizer Dose",
+      "marketPriceTrend": "Market Price Trend",
+      "riskProfile": "Risk Profile",
+      "riskSuffix": "{{risk}} Risk",
+      "aiModelConfidence": "AI Model Confidence"
+    },
+    "visualizations": {
+      "chartTitle": "Crop Suitability Scores Comparison (0-100)",
+      "chartDesc": "Multi-factor score ranking for {{district}}",
+      "suitabilityScoreLegend": "Suitability Score",
+      "profitabilityIndexLegend": "Profitability Index",
+      "factorAnalysisTitle": "Top Crop Factor Analysis (Live Computed)",
+      "factorAnalysisDesc": "Real agronomic sub-scores for {{crop}}",
+      "theTopCrop": "the top crop",
+      "factors": {
+        "soilMatch": "Soil Match",
+        "nutrientBalance": "Nutrient Balance",
+        "climateSuitability": "Climate Suitability",
+        "seasonalFit": "Seasonal Fit",
+        "marketPotential": "Market Potential"
+      }
+    },
+    "timeline": {
+      "title": "Agronomic Growth Timeline ({{crop}})",
+      "description": "Stages sized from {{crop}}'s actual {{days}}-day growing cycle, with dosing computed from this district's live soil nutrients",
+      "dayRange": "Day {{start}} - {{end}}",
+      "waterFooter": "Total seasonal water requirement for {{crop}}: {{water}} over {{days}} days — irrigation scheduling above is derived from this figure, not a fixed template.",
+      "topCrop": "Top Crop"
+    },
+    "disease": {
+      "alertTitle": "Weather & Soil-Based Disease Risk Forecast",
+      "alertDescription": "Risk levels below are computed from live temperature ({{temp}}°C), humidity ({{humidity}}%), rainfall ({{rainfall}}mm) and soil nitrogen ({{nitrogen}} kg/ha) for {{district}}. Always confirm with your local agriculture extension officer before applying any chemical.",
+      "riskSuffix": "{{risk}} Risk",
+      "pesticideLabel": "Pesticide:",
+      "organicLabel": "Organic option:",
+      "precautionLabel": "Precaution:",
+      "noData": "No common disease/pest data available for this crop yet.",
+      "riskLevels": { "High": "High", "Medium": "Medium", "Low": "Low" }
+    }
+  },
+  "roadmap": {
+    "aiTwinBadge": "AI Digital Farm Twin Active",
+    "districtVillageLabel": "District: {{district}} • Village: {{village}}",
+    "pageTitle": "🌾 My Farm Roadmap & Intelligent Advisory",
+    "farmerLine": "Farmer: {{name}} • Land: {{acres}} Acres ({{fields}} Fields) • Crop: {{crop}}",
+    "editProfile": "Edit Profile & Goals",
+    "checkIn": "End-of-Day Check-In",
+    "profileDialog": {
+      "title": "Farmer Profile Setup",
+      "description": "Customize your farm details to dynamically generate a unique AI Roadmap.",
+      "farmerName": "Farmer Name",
+      "district": "District",
+      "village": "Village",
+      "landArea": "Total Land Area (Acres)",
+      "currentCrop": "Current Crop",
+      "growthStage": "Growth Stage",
+      "save": "Save Profile & Refresh Backend Roadmap"
+    },
+    "diaryDialog": {
+      "title": "Daily Digital Farm Diary",
+      "description": "Record what actually happened on your farm today to dynamically update your AI Roadmap.",
+      "irrigatedQuestion": "Did you irrigate today?",
+      "fertilizerQuestion": "Did you apply fertilizer today?",
+      "fertilizerDetailsLabel": "Fertilizer Details (Amount & Type)",
+      "fertilizerPlaceholder": "e.g. 25kg Neem Urea",
+      "pestsQuestion": "Pests or disease symptoms noticed?",
+      "laborersLabel": "Number of Laborers Worked",
+      "notesLabel": "Additional Field Notes",
+      "notesPlaceholder": "e.g. Crop greening fast",
+      "submit": "Submit Daily Check-In"
+    },
+    "toast": {
+      "profileUpdated": "Farm Profile updated!",
+      "profileUpdateFailed": "Failed to update profile.",
+      "diarySuccess": "End-of-day check-in recorded! Adaptive roadmap updated.",
+      "diaryFailed": "Failed to submit diary.",
+      "taskStatusSuccess": "Task marked as {{status}}! Adaptive plan recalculated.",
+      "taskStatusFailed": "Failed to update task status.",
+      "backendError": "Error connecting to backend API."
+    },
+    "filters": {
+      "label": "Dynamic API Filters:",
+      "district": "District:",
+      "field": "Field:",
+      "allFields": "All Fields",
+      "field1": "Field 1 (Front Plot)",
+      "field2": "Field 2 (Canal Side)",
+      "crop": "Crop:",
+      "allCrops": "All Crops"
+    },
+    "dashboard": {
+      "soilWaterBalance": "Soil Water Balance",
+      "nutrientAvailability": "Nutrient Availability",
+      "expectedTotalYield": "Expected Total Yield",
+      "aiConfidence": "AI Confidence: {{value}}%",
+      "expectedNetProfit": "Expected Net Profit",
+      "harvestCountdown": "Harvest Countdown: {{days}} days"
+    },
+    "tabs": {
+      "planner": "Today's Farm Plan",
+      "upcoming": "Upcoming Tasks",
+      "alerts": "AI Smart Alerts",
+      "timeline": "Roadmap Timeline",
+      "charts": "API Charts",
+      "assistant": "AI Assistant"
+    },
+    "planner": {
+      "title": "Today's Actionable Farm Plan",
+      "fetchedFor": "Fetched dynamically for {{crop}} in {{district}}",
+      "tasksReturned": "{{count}} Tasks Returned",
+      "noTasks": "No active tasks for today. Check back tomorrow!",
+      "prioritySuffix": "{{priority}} Priority",
+      "dueLabel": "Due: {{deadline}}",
+      "aiContextLabel": "AI Context & Reason:",
+      "expectedBenefitLabel": "Expected Benefit:",
+      "consequenceLabel": "⚠️ Consequence if skipped: {{risk}}",
+      "completedBadge": "✓ Completed",
+      "markCompleted": "Mark Completed",
+      "skip": "Skip",
+      "delay": "Delay"
+    },
+    "upcoming": { "title": "Upcoming Roadmap Tasks" },
+    "alerts": {
+      "title": "AI Smart Alerts",
+      "whyLabel": "Why:",
+      "recommendedActionLabel": "Recommended Action:",
+      "impactLabel": "What happens if ignored:"
+    },
+    "timeline": {
+      "title": "14-Phase Adaptive Lifecycle Timeline",
+      "phaseLabel": "Phase {{num}}: {{name}}",
+      "aiStrategyLabel": "AI Strategy:"
+    },
+    "charts": {
+      "taskCompletionTitle": "Task Completion Trend",
+      "completedLegend": "Completed",
+      "targetLegend": "Target",
+      "yieldTrendTitle": "Yield Prediction Trend (quintals/acre)",
+      "predictedYieldLegend": "Predicted Yield (q/acre)"
+    },
+    "assistant": {
+      "title": "AI Agricultural Scientist Assistant",
+      "inputPlaceholder": "Type your farming question...",
+      "greeting": "Hello {{name}}! I am your AI Agricultural Assistant for {{district}}. How can I guide your {{crop}} farming today?",
+      "waterBalanceAnswer": "Based on backend metrics for {{name}}, soil moisture is at {{value}}%. Everything is optimal.",
+      "irrigateAnswer": "Based on live weather API data for {{district}}, next irrigation is recommended in 3 days.",
+      "fertilizerAnswer": "Your crop is currently in {{stage}}. Top-dressing Urea application is due.",
+      "todayAnswer": "Today's priority is: {{task}}.",
+      "defaultTaskName": "Check Field Moisture",
+      "defaultFarmerName": "Farmer",
+      "defaultGrowthStage": "Vegetative Stage"
+    },
+    "priority": { "Critical": "Critical", "High": "High", "Medium": "Medium", "Low": "Low" },
+    "status": { "Completed": "Completed", "In Progress": "In Progress", "Pending": "Pending", "Skipped": "Skipped", "Delayed": "Delayed" }
   }
 }

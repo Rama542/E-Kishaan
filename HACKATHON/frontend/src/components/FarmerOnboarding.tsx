@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Sprout, CheckCircle2 } from 'lucide-react';
@@ -63,6 +64,7 @@ export default function FarmerOnboarding({
   defaultState = 'Punjab',
   defaultLocation = 'Ludhiana, Punjab'
 }: Props) {
+  const { t } = useTranslation();
   // Start with empty selected crops so nothing is highlighted beforehand
   const [selectedCrops, setSelectedCrops] = useState<string[]>([]);
   const [cropError, setCropError] = useState('');
@@ -77,7 +79,7 @@ export default function FarmerOnboarding({
 
   function handleFinish() {
     if (selectedCrops.length === 0) {
-      setCropError('Please select at least one crop before continuing.');
+      setCropError(t('onboarding.selectAtLeastOne'));
       return;
     }
     const profile: FarmerProfile = {
@@ -100,7 +102,7 @@ export default function FarmerOnboarding({
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto">
             <CheckCircle2 className="w-10 h-10 text-green-600" />
           </div>
-          <h2 className="text-2xl font-bold text-gray-900">Setting up your dashboard… 🎉</h2>
+          <h2 className="text-2xl font-bold text-gray-900">{t('onboarding.settingUp')}</h2>
           <div className="flex justify-center gap-1 pt-2">
             {[0, 1, 2].map((i) => (
               <div key={i} className="w-2 h-2 bg-green-500 rounded-full animate-bounce" style={{ animationDelay: `${i * 0.15}s` }} />
@@ -120,8 +122,8 @@ export default function FarmerOnboarding({
             <Sprout className="w-6 h-6 text-green-700" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-gray-900">Which crops do you grow?</h2>
-            <p className="text-sm text-gray-500">Select all that apply — you can change this later</p>
+            <h2 className="text-xl font-bold text-gray-900">{t('onboarding.title')}</h2>
+            <p className="text-sm text-gray-500">{t('onboarding.subtitle')}</p>
           </div>
         </div>
 
@@ -172,7 +174,7 @@ export default function FarmerOnboarding({
           className="w-full bg-emerald-600 hover:bg-emerald-700 text-white h-12 text-base font-semibold rounded-xl shadow-lg shadow-emerald-600/20"
           onClick={handleFinish}
         >
-          Start Farming 🌾
+          {t('onboarding.startFarming')}
         </Button>
       </div>
     </div>

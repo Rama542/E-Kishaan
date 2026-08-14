@@ -88,8 +88,20 @@
       "farmingJourney": "ਤੁਹਾਡਾ ਖੇਤੀ ਸਫ਼ਰ",
       "achievement1": "ਫ੍ਰੈਂਕਨਸਟਾਈਨ ਚੈਲੰਜ ਲੈਵਲ 5 ਪੂਰਾ ਕੀਤਾ",
       "achievement2": "30 ਦਿਨਾਂ ਲਈ ਬਿਹਤਰੀਨ ਮਿੱਟੀ ਪ੍ਰਬੰਧਨ",
-      "achievement3": "ਪਿਛਲੇ ਮੌਸਮ ਵਿੱਚ 20%+ ਆਰਓਆਈ ਹਾਸਲ ਕੀਤਾ"
+      "achievement3": "ਪਿਛਲੇ ਮੌਸਮ ਵਿੱਚ 20%+ ਆਰਓਆਈ ਹਾਸਲ ਕੀਤਾ",
+      "yourCrops": "ਤੁਹਾਡੀਆਂ ਫ਼ਸਲਾਂ",
+      "yourCropsDesc": "ਇਸ ਮੌਸਮ ਵਿੱਚ ਤੁਸੀਂ ਜੋ ਫ਼ਸਲਾਂ ਉਗਾਉਣ ਦੀ ਯੋਜਨਾ ਬਣਾ ਰਹੇ ਹੋ",
+      "changeCrops": "ਫ਼ਸਲਾਂ ਬਦਲੋ",
+      "goToMarketPrefix": "ਆਪਣੀਆਂ ਫ਼ਸਲਾਂ ਲਈ ਲਾਈਵ ਕੀਮਤਾਂ ਅਤੇ ਵਿਕਰੀ ਸਲਾਹ ਦੇਖਣ ਲਈ",
+      "goToMarketSuffix": "ਟੈਬ 'ਤੇ ਜਾਓ।"
     }
+  },
+  "onboarding": {
+    "title": "ਤੁਸੀਂ ਕਿਹੜੀਆਂ ਫ਼ਸਲਾਂ ਉਗਾਉਂਦੇ ਹੋ?",
+    "subtitle": "ਜੋ ਵੀ ਲਾਗੂ ਹੋਵੇ ਚੁਣੋ — ਤੁਸੀਂ ਇਸਨੂੰ ਬਾਅਦ ਵਿੱਚ ਬਦਲ ਸਕਦੇ ਹੋ",
+    "selectAtLeastOne": "ਜਾਰੀ ਰੱਖਣ ਤੋਂ ਪਹਿਲਾਂ ਕਿਰਪਾ ਕਰਕੇ ਘੱਟੋ-ਘੱਟ ਇੱਕ ਫ਼ਸਲ ਚੁਣੋ।",
+    "settingUp": "ਤੁਹਾਡਾ ਡੈਸ਼ਬੋਰਡ ਸੈੱਟ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ… 🎉",
+    "startFarming": "ਖੇਤੀ ਸ਼ੁਰੂ ਕਰੋ 🌾"
   },
   "notFound": {
     "title": "404",
@@ -97,5 +109,471 @@
     "description": "ਜੋ ਪੰਨਾ ਤੁਸੀਂ ਲੱਭ ਰਹੇ ਹੋ ਉਹ ਮੌਜੂਦ ਨਹੀਂ ਹੈ ਜਾਂ ਹਟਾ ਦਿੱਤਾ ਗਿਆ ਹੋ ਸਕਦਾ ਹੈ।",
     "backHome": "ਹੋਮ 'ਤੇ ਵਾਪਸ ਜਾਓ",
     "goBack": "ਵਾਪਸ ਜਾਓ"
+  },
+  "weather": {
+    "engineBadge": "ਜ਼ਿਲ੍ਹਾ-ਵਾਰ ਐਮਐਲ ਪੂਰਵ ਅਨੁਮਾਨ ਇੰਜਣ",
+    "districtsSupportedBadge": "ਪੰਜਾਬ ਦੇ 23 ਜ਼ਿਲ੍ਹੇ ਸਮਰਥਿਤ",
+    "headerTitle": "{{district}} ਜ਼ਿਲ੍ਹਾ ਮੌਸਮ ਅਤੇ ਐਮਐਲ ਪੂਰਵ ਅਨੁਮਾਨ",
+    "headerSubtitle": "{{district}} ਜ਼ਿਲ੍ਹੇ ({{region}} ਖੇਤਰ) ਲਈ ਗਤੀਸ਼ੀਲ ਤੌਰ 'ਤੇ ਪ੍ਰਾਪਤ ਕੀਤੀਆਂ ਲਾਈਵ ਓਪਨ-ਮੀਟਿਓ ਮੌਸਮ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ",
+    "selectDistrict": "ਪੰਜਾਬ ਜ਼ਿਲ੍ਹਾ ਚੁਣੋ",
+    "districtsCount": "(23 ਜ਼ਿਲ੍ਹੇ)",
+    "refresh": "ਤਾਜ਼ਾ ਕਰੋ",
+    "lastUpdated": "ਆਖਰੀ ਅੱਪਡੇਟ: {{time}}",
+    "districtCoordinates": "ਜ਼ਿਲ੍ਹਾ ਨਿਰਦੇਸ਼ਾਂਕ: {{lat}}° N, {{lon}}° E ({{region}} ਪੰਜਾਬ)",
+    "fetchingWeatherFor": "{{district}} ਜ਼ਿਲ੍ਹੇ ਲਈ ਲਾਈਵ ਮੌਸਮ ਪ੍ਰਾਪਤ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ...",
+    "connectingApi": "ਨਿਰਦੇਸ਼ਾਂਕ {{lat}}° N, {{lon}}° E ਲਈ ਓਪਨ-ਮੀਟਿਓ ਏਪੀਆਈ ਨਾਲ ਜੁੜ ਰਹੇ ਹਾਂ...",
+    "fetchingLatestDistrict": "ਨਵੀਨਤਮ {{district}} ਜ਼ਿਲ੍ਹਾ ਮੌਸਮ ਪ੍ਰਾਪਤ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ...",
+    "apiConnectionNotice": "ਮੌਸਮ ਏਪੀਆਈ ਕਨੈਕਸ਼ਨ ਸੂਚਨਾ",
+    "unableToFetchError": "ਨਵੀਨਤਮ ਮੌਸਮ ਡਾਟਾ ਪ੍ਰਾਪਤ ਕਰਨ ਵਿੱਚ ਅਸਮਰੱਥ। ਆਖਰੀ ਸਫਲ ਅੱਪਡੇਟ ਦਿਖਾਇਆ ਜਾ ਰਿਹਾ ਹੈ।",
+    "retry": "ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ",
+    "mlRiskLabel": "ਐਮਐਲ ਜੋਖਮ: {{level}}",
+    "districtSuffix": "— {{district}} ਜ਼ਿਲ੍ਹਾ",
+    "predictedAt": "ਪੂਰਵ ਅਨੁਮਾਨ ਸਮਾਂ: {{time}} · ਸਰੋਤ: ਓਪਨ-ਮੀਟਿਓ ਏਪੀਆਈ",
+    "currentWeatherDataTitle": "ਮੌਜੂਦਾ ਮੌਸਮ ਡਾਟਾ ({{district}} ਜ਼ਿਲ੍ਹਾ)",
+    "temperature": "ਤਾਪਮਾਨ",
+    "feelsLike": "ਮਹਿਸੂਸ ਹੁੰਦਾ ਹੈ {{temp}}°C",
+    "relativeHumidity": "ਸਾਪੇਖਿਕ ਨਮੀ",
+    "highHumidityEnv": "ਉੱਚ ਨਮੀ ਵਾਲਾ ਵਾਤਾਵਰਣ",
+    "optimalFieldCrops": "ਖੇਤ ਦੀਆਂ ਫ਼ਸਲਾਂ ਲਈ ਸਰਵੋਤਮ",
+    "windSpeed": "ਹਵਾ ਦੀ ਗਤੀ",
+    "direction": "ਦਿਸ਼ਾ: {{deg}}°",
+    "precipitation": "ਵਰਖਾ",
+    "surfacePressure": "ਸਤਹੀ ਦਬਾਅ: {{value}} hPa",
+    "mlPredictionsTitle": "ਐਮਐਲ ਮੌਸਮ ਮਾਡਲ ਪੂਰਵ ਅਨੁਮਾਨ ({{district}} ਜ਼ਿਲ੍ਹਾ)",
+    "mlPredictionsSubtitle": "ਜ਼ਿਲ੍ਹਾ ਐਮਐਲ ਪੂਰਵ ਅਨੁਮਾਨ ਪਾਈਪਲਾਈਨ ਰਾਹੀਂ ਲਾਈਵ ਓਪਨ-ਮੀਟਿਓ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਚਲਾ ਕੇ ਪ੍ਰਾਪਤ ਨਤੀਜੇ",
+    "modelConfidence": "ਮਾਡਲ ਭਰੋਸਾ: {{value}}%",
+    "humiditySuffix": "{{value}}% ਨਮੀ",
+    "rainRisk": "{{value}}% ਵਰਖਾ ਜੋਖਮ",
+    "modelScore": "{{value}}% ਮਾਡਲ ਸਕੋਰ",
+    "sevenDayForecastTitle": "7-ਦਿਨ ਮੌਸਮ ਪੂਰਵ ਅਨੁਮਾਨ ({{district}} ਜ਼ਿਲ੍ਹਾ)",
+    "sevenDayForecastSubtitle": "ਓਪਨ-ਮੀਟਿਓ ਤੋਂ ਲਾਈਵ ਰੋਜ਼ਾਨਾ ਤਾਪਮਾਨ ਅਤੇ ਵਰਖਾ ਪੂਰਵ ਅਨੁਮਾਨ",
+    "districtForecastBadge": "ਜ਼ਿਲ੍ਹਾ ਪੂਰਵ ਅਨੁਮਾਨ",
+    "sixMonthForecastTitle": "6-ਮਹੀਨੇ ਗਤੀਸ਼ੀਲ ਜਲਵਾਯੂ ਪੂਰਵ ਅਨੁਮਾਨ ({{district}} ਜ਼ਿਲ੍ਹਾ)",
+    "sixMonthForecastSubtitle": "{{district}} ਫ਼ਸਲਾਂ ਲਈ ਲੰਬੇ ਸਮੇਂ ਦੇ ਮਾਸਿਕ ਤਾਪਮਾਨ ਅਤੇ ਵਰਖਾ ਪੈਟਰਨ",
+    "mlWeatherAdviceTitle": "ਐਮਐਲ ਮੌਸਮ ਸਲਾਹ ({{district}} ਜ਼ਿਲ੍ਹਾ)",
+    "weeklyFieldActionPlan": "ਹਫ਼ਤਾਵਾਰੀ ਖੇਤ ਕਾਰਜ ਯੋਜਨਾ",
+    "monthlyStrategicPlanning": "ਮਾਸਿਕ ਰਣਨੀਤਕ ਯੋਜਨਾ",
+    "liveOpenMeteoBadge": "ਲਾਈਵ ਓਪਨ-ਮੀਟਿਓ ਡਾਟਾ",
+    "clear": "ਸਾਫ਼",
+    "mmRain": "{{value}}mm ਵਰਖਾ",
+    "chart": {
+      "maxTemp": "ਵੱਧ ਤੋਂ ਵੱਧ ਤਾਪਮਾਨ (°C)",
+      "minTemp": "ਘੱਟੋ-ਘੱਟ ਤਾਪਮਾਨ (°C)",
+      "rainfall": "ਵਰਖਾ (mm)",
+      "avgTemp": "ਔਸਤ ਤਾਪਮਾਨ (°C)",
+      "expectedRain": "ਸੰਭਾਵਿਤ ਵਰਖਾ (mm)"
+    },
+    "days": {
+      "sun": "ਐਤ", "mon": "ਸੋਮ", "tue": "ਮੰਗਲ", "wed": "ਬੁੱਧ", "thu": "ਵੀਰ", "fri": "ਸ਼ੁੱਕਰ", "sat": "ਸ਼ਨੀ"
+    },
+    "codes": {
+      "clearSky": "ਸਾਫ਼ ਅਸਮਾਨ",
+      "mainlyClear": "ਮੁੱਖ ਤੌਰ 'ਤੇ ਸਾਫ਼",
+      "partlyCloudy": "ਅੰਸ਼ਕ ਬੱਦਲਵਾਈ",
+      "overcast": "ਪੂਰੀ ਬੱਦਲਵਾਈ",
+      "foggy": "ਧੁੰਦ",
+      "rimeFog": "ਪਾਲਾ ਜੰਮਣ ਵਾਲੀ ਧੁੰਦ",
+      "lightDrizzle": "ਹਲਕੀ ਬੂੰਦਾਬਾਂਦੀ",
+      "moderateDrizzle": "ਦਰਮਿਆਨੀ ਬੂੰਦਾਬਾਂਦੀ",
+      "denseDrizzle": "ਸੰਘਣੀ ਬੂੰਦਾਬਾਂਦੀ",
+      "slightRain": "ਹਲਕੀ ਬਾਰਿਸ਼",
+      "moderateRain": "ਦਰਮਿਆਨੀ ਬਾਰਿਸ਼",
+      "heavyRain": "ਭਾਰੀ ਬਾਰਿਸ਼",
+      "slightSnow": "ਹਲਕੀ ਬਰਫ਼ਬਾਰੀ",
+      "moderateSnow": "ਦਰਮਿਆਨੀ ਬਰਫ਼ਬਾਰੀ",
+      "heavySnow": "ਭਾਰੀ ਬਰਫ਼ਬਾਰੀ",
+      "slightRainShowers": "ਹਲਕੀਆਂ ਬੌਛਾਰਾਂ",
+      "moderateRainShowers": "ਦਰਮਿਆਨੀਆਂ ਬੌਛਾਰਾਂ",
+      "violentRainShowers": "ਤੇਜ਼ ਬੌਛਾਰਾਂ",
+      "thunderstorm": "ਗਰਜ-ਤੂਫ਼ਾਨ",
+      "thunderstormSlightHail": "ਹਲਕੇ ਗੜਿਆਂ ਨਾਲ ਤੂਫ਼ਾਨ",
+      "thunderstormHeavyHail": "ਭਾਰੀ ਗੜਿਆਂ ਨਾਲ ਤੂਫ਼ਾਨ"
+    },
+    "conditions": {
+      "clearStable": "ਸਾਫ਼ ਅਤੇ ਸਥਿਰ",
+      "heavyRain": "ਭਾਰੀ ਬਾਰਿਸ਼ ਦਾ ਪੂਰਵ ਅਨੁਮਾਨ",
+      "lightShowers": "ਹਲਕੀਆਂ ਬੌਛਾਰਾਂ ਦੀ ਸੰਭਾਵਨਾ",
+      "highHumidityFoggy": "ਉੱਚ ਨਮੀ / ਧੁੰਦ",
+      "heatwaveWarning": "ਗਰਮੀ ਦੀ ਲਹਿਰ ਚੇਤਾਵਨੀ",
+      "pleasantCool": "ਸੁਹਾਵਣਾ / ਠੰਡਾ"
+    },
+    "alerts": {
+      "optimal": {
+        "title": "ਸਰਵੋਤਮ ਖੇਤੀ ਹਾਲਾਤ",
+        "description": "ਤੁਹਾਡੇ ਜ਼ਿਲ੍ਹੇ ਵਿੱਚ ਮੌਜੂਦਾ ਹਾਲਾਤ ਸਾਫ਼ ਅਤੇ ਸਥਿਰ ਹਨ ({{temp}}°C, {{humidity}}% ਨਮੀ, {{wind}} km/h ਹਵਾ)। ਖੇਤ ਦੇ ਕੰਮ ਆਮ ਤੌਰ 'ਤੇ ਜਾਰੀ ਰਹਿ ਸਕਦੇ ਹਨ।"
+      },
+      "heavyRainfallFlooding": {
+        "title": "ਭਾਰੀ ਵਰਖਾ ਅਤੇ ਹੜ੍ਹ ਦਾ ਖ਼ਤਰਾ",
+        "description": "ਐਮਐਲ ਮਾਡਲ ਨੇ ਉੱਚ ਵਰਖਾ ਜੋਖਮ ਦਾ ਪਤਾ ਲਗਾਇਆ ({{maxRainProb}}% ਸੰਭਾਵਨਾ, ~{{maxRain}}mm ਸੰਭਾਵਿਤ)। ਖੇਤ ਦੀ ਨਿਕਾਸੀ ਯਕੀਨੀ ਬਣਾਓ, ਕੀਟਨਾਸ਼ਕ ਛਿੜਕਾਅ ਤੋਂ ਬਚੋ, ਅਤੇ ਨੀਵੇਂ ਖੇਤਰਾਂ ਦੀਆਂ ਫ਼ਸਲਾਂ ਦੀ ਰੱਖਿਆ ਕਰੋ।"
+      },
+      "moderateRainfall": {
+        "title": "ਦਰਮਿਆਨੀ ਵਰਖਾ ਦੀ ਸੰਭਾਵਨਾ",
+        "description": "ਆਉਣ ਵਾਲੇ ਘੰਟਿਆਂ ਵਿੱਚ ਵਰਖਾ ਸੰਭਾਵਿਤ ਹੈ (~{{maxRain}}mm, {{maxRainProb}}% ਸੰਭਾਵਨਾ)। ਪੱਤਿਆਂ 'ਤੇ ਖਾਦ ਛਿੜਕਾਅ ਮੁਲਤਵੀ ਕਰੋ ਅਤੇ ਬਾਰਿਸ਼ ਤੋਂ ਪਹਿਲਾਂ ਡੂੰਘੀ ਸਿੰਚਾਈ ਤੋਂ ਬਚੋ।"
+      },
+      "highWind": {
+        "title": "ਤੇਜ਼ ਹਵਾ ਦੀ ਚੇਤਾਵਨੀ",
+        "description": "{{wind}} km/h ਦੀ ਹਵਾ ਦਰਜ ਕੀਤੀ ਗਈ (ਝੱਖੜ {{maxWind}} km/h ਤੱਕ ਸੰਭਾਵਿਤ)। ਗ੍ਰੀਨਹਾਊਸ ਢਾਂਚਿਆਂ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰੋ ਅਤੇ ਲੰਬੀਆਂ ਫ਼ਸਲਾਂ ਨੂੰ ਵਾਧੂ ਸਹਾਰਾ ਦਿਓ।"
+      },
+      "highTemperature": {
+        "title": "ਉੱਚ ਤਾਪਮਾਨ ਅਤੇ ਗਰਮੀ ਤਣਾਅ ਜੋਖਮ",
+        "description": "ਤਾਪਮਾਨ {{temp}}°C ({{feelsLike}}°C ਮਹਿਸੂਸ)। ਫ਼ਸਲ ਦੇ ਤਾਪ ਤਣਾਅ ਅਤੇ ਪੱਤਾ ਝੁਲਸਣ ਤੋਂ ਬਚਾਅ ਲਈ ਸ਼ਾਮ ਦੀ ਸਿੰਚਾਈ ਵਧਾਓ।"
+      },
+      "highHumidityFog": {
+        "title": "ਉੱਚ ਨਮੀ ਅਤੇ ਧੁੰਦ / ਰੋਗ ਜੋਖਮ",
+        "description": "ਨਮੀ {{humidity}}% (ਸਿਖਰ {{maxHumidity}}%)। ਵਧੇਰੇ ਨਮੀ ਝੋਨੇ, ਕਣਕ ਅਤੇ ਕਪਾਹ ਵਿੱਚ ਫੰਗਲ ਰੋਗ ਦਾ ਖ਼ਤਰਾ ਵਧਾਉਂਦੀ ਹੈ। ਲੋੜ ਪੈਣ 'ਤੇ ਰੋਕਥਾਮ ਵਾਲੀ ਉੱਲੀਨਾਸ਼ਕ ਲਗਾਓ।"
+      },
+      "denseFog": {
+        "title": "ਸੰਘਣੀ ਧੁੰਦ ਸਲਾਹ",
+        "description": "ਧੁੰਦ ਵਾਲੀਆਂ ਸਥਿਤੀਆਂ ਦਾ ਪਤਾ ਲੱਗਾ (ਮੌਸਮ ਕੋਡ {{weatherCode}})। ਦਿੱਖ ਘੱਟ ਹੋ ਸਕਦੀ ਹੈ। ਧੁੰਦ ਸਾਫ਼ ਹੋਣ ਤੱਕ ਖੇਤ ਛਿੜਕਾਅ ਕਾਰਜ ਮੁਲਤਵੀ ਕਰੋ।"
+      }
+    },
+    "recommendations": {
+      "clearDrainage": "ਪਾਣੀ ਖੜ੍ਹਾ ਹੋਣ ਤੋਂ ਬਚਣ ਲਈ ਖੇਤਾਂ ਵਿੱਚ ਨਿਕਾਸੀ ਚੈਨਲ ਸਾਫ਼ ਕਰੋ",
+      "suspendSpray": "ਬਾਰਿਸ਼ ਤੋਂ ਪਹਿਲਾਂ ਤਰਲ ਨਾਈਟ੍ਰੋਜਨ ਅਤੇ ਕੀਟਨਾਸ਼ਕਾਂ ਦਾ ਛਿੜਕਾਅ ਰੋਕੋ",
+      "inspectFungal": "ਫੰਗਲ ਬੀਜਾਣੂ ਵਾਧੇ ਲਈ ਖੜ੍ਹੀਆਂ ਝੋਨੇ/ਕਣਕ ਦੀਆਂ ਫ਼ਸਲਾਂ ਦਾ ਨਿਰੀਖਣ ਕਰੋ",
+      "scheduledFertilizer": "ਘੱਟ ਹਵਾ ਵਾਲੇ ਸਵੇਰ ਦੇ ਘੰਟਿਆਂ ਦੌਰਾਨ ਨਿਰਧਾਰਿਤ ਖਾਦ ਲਗਾਓ",
+      "soilMoisture": "ਸਰਗਰਮ ਫ਼ਸਲਾਂ ਲਈ ਮਿਆਰੀ ਮਿੱਟੀ ਨਮੀ ਪੱਧਰ ਬਣਾਈ ਰੱਖੋ",
+      "pestScouting": "ਫ਼ਸਲ ਸੀਮਾਵਾਂ 'ਤੇ ਨਿਯਮਿਤ ਕੀਟ ਨਿਰੀਖਣ ਕਰੋ",
+      "shadeNetting": "ਨੌਜਵਾਨ ਸਬਜ਼ੀ ਨਰਸਰੀ ਬੈੱਡਾਂ ਲਈ ਛਾਂ ਜਾਲ ਤਿਆਰ ਕਰੋ",
+      "dripIrrigation": "ਸਵੇਰੇ ਜਲਦੀ ਤੁਪਕਾ ਸਿੰਚਾਈ ਨਿਰਧਾਰਿਤ ਕਰੋ",
+      "seasonalSowing": "ਸਥਿਰ ਮਿੱਟੀ ਤਾਪਮਾਨ ਦੇ ਆਧਾਰ 'ਤੇ ਮੌਸਮੀ ਬਿਜਾਈ ਦੀ ਯੋਜਨਾ ਬਣਾਓ",
+      "waterStorage": "ਮੌਸਮੀ ਤਬਦੀਲੀਆਂ ਤੋਂ ਪਹਿਲਾਂ ਪਾਣੀ ਭੰਡਾਰਨ ਨੂੰ ਅਨੁਕੂਲ ਬਣਾਓ"
+    }
+  },
+  "solver": {
+    "title": "ਫ੍ਰੈਂਕਨਸਟਾਈਨ ਔਰਬ ਚੈਲੰਜ",
+    "subtitle": "ਅੰਕ ਹਾਸਲ ਕਰਨ ਅਤੇ ਤਰਕਪੂਰਨ ਸੋਚ ਸੁਧਾਰਨ ਲਈ ਐਲਗੋਰਿਦਮਿਕ ਬੁਝਾਰਤਾਂ ਹੱਲ ਕਰੋ",
+    "points": "{{count}} ਅੰਕ",
+    "problemsSolved": "ਹੱਲ ਕੀਤੀਆਂ ਸਮੱਸਿਆਵਾਂ: {{count}}",
+    "tabs": { "solver": "ਏਆਈ ਸੌਲਵਰ", "challenges": "ਚੈਲੰਜ", "tutorial": "ਇਹ ਕਿਵੇਂ ਕੰਮ ਕਰਦਾ ਹੈ" },
+    "input": {
+      "title": "ਸਮੱਸਿਆ ਇਨਪੁੱਟ",
+      "description": "ਲੋੜੀਂਦੇ ਘੱਟੋ-ਘੱਟ ਜਾਦੂਈ ਔਰਬ ਲੱਭਣ ਲਈ ਆਪਣੀਆਂ ਪੋਸ਼ਨ ਰੈਸਿਪੀਆਂ ਅਤੇ ਟੀਚਾ ਪੋਸ਼ਨ ਦਰਜ ਕਰੋ",
+      "recipesLabel": "ਪੋਸ਼ਨ ਰੈਸਿਪੀਆਂ (ਪ੍ਰਤੀ ਲਾਈਨ ਇੱਕ)",
+      "recipesHint": "ਫਾਰਮੈਟ: potion_name = ingredient1 + ingredient2",
+      "targetLabel": "ਟੀਚਾ ਪੋਸ਼ਨ",
+      "solving": "ਹੱਲ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ...",
+      "solve": "ਸਮੱਸਿਆ ਹੱਲ ਕਰੋ"
+    },
+    "solution": {
+      "title": "ਹੱਲ",
+      "description": "ਕਦਮ-ਦਰ-ਕਦਮ ਵੇਰਵੇ ਨਾਲ ਏਆਈ-ਸੰਚਾਲਿਤ ਹੱਲ",
+      "minOrbsLabel": "ਲੋੜੀਂਦੇ ਘੱਟੋ-ਘੱਟ ਜਾਦੂਈ ਔਰਬ",
+      "stepsTitle": "ਹੱਲ ਦੇ ਕਦਮ:",
+      "explanationTitle": "ਵਿਆਖਿਆ",
+      "errorTitle": "ਗਲਤੀ",
+      "emptyState": "ਹੱਲ ਦੇਖਣ ਲਈ ਆਪਣੀ ਸਮੱਸਿਆ ਦਰਜ ਕਰੋ ਅਤੇ \"ਸਮੱਸਿਆ ਹੱਲ ਕਰੋ\" 'ਤੇ ਕਲਿੱਕ ਕਰੋ",
+      "invalidFormat": "ਸਮੱਸਿਆ ਹੱਲ ਕਰਨ ਵਿੱਚ ਅਸਮਰੱਥ। ਕਿਰਪਾ ਕਰਕੇ ਆਪਣਾ ਰੈਸਿਪੀ ਫਾਰਮੈਟ ਜਾਂਚੋ।"
+    },
+    "step": {
+      "top": "{{ingredients}} ਦੀ ਵਰਤੋਂ ਕਰਕੇ {{potion}} ਬਣਾਓ ({{orbs}} ਕੁੱਲ ਔਰਬ)",
+      "nested": "{{ingredients}} ਤੋਂ {{potion}} ਬਣਾਓ ({{orbs}} ਔਰਬ)"
+    },
+    "explanation": {
+      "basicIngredient": "{{potion}} ਇੱਕ ਮੂਲ ਸਮੱਗਰੀ ਹੈ ਜਿਸਦੀ ਕੀਮਤ 1 ਜਾਦੂਈ ਔਰਬ ਹੈ।",
+      "composedBase": "{{potion}} ਬਣਾਉਣ ਲਈ, ਸਾਨੂੰ {{ingredients}} ਦੀ ਲੋੜ ਹੈ।",
+      "basicNote": "ਮੂਲ ਸਮੱਗਰੀ ({{basicIngredients}}) ਦੀ ਕੀਮਤ ਹਰੇਕ 1 ਔਰਬ ਹੈ।",
+      "complexNote": "ਗੁੰਝਲਦਾਰ ਸਮੱਗਰੀ ({{complexIngredients}}) ਨੂੰ ਆਪਣੀ ਖੁਦ ਦੀ ਰੈਸਿਪੀ ਦੀ ਲੋੜ ਹੈ।",
+      "totalNote": "ਕੁੱਲ ਲਾਗਤ ਵਿੱਚ ਸਮੱਗਰੀ ਔਰਬ ਦੇ ਨਾਲ ਸੰਯੋਜਨ ਪ੍ਰਕਿਰਿਆ ਲਈ 1 ਔਰਬ ਸ਼ਾਮਲ ਹੈ, ਜਿਸਦੇ ਨਤੀਜੇ ਵਜੋਂ {{minOrbs}} ਜਾਦੂਈ ਔਰਬ ਹੁੰਦੇ ਹਨ।",
+      "error": "ਗਲਤੀ: {{message}}"
+    },
+    "challenges": {
+      "recipesLabel": "ਰੈਸਿਪੀਆਂ:",
+      "andMore": "... ਅਤੇ ਹੋਰ",
+      "targetLabel": "ਟੀਚਾ:",
+      "solvedBadge": "✓ ਹੱਲ ਹੋ ਗਿਆ",
+      "tryChallenge": "ਇਹ ਚੈਲੰਜ ਅਜ਼ਮਾਓ"
+    },
+    "difficulty": { "easy": "ਆਸਾਨ", "medium": "ਦਰਮਿਆਨਾ", "hard": "ਔਖਾ" },
+    "samples": {
+      "basic": { "title": "ਬੇਸਿਕ ਅਵੇਕਨਿੰਗ ਪੋਸ਼ਨ", "description": "ਘੱਟੋ-ਘੱਟ ਜਾਦੂਈ ਔਰਬ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਇੱਕ ਅਵੇਕਨਿੰਗ ਪੋਸ਼ਨ ਬਣਾਓ" },
+      "complex": { "title": "ਗੁੰਝਲਦਾਰ ਤਬਦੀਲੀ", "description": "ਵਿਚਕਾਰਲੀ ਸਮੱਗਰੀ ਨਾਲ ਬਹੁ-ਪੜਾਅ ਪੋਸ਼ਨ ਨਿਰਮਾਣ" },
+      "master": { "title": "ਮਾਸਟਰ ਅਲਕੈਮਿਸਟ ਚੈਲੰਜ", "description": "ਕਈ ਰਸਤਿਆਂ ਨਾਲ ਅੰਤਿਮ ਅੰਮ੍ਰਿਤ ਬਣਾਓ" }
+    },
+    "tutorial": {
+      "title": "ਫ੍ਰੈਂਕਨਸਟਾਈਨ ਔਰਬ ਚੈਲੰਜ ਕਿਵੇਂ ਕੰਮ ਕਰਦਾ ਹੈ",
+      "subtitle": "ਐਲਗੋਰਿਦਮ ਅਤੇ ਸਮੱਸਿਆ-ਹੱਲ ਕਰਨ ਦੇ ਤਰੀਕੇ ਨੂੰ ਸਮਝਣਾ",
+      "overviewTitle": "ਸਮੱਸਿਆ ਸੰਖੇਪ",
+      "overviewText": "ਫ੍ਰੈਂਕਨਸਟਾਈਨ ਔਰਬ ਚੈਲੰਜ ਗ੍ਰਾਫ ਥਿਊਰੀ ਅਤੇ ਡਾਇਨਾਮਿਕ ਪ੍ਰੋਗਰਾਮਿੰਗ ਤੋਂ ਪ੍ਰੇਰਿਤ ਹੈ। ਤੁਹਾਨੂੰ ਪੋਸ਼ਨ ਰੈਸਿਪੀਆਂ ਦਾ ਇੱਕ ਸੈੱਟ (ਇੱਕ ਨਿਰਭਰਤਾ ਗ੍ਰਾਫ ਵਾਂਗ) ਦਿੱਤਾ ਜਾਂਦਾ ਹੈ ਅਤੇ ਟੀਚਾ ਪੋਸ਼ਨ ਬਣਾਉਣ ਲਈ ਲੋੜੀਂਦੇ ਘੱਟੋ-ਘੱਟ ਜਾਦੂਈ ਔਰਬ ਦੀ ਗਿਣਤੀ ਲੱਭਣੀ ਹੁੰਦੀ ਹੈ।",
+      "approachTitle": "ਐਲਗੋਰਿਦਮ ਤਰੀਕਾ",
+      "approach1": "ਨਿਰਭਰਤਾ ਗ੍ਰਾਫ ਬਣਾਉਣ ਲਈ ਰੈਸਿਪੀਆਂ ਪਾਰਸ ਕਰੋ",
+      "approach2": "ਉਪ-ਸਮੱਸਿਆਵਾਂ ਦੀ ਮੁੜ ਗਣਨਾ ਤੋਂ ਬਚਣ ਲਈ ਮੈਮੋਇਜ਼ੇਸ਼ਨ ਦੀ ਵਰਤੋਂ ਕਰੋ",
+      "approach3": "ਅਨੁਕੂਲਨ ਨਾਲ ਡੂੰਘਾਈ-ਪਹਿਲਾਂ ਖੋਜ ਲਾਗੂ ਕਰੋ",
+      "approach4": "ਘੱਟੋ-ਘੱਟ ਔਰਬ ਅਤੇ ਸਰਵੋਤਮ ਰਸਤਾ ਵਾਪਸ ਕਰੋ",
+      "recipeFormatTitle": "ਰੈਸਿਪੀ ਫਾਰਮੈਟ",
+      "educationalTitle": "ਵਿਦਿਅਕ ਮੁੱਲ",
+      "educationalIntro": "ਇਹ ਚੈਲੰਜ ਕਿਸਾਨਾਂ ਅਤੇ ਵਿਦਿਆਰਥੀਆਂ ਨੂੰ ਸਮਝਣ ਵਿੱਚ ਮਦਦ ਕਰਦਾ ਹੈ:",
+      "eduPoint1": "ਗ੍ਰਾਫ ਥਿਊਰੀ ਅਤੇ ਨਿਰਭਰਤਾ ਹੱਲ",
+      "eduPoint2": "ਡਾਇਨਾਮਿਕ ਪ੍ਰੋਗਰਾਮਿੰਗ ਅਨੁਕੂਲਨ",
+      "eduPoint3": "ਸਰੋਤ ਵੰਡ ਅਤੇ ਯੋਜਨਾਬੰਦੀ",
+      "eduPoint4": "ਤਰਕਪੂਰਨ ਸੋਚ ਅਤੇ ਸਮੱਸਿਆ ਵਿਭਾਜਨ",
+      "realWorldTitle": "ਅਸਲ-ਸੰਸਾਰ ਉਪਯੋਗ",
+      "realWorldText": "ਇਸੇ ਤਰ੍ਹਾਂ ਦੇ ਐਲਗੋਰਿਦਮ ਆਧੁਨਿਕ ਖੇਤੀਬਾੜੀ ਵਿੱਚ ਫ਼ਸਲ ਚੱਕਰ ਯੋਜਨਾਬੰਦੀ, ਸਪਲਾਈ ਚੇਨ ਅਨੁਕੂਲਨ ਅਤੇ ਸਰੋਤ ਵੰਡ ਵਿੱਚ ਵਰਤੇ ਜਾਂਦੇ ਹਨ!"
+    }
+  },
+  "soil": {
+    "headerTitle": "ਗਤੀਸ਼ੀਲ ਮਿੱਟੀ ਸਿਹਤ ਇੰਟੈਲੀਜੈਂਸ ਸਿਸਟਮ",
+    "headerSubtitle": "ਪੰਜਾਬ ਦੇ ਸਾਰੇ 23 ਜ਼ਿਲ੍ਹਿਆਂ ਵਿੱਚ ਰੀਅਲ-ਟਾਈਮ ਆਈਸੀਏਆਰ ਅਤੇ ਮਿੱਟੀ ਸਿਹਤ ਕਾਰਡ ਵਿਸ਼ਲੇਸ਼ਣ",
+    "districtLabel": "ਜ਼ਿਲ੍ਹਾ:",
+    "refreshDatasets": "ਸਰਕਾਰੀ ਡਾਟਾਸੈੱਟ ਤਾਜ਼ਾ ਕਰੋ",
+    "syncingEtl": "ਈਟੀਐਲ ਸਿੰਕ ਹੋ ਰਿਹਾ ਹੈ...",
+    "toast": {
+      "syncSuccess": "ਪੰਜਾਬ ਦੇ ਸਾਰੇ 23 ਜ਼ਿਲ੍ਹਿਆਂ ਵਿੱਚ ਸਰਕਾਰੀ ਮਿੱਟੀ ਸਿਹਤ ਡਾਟਾਸੈੱਟ ਤਾਜ਼ਾ ਕੀਤੇ ਗਏ!",
+      "syncError": "ਡਾਟਾਸੈੱਟ ਸਿੰਕ ਟਰਿੱਗਰ ਕਰਨ ਵਿੱਚ ਅਸਫਲ।",
+      "fertilizerEmptyError": "ਕਿਰਪਾ ਕਰਕੇ ਘੱਟੋ-ਘੱਟ ਇੱਕ ਖਾਦ ਮਾਤਰਾ ਦਰਜ ਕਰੋ (N, P, ਜਾਂ K)।",
+      "fertilizerSuccess": "{{district}} ਲਈ ਖਾਦ ਲੌਗ ਦਰਜ ਕੀਤਾ ਗਿਆ!",
+      "fertilizerError": "ਖਾਦ ਲੌਗ ਦਰਜ ਕਰਨ ਵਿੱਚ ਅਸਫਲ।"
+    },
+    "cards": {
+      "soilHealthScore": "ਮਿੱਟੀ ਸਿਹਤ ਸਕੋਰ",
+      "icarBenchmark": "ਆਈਸੀਏਆਰ ਪ੍ਰਮਾਣਿਤ ਬੈਂਚਮਾਰਕ",
+      "soilTypeTexture": "ਮਿੱਟੀ ਕਿਸਮ ਅਤੇ ਬਣਤਰ",
+      "soilPhSalinity": "ਮਿੱਟੀ pH ਅਤੇ ਖਾਰਾਪਣ (EC)",
+      "organicCarbon": "ਜੈਵਿਕ ਕਾਰਬਨ (OC)",
+      "organicCarbonTarget": "ਟੀਚਾ: ਸਰਵੋਤਮ ਉਪਜਾਊ ਸ਼ਕਤੀ ਲਈ >0.75%"
+    },
+    "tabs": {
+      "overview": "ਪੋਸ਼ਕ ਤੱਤ ਸੰਖੇਪ",
+      "history": "ਇਤਿਹਾਸਕ ਰੁਝਾਨ",
+      "recommendations": "ਏਆਈ ਖਾਦ ਅਤੇ ਫ਼ਸਲ ਸਲਾਹ",
+      "compare": "ਜ਼ਿਲ੍ਹਾ ਤੁਲਨਾ"
+    },
+    "overview": {
+      "macronutrientsTitle": "ਮੈਕਰੋਨਿਊਟ੍ਰੀਐਂਟਸ (NPK) ਬਨਾਮ ਬੈਂਚਮਾਰਕ",
+      "macronutrientsDesc": "{{district}} ਵਿੱਚ ਉਪਲਬਧ N, P, K ਪੱਧਰ (kg/ha)",
+      "radarTitle": "ਪੋਸ਼ਕ ਤੱਤ ਸੰਤੁਲਨ ਰਡਾਰ",
+      "radarDesc": "ਬਹੁ-ਪੈਰਾਮੀਟਰ ਮਿੱਟੀ ਉਪਜਾਊ ਸ਼ਕਤੀ ਸੂਚਕਾਂਕ",
+      "currentLevel": "ਮੌਜੂਦਾ ਪੱਧਰ",
+      "idealBenchmark": "ਆਦਰਸ਼ ਬੈਂਚਮਾਰਕ",
+      "micronutrientsTitle": "ਜ਼ਰੂਰੀ ਸੂਖਮ ਪੋਸ਼ਕ ਤੱਤ ਅਤੇ ਸੈਕੰਡਰੀ ਖਣਿਜ ਵੇਰਵਾ",
+      "nitrogen": "ਨਾਈਟ੍ਰੋਜਨ (N)",
+      "phosphorus": "ਫਾਸਫੋਰਸ (P)",
+      "potassium": "ਪੋਟਾਸ਼ੀਅਮ (K)",
+      "sulphur": "ਸਲਫਰ (S)",
+      "zinc": "ਜ਼ਿੰਕ (Zn)",
+      "iron": "ਆਇਰਨ (Fe)",
+      "copper": "ਕਾਪਰ (Cu)",
+      "manganese": "ਮੈਂਗਨੀਜ਼",
+      "boron": "ਬੋਰਾਨ (B)",
+      "calcium": "ਕੈਲਸ਼ੀਅਮ (Ca)",
+      "magnesium": "ਮੈਗਨੀਸ਼ੀਅਮ"
+    },
+    "history": {
+      "title": "ਇਤਿਹਾਸਕ ਮਿੱਟੀ ਸਿਹਤ ਅਤੇ NPK ਰੁਝਾਨ",
+      "description": "{{district}} ਲਈ ਬਹੁ-ਮਾਸਿਕ ਤਰੱਕੀ",
+      "chart": {
+        "nitrogen": "ਨਾਈਟ੍ਰੋਜਨ (kg/ha)",
+        "phosphorus": "ਫਾਸਫੋਰਸ (kg/ha)",
+        "potassium": "ਪੋਟਾਸ਼ੀਅਮ (kg/ha)",
+        "healthScore": "ਸਿਹਤ ਸਕੋਰ"
+      },
+      "loggerTitle": "ਨਵਾਂ ਖਾਦ ਐਪਲੀਕੇਸ਼ਨ ਲੌਗ ਦਰਜ ਕਰੋ",
+      "nitrogenAdded": "ਸ਼ਾਮਲ ਕੀਤਾ ਨਾਈਟ੍ਰੋਜਨ (kg/acre)",
+      "phosphorusAdded": "ਸ਼ਾਮਲ ਕੀਤਾ ਫਾਸਫੋਰਸ (kg/acre)",
+      "potassiumAdded": "ਸ਼ਾਮਲ ਕੀਤਾ ਪੋਟਾਸ਼ੀਅਮ (kg/acre)",
+      "applicationDate": "ਲਾਗੂ ਕਰਨ ਦੀ ਮਿਤੀ",
+      "recordLogEntry": "ਲੌਗ ਐਂਟਰੀ ਦਰਜ ਕਰੋ"
+    },
+    "recommendations": {
+      "fertilizerDosageTitle": "ਗਤੀਸ਼ੀਲ ਏਆਈ ਖਾਦ ਖੁਰਾਕ (kg/acre)",
+      "fertilizerDosageDesc": "ਆਈਸੀਏਆਰ ਸਿਫਾਰਸ਼ਾਂ ਦੇ ਆਧਾਰ 'ਤੇ {{district}} ਲਈ ਅਨੁਕੂਲਿਤ",
+      "irrigationTitle": "ਓਪਨ-ਮੀਟਿਓ ਮੌਸਮ ਅਤੇ ਸਿੰਚਾਈ ਸਮਾਂ-ਸਾਰਣੀ",
+      "recommendedIrrigation": "ਸਿਫਾਰਸ਼ੀ ਸਿੰਚਾਈ",
+      "liveTemperature": "ਲਾਈਵ ਤਾਪਮਾਨ",
+      "soilMoisture": "ਮਿੱਟੀ ਦੀ ਨਮੀ",
+      "topRecommendedCrop": "ਚੋਟੀ ਦੀ ਸਿਫਾਰਸ਼ੀ ਫ਼ਸਲ"
+    },
+    "compare": {
+      "title": "ਜ਼ਿਲ੍ਹਾ ਸਾਈਡ-ਬਾਈ-ਸਾਈਡ ਮਿੱਟੀ ਤੁਲਨਾ",
+      "description": "ਕਿਸੇ ਵੀ 2 ਪੰਜਾਬ ਜ਼ਿਲ੍ਹਿਆਂ ਵਿਚਕਾਰ ਮਿੱਟੀ ਸਿਹਤ ਪੈਰਾਮੀਟਰਾਂ ਦੀ ਤੁਲਨਾ ਕਰੋ",
+      "vs": "ਬਨਾਮ",
+      "soilType": "ਮਿੱਟੀ ਕਿਸਮ:",
+      "ph": "pH:",
+      "organicCarbon": "ਜੈਵਿਕ ਕਾਰਬਨ:",
+      "nitrogen": "ਨਾਈਟ੍ਰੋਜਨ:",
+      "recommendedCrop": "ਸਿਫਾਰਸ਼ੀ ਫ਼ਸਲ:",
+      "loading": "ਤੁਲਨਾ ਮੈਟ੍ਰਿਕਸ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
+    }
+  },
+  "crop": {
+    "headerTitle": "ਏਆਈ ਫ਼ਸਲ ਸਿਫਾਰਸ਼ ਅਤੇ ਖੇਤੀ ਸਲਾਹ",
+    "headerSubtitle": "ਲਾਈਵ ਮਿੱਟੀ NPK, ਰੀਅਲ-ਟਾਈਮ ਓਪਨ-ਮੀਟਿਓ ਜਲਵਾਯੂ, ਅਤੇ ਆਈਸੀਏਆਰ ਖੇਤੀ ਮਿਆਰਾਂ ਨੂੰ ਜੋੜਦਾ ਡਾਟਾ-ਸੰਚਾਲਿਤ ਫ਼ਸਲ ਚੋਣ",
+    "seasonLabel": "ਮੌਸਮ: {{season}}",
+    "seasons": { "Rabi": "ਹਾੜੀ", "Kharif": "ਸਾਉਣੀ", "Zaid": "ਜ਼ੈਦ" },
+    "liveBadge": "ਲਾਈਵ",
+    "estimatedBadge": "ਅਨੁਮਾਨਿਤ",
+    "estimatedTooltip": "ਲਾਈਵ ਸਿਫਾਰਸ਼ ਇੰਜਣ ਤੱਕ ਪਹੁੰਚ ਨਹੀਂ ਹੋ ਸਕੀ, ਇਸ ਲਈ ਇਹ ਇਸ ਜ਼ਿਲ੍ਹੇ ਦੇ ਕਿਊਰੇਟਿਡ ਮਿੱਟੀ ਬੇਸਲਾਈਨ ਤੋਂ ਸਥਾਨਕ ਤੌਰ 'ਤੇ ਗਿਣਿਆ ਗਿਆ ਹੈ।",
+    "districtLabel": "ਜ਼ਿਲ੍ਹਾ:",
+    "advisoryTitle": "{{district}} ਲਈ ਏਆਈ ਖੇਤੀ ਸਲਾਹਕਾਰ",
+    "advisory": "ਮੌਜੂਦਾ ਆਈਸੀਏਆਰ ਮਿਆਰਾਂ ਦੇ ਆਧਾਰ 'ਤੇ, {{district}} ਦੀ ਮਿੱਟੀ pH ({{ph}}), ਜੈਵਿਕ ਕਾਰਬਨ ({{oc}}%), ਉਪਲਬਧ ਨਾਈਟ੍ਰੋਜਨ ({{nitrogen}} kg/ha), ਅਤੇ ਲਾਈਵ ਮੌਸਮ ਹਾਲਾਤ ({{temp}}°C, {{moisture}}% ਨਮੀ) ਨੂੰ ਦੇਖਦੇ ਹੋਏ, ਇਸ {{season}} ਮੌਸਮ ਵਿੱਚ {{crop}} ਦੀ ਖੇਤੀ ਲਈ {{score}}/100 ਅਨੁਕੂਲਤਾ ਸਕੋਰ ਨਾਲ ਬਹੁਤ ਸਿਫਾਰਸ਼ ਕੀਤੀ ਜਾਂਦੀ ਹੈ। ਸੰਭਾਵਿਤ ਝਾੜ {{yield}} ਹੈ ਜਿਸ ਵਿੱਚ {{risk}} ਜੋਖਮ ਹੈ।",
+    "topCropBadge": "#1 ਚੋਟੀ ਦੀ ਸਿਫਾਰਸ਼ੀ ਫ਼ਸਲ",
+    "suitabilityScore": "ਅਨੁਕੂਲਤਾ ਸਕੋਰ",
+    "confidenceIndex": "ਭਰੋਸਾ ਸੂਚਕਾਂਕ",
+    "aiVerified": "ਏਆਈ ਪ੍ਰਮਾਣਿਤ",
+    "expectedMarketPrice": "ਸੰਭਾਵਿਤ ਬਾਜ਼ਾਰ ਮੁੱਲ",
+    "demandLabel": "ਮੰਗ: {{demand}}",
+    "tabs": {
+      "rankings": "ਚੋਟੀ ਦੀਆਂ 5 ਫ਼ਸਲ ਰੈਂਕਿੰਗਾਂ",
+      "visualizations": "ਅਨੁਕੂਲਤਾ ਚਾਰਟ",
+      "timeline": "ਫ਼ਸਲ ਵਾਧਾ ਪੜਾਅ ਸਮਾਂਰੇਖਾ",
+      "disease": "ਰੋਗ ਅਤੇ ਕੀਟ ਅਲਰਟ"
+    },
+    "rankings": {
+      "expectedYield": "ਸੰਭਾਵਿਤ ਝਾੜ",
+      "waterRequirement": "ਪਾਣੀ ਦੀ ਲੋੜ",
+      "fertilizerDose": "ਖਾਦ ਖੁਰਾਕ",
+      "marketPriceTrend": "ਬਾਜ਼ਾਰ ਮੁੱਲ ਰੁਝਾਨ",
+      "riskProfile": "ਜੋਖਮ ਪ੍ਰੋਫਾਈਲ",
+      "riskSuffix": "{{risk}} ਜੋਖਮ",
+      "aiModelConfidence": "ਏਆਈ ਮਾਡਲ ਭਰੋਸਾ"
+    },
+    "visualizations": {
+      "chartTitle": "ਫ਼ਸਲ ਅਨੁਕੂਲਤਾ ਸਕੋਰ ਤੁਲਨਾ (0-100)",
+      "chartDesc": "{{district}} ਲਈ ਬਹੁ-ਕਾਰਕ ਸਕੋਰ ਰੈਂਕਿੰਗ",
+      "suitabilityScoreLegend": "ਅਨੁਕੂਲਤਾ ਸਕੋਰ",
+      "profitabilityIndexLegend": "ਲਾਭਕਾਰੀ ਸੂਚਕਾਂਕ",
+      "factorAnalysisTitle": "ਚੋਟੀ ਦੀ ਫ਼ਸਲ ਕਾਰਕ ਵਿਸ਼ਲੇਸ਼ਣ (ਲਾਈਵ ਗਣਨਾ)",
+      "factorAnalysisDesc": "{{crop}} ਲਈ ਅਸਲ ਖੇਤੀ ਉਪ-ਸਕੋਰ",
+      "theTopCrop": "ਚੋਟੀ ਦੀ ਫ਼ਸਲ",
+      "factors": {
+        "soilMatch": "ਮਿੱਟੀ ਮੇਲ",
+        "nutrientBalance": "ਪੋਸ਼ਕ ਤੱਤ ਸੰਤੁਲਨ",
+        "climateSuitability": "ਜਲਵਾਯੂ ਅਨੁਕੂਲਤਾ",
+        "seasonalFit": "ਮੌਸਮੀ ਫਿੱਟ",
+        "marketPotential": "ਬਾਜ਼ਾਰ ਸੰਭਾਵਨਾ"
+      }
+    },
+    "timeline": {
+      "title": "ਖੇਤੀ ਵਾਧਾ ਸਮਾਂਰੇਖਾ ({{crop}})",
+      "description": "{{crop}} ਦੇ ਅਸਲ {{days}}-ਦਿਨ ਵਿਕਾਸ ਚੱਕਰ ਤੋਂ ਆਕਾਰ ਦਿੱਤੇ ਪੜਾਅ, ਇਸ ਜ਼ਿਲ੍ਹੇ ਦੇ ਲਾਈਵ ਮਿੱਟੀ ਪੋਸ਼ਕ ਤੱਤਾਂ ਤੋਂ ਗਿਣੀ ਗਈ ਖੁਰਾਕ ਨਾਲ",
+      "dayRange": "ਦਿਨ {{start}} - {{end}}",
+      "waterFooter": "{{crop}} ਲਈ ਕੁੱਲ ਮੌਸਮੀ ਪਾਣੀ ਦੀ ਲੋੜ: {{water}} {{days}} ਦਿਨਾਂ ਵਿੱਚ — ਉੱਪਰ ਸਿੰਚਾਈ ਸਮਾਂ-ਸਾਰਣੀ ਇਸ ਅੰਕੜੇ ਤੋਂ ਲਈ ਗਈ ਹੈ, ਨਾ ਕਿ ਕਿਸੇ ਸਥਿਰ ਟੈਂਪਲੇਟ ਤੋਂ।",
+      "topCrop": "ਚੋਟੀ ਦੀ ਫ਼ਸਲ"
+    },
+    "disease": {
+      "alertTitle": "ਮੌਸਮ ਅਤੇ ਮਿੱਟੀ ਆਧਾਰਿਤ ਰੋਗ ਜੋਖਮ ਪੂਰਵ ਅਨੁਮਾਨ",
+      "alertDescription": "ਹੇਠਾਂ ਦਿੱਤੇ ਜੋਖਮ ਪੱਧਰ ਲਾਈਵ ਤਾਪਮਾਨ ({{temp}}°C), ਨਮੀ ({{humidity}}%), ਵਰਖਾ ({{rainfall}}mm) ਅਤੇ {{district}} ਲਈ ਮਿੱਟੀ ਨਾਈਟ੍ਰੋਜਨ ({{nitrogen}} kg/ha) ਤੋਂ ਗਿਣੇ ਗਏ ਹਨ। ਕੋਈ ਵੀ ਰਸਾਇਣ ਲਗਾਉਣ ਤੋਂ ਪਹਿਲਾਂ ਹਮੇਸ਼ਾ ਆਪਣੇ ਸਥਾਨਕ ਖੇਤੀ ਵਿਸਥਾਰ ਅਧਿਕਾਰੀ ਨਾਲ ਪੁਸ਼ਟੀ ਕਰੋ।",
+      "riskSuffix": "{{risk}} ਜੋਖਮ",
+      "pesticideLabel": "ਕੀਟਨਾਸ਼ਕ:",
+      "organicLabel": "ਜੈਵਿਕ ਵਿਕਲਪ:",
+      "precautionLabel": "ਸਾਵਧਾਨੀ:",
+      "noData": "ਇਸ ਫ਼ਸਲ ਲਈ ਅਜੇ ਤੱਕ ਕੋਈ ਆਮ ਰੋਗ/ਕੀਟ ਡਾਟਾ ਉਪਲਬਧ ਨਹੀਂ ਹੈ।",
+      "riskLevels": { "High": "ਉੱਚ", "Medium": "ਦਰਮਿਆਨਾ", "Low": "ਘੱਟ" }
+    }
+  },
+  "roadmap": {
+    "aiTwinBadge": "ਏਆਈ ਡਿਜੀਟਲ ਫਾਰਮ ਟਵਿਨ ਸਰਗਰਮ",
+    "districtVillageLabel": "ਜ਼ਿਲ੍ਹਾ: {{district}} • ਪਿੰਡ: {{village}}",
+    "pageTitle": "🌾 ਮੇਰੀ ਖੇਤ ਯੋਜਨਾ ਅਤੇ ਬੁੱਧੀਮਾਨ ਸਲਾਹ",
+    "farmerLine": "ਕਿਸਾਨ: {{name}} • ਜ਼ਮੀਨ: {{acres}} ਏਕੜ ({{fields}} ਖੇਤ) • ਫ਼ਸਲ: {{crop}}",
+    "editProfile": "ਪ੍ਰੋਫਾਈਲ ਅਤੇ ਟੀਚੇ ਸੰਪਾਦਿਤ ਕਰੋ",
+    "checkIn": "ਦਿਨ ਦੇ ਅੰਤ ਦੀ ਜਾਂਚ",
+    "profileDialog": {
+      "title": "ਕਿਸਾਨ ਪ੍ਰੋਫਾਈਲ ਸੈੱਟਅੱਪ",
+      "description": "ਇੱਕ ਵਿਲੱਖਣ ਏਆਈ ਰੋਡਮੈਪ ਬਣਾਉਣ ਲਈ ਆਪਣੇ ਖੇਤ ਦੇ ਵੇਰਵੇ ਅਨੁਕੂਲਿਤ ਕਰੋ।",
+      "farmerName": "ਕਿਸਾਨ ਦਾ ਨਾਮ",
+      "district": "ਜ਼ਿਲ੍ਹਾ",
+      "village": "ਪਿੰਡ",
+      "landArea": "ਕੁੱਲ ਜ਼ਮੀਨ ਖੇਤਰ (ਏਕੜ)",
+      "currentCrop": "ਮੌਜੂਦਾ ਫ਼ਸਲ",
+      "growthStage": "ਵਾਧਾ ਪੜਾਅ",
+      "save": "ਪ੍ਰੋਫਾਈਲ ਸੇਵ ਕਰੋ ਅਤੇ ਬੈਕਐਂਡ ਰੋਡਮੈਪ ਤਾਜ਼ਾ ਕਰੋ"
+    },
+    "diaryDialog": {
+      "title": "ਰੋਜ਼ਾਨਾ ਡਿਜੀਟਲ ਫਾਰਮ ਡਾਇਰੀ",
+      "description": "ਆਪਣੇ ਏਆਈ ਰੋਡਮੈਪ ਨੂੰ ਗਤੀਸ਼ੀਲ ਤੌਰ 'ਤੇ ਅੱਪਡੇਟ ਕਰਨ ਲਈ ਅੱਜ ਤੁਹਾਡੇ ਖੇਤ ਵਿੱਚ ਕੀ ਹੋਇਆ, ਦਰਜ ਕਰੋ।",
+      "irrigatedQuestion": "ਕੀ ਤੁਸੀਂ ਅੱਜ ਸਿੰਚਾਈ ਕੀਤੀ?",
+      "fertilizerQuestion": "ਕੀ ਤੁਸੀਂ ਅੱਜ ਖਾਦ ਪਾਈ?",
+      "fertilizerDetailsLabel": "ਖਾਦ ਵੇਰਵੇ (ਮਾਤਰਾ ਅਤੇ ਕਿਸਮ)",
+      "fertilizerPlaceholder": "ਜਿਵੇਂ 25kg ਨਿੰਮ ਯੂਰੀਆ",
+      "pestsQuestion": "ਕੀਟ ਜਾਂ ਰੋਗ ਦੇ ਲੱਛਣ ਦੇਖੇ ਗਏ?",
+      "laborersLabel": "ਕੰਮ ਕਰਨ ਵਾਲੇ ਮਜ਼ਦੂਰਾਂ ਦੀ ਗਿਣਤੀ",
+      "notesLabel": "ਵਾਧੂ ਖੇਤ ਨੋਟਸ",
+      "notesPlaceholder": "ਜਿਵੇਂ ਫ਼ਸਲ ਤੇਜ਼ੀ ਨਾਲ ਹਰੀ ਹੋ ਰਹੀ ਹੈ",
+      "submit": "ਰੋਜ਼ਾਨਾ ਚੈੱਕ-ਇਨ ਸਬਮਿਟ ਕਰੋ"
+    },
+    "toast": {
+      "profileUpdated": "ਖੇਤ ਪ੍ਰੋਫਾਈਲ ਅੱਪਡੇਟ ਕੀਤੀ ਗਈ!",
+      "profileUpdateFailed": "ਪ੍ਰੋਫਾਈਲ ਅੱਪਡੇਟ ਕਰਨ ਵਿੱਚ ਅਸਫਲ।",
+      "diarySuccess": "ਦਿਨ ਦੇ ਅੰਤ ਦੀ ਜਾਂਚ ਦਰਜ ਕੀਤੀ ਗਈ! ਅਨੁਕੂਲ ਰੋਡਮੈਪ ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ।",
+      "diaryFailed": "ਡਾਇਰੀ ਸਬਮਿਟ ਕਰਨ ਵਿੱਚ ਅਸਫਲ।",
+      "taskStatusSuccess": "ਕੰਮ ਨੂੰ {{status}} ਵਜੋਂ ਚਿੰਨ੍ਹਿਤ ਕੀਤਾ ਗਿਆ! ਅਨੁਕੂਲ ਯੋਜਨਾ ਮੁੜ ਗਿਣੀ ਗਈ।",
+      "taskStatusFailed": "ਕੰਮ ਦੀ ਸਥਿਤੀ ਅੱਪਡੇਟ ਕਰਨ ਵਿੱਚ ਅਸਫਲ।",
+      "backendError": "ਬੈਕਐਂਡ ਏਪੀਆਈ ਨਾਲ ਜੁੜਨ ਵਿੱਚ ਗਲਤੀ।"
+    },
+    "filters": {
+      "label": "ਗਤੀਸ਼ੀਲ ਏਪੀਆਈ ਫਿਲਟਰ:",
+      "district": "ਜ਼ਿਲ੍ਹਾ:",
+      "field": "ਖੇਤ:",
+      "allFields": "ਸਾਰੇ ਖੇਤ",
+      "field1": "ਖੇਤ 1 (ਸਾਹਮਣੇ ਦਾ ਪਲਾਟ)",
+      "field2": "ਖੇਤ 2 (ਨਹਿਰ ਕਿਨਾਰੇ)",
+      "crop": "ਫ਼ਸਲ:",
+      "allCrops": "ਸਾਰੀਆਂ ਫ਼ਸਲਾਂ"
+    },
+    "dashboard": {
+      "soilWaterBalance": "ਮਿੱਟੀ ਜਲ ਸੰਤੁਲਨ",
+      "nutrientAvailability": "ਪੋਸ਼ਕ ਤੱਤ ਉਪਲਬਧਤਾ",
+      "expectedTotalYield": "ਸੰਭਾਵਿਤ ਕੁੱਲ ਝਾੜ",
+      "aiConfidence": "ਏਆਈ ਭਰੋਸਾ: {{value}}%",
+      "expectedNetProfit": "ਸੰਭਾਵਿਤ ਸ਼ੁੱਧ ਲਾਭ",
+      "harvestCountdown": "ਵਾਢੀ ਤੱਕ ਬਾਕੀ: {{days}} ਦਿਨ"
+    },
+    "tabs": {
+      "planner": "ਅੱਜ ਦੀ ਖੇਤ ਯੋਜਨਾ",
+      "upcoming": "ਆਉਣ ਵਾਲੇ ਕੰਮ",
+      "alerts": "ਏਆਈ ਸਮਾਰਟ ਅਲਰਟ",
+      "timeline": "ਰੋਡਮੈਪ ਸਮਾਂਰੇਖਾ",
+      "charts": "ਏਪੀਆਈ ਚਾਰਟ",
+      "assistant": "ਏਆਈ ਸਹਾਇਕ"
+    },
+    "planner": {
+      "title": "ਅੱਜ ਦੀ ਕਾਰਵਾਈਯੋਗ ਖੇਤ ਯੋਜਨਾ",
+      "fetchedFor": "{{district}} ਵਿੱਚ {{crop}} ਲਈ ਗਤੀਸ਼ੀਲ ਤੌਰ 'ਤੇ ਪ੍ਰਾਪਤ ਕੀਤਾ ਗਿਆ",
+      "tasksReturned": "{{count}} ਕੰਮ ਵਾਪਸ ਕੀਤੇ ਗਏ",
+      "noTasks": "ਅੱਜ ਲਈ ਕੋਈ ਸਰਗਰਮ ਕੰਮ ਨਹੀਂ। ਕੱਲ੍ਹ ਦੁਬਾਰਾ ਜਾਂਚ ਕਰੋ!",
+      "prioritySuffix": "{{priority}} ਤਰਜੀਹ",
+      "dueLabel": "ਦੇਣਾ: {{deadline}}",
+      "aiContextLabel": "ਏਆਈ ਸੰਦਰਭ ਅਤੇ ਕਾਰਨ:",
+      "expectedBenefitLabel": "ਸੰਭਾਵਿਤ ਲਾਭ:",
+      "consequenceLabel": "⚠️ ਛੱਡਣ 'ਤੇ ਨਤੀਜਾ: {{risk}}",
+      "completedBadge": "✓ ਪੂਰਾ",
+      "markCompleted": "ਪੂਰਾ ਚਿੰਨ੍ਹਿਤ ਕਰੋ",
+      "skip": "ਛੱਡੋ",
+      "delay": "ਦੇਰੀ ਕਰੋ"
+    },
+    "upcoming": { "title": "ਆਉਣ ਵਾਲੇ ਰੋਡਮੈਪ ਕੰਮ" },
+    "alerts": {
+      "title": "ਏਆਈ ਸਮਾਰਟ ਅਲਰਟ",
+      "whyLabel": "ਕਿਉਂ:",
+      "recommendedActionLabel": "ਸਿਫਾਰਸ਼ੀ ਕਾਰਵਾਈ:",
+      "impactLabel": "ਨਜ਼ਰਅੰਦਾਜ਼ ਕਰਨ 'ਤੇ ਕੀ ਹੋਵੇਗਾ:"
+    },
+    "timeline": {
+      "title": "14-ਪੜਾਅ ਅਨੁਕੂਲ ਜੀਵਨ ਚੱਕਰ ਸਮਾਂਰੇਖਾ",
+      "phaseLabel": "ਪੜਾਅ {{num}}: {{name}}",
+      "aiStrategyLabel": "ਏਆਈ ਰਣਨੀਤੀ:"
+    },
+    "charts": {
+      "taskCompletionTitle": "ਕੰਮ ਪੂਰਨਤਾ ਰੁਝਾਨ",
+      "completedLegend": "ਪੂਰਾ",
+      "targetLegend": "ਟੀਚਾ",
+      "yieldTrendTitle": "ਝਾੜ ਪੂਰਵ ਅਨੁਮਾਨ ਰੁਝਾਨ (ਕੁਇੰਟਲ/ਏਕੜ)",
+      "predictedYieldLegend": "ਅਨੁਮਾਨਿਤ ਝਾੜ (q/acre)"
+    },
+    "assistant": {
+      "title": "ਏਆਈ ਖੇਤੀਬਾੜੀ ਵਿਗਿਆਨੀ ਸਹਾਇਕ",
+      "inputPlaceholder": "ਆਪਣਾ ਖੇਤੀ ਸਵਾਲ ਟਾਈਪ ਕਰੋ...",
+      "greeting": "ਸਤ ਸ੍ਰੀ ਅਕਾਲ {{name}}! ਮੈਂ {{district}} ਲਈ ਤੁਹਾਡਾ ਏਆਈ ਖੇਤੀਬਾੜੀ ਸਹਾਇਕ ਹਾਂ। ਮੈਂ ਅੱਜ ਤੁਹਾਡੀ {{crop}} ਖੇਤੀ ਵਿੱਚ ਕਿਵੇਂ ਮਾਰਗਦਰਸ਼ਨ ਕਰ ਸਕਦਾ ਹਾਂ?",
+      "waterBalanceAnswer": "{{name}} ਲਈ ਬੈਕਐਂਡ ਮੈਟ੍ਰਿਕਸ ਦੇ ਆਧਾਰ 'ਤੇ, ਮਿੱਟੀ ਦੀ ਨਮੀ {{value}}% ਹੈ। ਸਭ ਕੁਝ ਸਰਵੋਤਮ ਹੈ।",
+      "irrigateAnswer": "{{district}} ਲਈ ਲਾਈਵ ਮੌਸਮ ਏਪੀਆਈ ਡਾਟੇ ਦੇ ਆਧਾਰ 'ਤੇ, ਅਗਲੀ ਸਿੰਚਾਈ 3 ਦਿਨਾਂ ਵਿੱਚ ਸਿਫਾਰਸ਼ੀ ਹੈ।",
+      "fertilizerAnswer": "ਤੁਹਾਡੀ ਫ਼ਸਲ ਇਸ ਵੇਲੇ {{stage}} ਵਿੱਚ ਹੈ। ਟਾਪ-ਡਰੈਸਿੰਗ ਯੂਰੀਆ ਐਪਲੀਕੇਸ਼ਨ ਦੇਣੀ ਬਾਕੀ ਹੈ।",
+      "todayAnswer": "ਅੱਜ ਦੀ ਤਰਜੀਹ ਹੈ: {{task}}।",
+      "defaultTaskName": "ਖੇਤ ਦੀ ਨਮੀ ਜਾਂਚੋ",
+      "defaultFarmerName": "ਕਿਸਾਨ",
+      "defaultGrowthStage": "ਬਨਸਪਤੀ ਪੜਾਅ"
+    },
+    "priority": { "Critical": "ਗੰਭੀਰ", "High": "ਉੱਚ", "Medium": "ਦਰਮਿਆਨਾ", "Low": "ਘੱਟ" },
+    "status": { "Completed": "ਪੂਰਾ", "In Progress": "ਜਾਰੀ", "Pending": "ਬਕਾਇਆ", "Skipped": "ਛੱਡਿਆ", "Delayed": "ਦੇਰੀ ਹੋਈ" }
   }
 }

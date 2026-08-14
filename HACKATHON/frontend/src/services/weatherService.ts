@@ -174,32 +174,33 @@ export function calculateDynamic6MonthClimate(
   return result;
 }
 
-const WEATHER_CODE_DESCRIPTIONS: Record<number, string> = {
-  0: 'Clear Sky',
-  1: 'Mainly Clear',
-  2: 'Partly Cloudy',
-  3: 'Overcast',
-  45: 'Foggy',
-  48: 'Depositing Rime Fog',
-  51: 'Light Drizzle',
-  53: 'Moderate Drizzle',
-  55: 'Dense Drizzle',
-  61: 'Slight Rain',
-  63: 'Moderate Rain',
-  65: 'Heavy Rain',
-  71: 'Slight Snow',
-  73: 'Moderate Snow',
-  75: 'Heavy Snow',
-  80: 'Slight Rain Showers',
-  81: 'Moderate Rain Showers',
-  82: 'Violent Rain Showers',
-  95: 'Thunderstorm',
-  96: 'Thunderstorm with Slight Hail',
-  99: 'Thunderstorm with Heavy Hail',
+const WEATHER_CODE_KEYS: Record<number, string> = {
+  0: 'clearSky',
+  1: 'mainlyClear',
+  2: 'partlyCloudy',
+  3: 'overcast',
+  45: 'foggy',
+  48: 'rimeFog',
+  51: 'lightDrizzle',
+  53: 'moderateDrizzle',
+  55: 'denseDrizzle',
+  61: 'slightRain',
+  63: 'moderateRain',
+  65: 'heavyRain',
+  71: 'slightSnow',
+  73: 'moderateSnow',
+  75: 'heavySnow',
+  80: 'slightRainShowers',
+  81: 'moderateRainShowers',
+  82: 'violentRainShowers',
+  95: 'thunderstorm',
+  96: 'thunderstormSlightHail',
+  99: 'thunderstormHeavyHail',
 };
 
-export function getWeatherConditionText(code: number): string {
-  return WEATHER_CODE_DESCRIPTIONS[code] || 'Partly Cloudy';
+/** Returns a translation key under `weather.codes.*` — pass through t('weather.codes.' + key) to render. */
+export function getWeatherConditionKey(code: number): string {
+  return WEATHER_CODE_KEYS[code] || 'partlyCloudy';
 }
 
 export async function fetchPunjabWeatherData(
@@ -240,7 +241,7 @@ export async function fetchPunjabWeatherData(
     windSpeed: Math.round(data.hourly.wind_speed_10m[idx] || 0),
   }));
 
-  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const dayNames = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
   const daily: DailyForecastItem[] = (data.daily.time || []).map((dateStr: string, idx: number) => {
     const d = new Date(dateStr);
     const maxTemp = Math.round(data.daily.temperature_2m_max[idx]);

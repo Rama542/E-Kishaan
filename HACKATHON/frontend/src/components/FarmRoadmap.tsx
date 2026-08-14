@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -75,6 +76,7 @@ import {
 import { DEFAULT_DISTRICTS_LIST } from '@/services/soilService';
 
 export default function FarmRoadmap() {
+  const { t } = useTranslation();
   const [district, setDistrict] = useState<string>('Ludhiana');
   const [fieldFilter, setFieldFilter] = useState<string>('All Fields');
   const [cropFilter, setCropFilter] = useState<string>('All Crops');
@@ -150,13 +152,17 @@ export default function FarmRoadmap() {
         setChatMessages([
           {
             sender: 'ai',
-            text: `Hello ${profRes.farmerName}! I am your AI Agricultural Assistant for ${profRes.district}. How can I guide your ${profRes.currentCrop} farming today?`,
+            text: t('roadmap.assistant.greeting', {
+              name: profRes.farmerName,
+              district: profRes.district,
+              crop: profRes.currentCrop,
+            }),
           },
         ]);
       }
     } catch (err) {
       console.error('Failed to fetch roadmap API data:', err);
-      toast.error('Error connecting to backend API.');
+      toast.error(t('roadmap.toast.backendError'));
     } finally {
       setIsLoading(false);
     }
@@ -170,11 +176,11 @@ export default function FarmRoadmap() {
     e.preventDefault();
     try {
       await saveFarmProfile(profileForm);
-      toast.success('Farm Profile updated!');
+      toast.success(t('roadmap.toast.profileUpdated'));
       setIsOnboardingOpen(false);
       await loadAllBackendData();
     } catch (err) {
-      toast.error('Failed to update profile.');
+      toast.error(t('roadmap.toast.profileUpdateFailed'));
     }
   };
 
@@ -182,7 +188,7 @@ export default function FarmRoadmap() {
     e.preventDefault();
     try {
       await submitDailyDiary(diaryForm);
-      toast.success('End-of-day check-in recorded! Adaptive roadmap updated.');
+      toast.success(t('roadmap.toast.diarySuccess'));
       setIsDiaryOpen(false);
       setDiaryForm({
         checkInDate: new Date().toISOString().split('T')[0],
@@ -197,17 +203,17 @@ export default function FarmRoadmap() {
       });
       await loadAllBackendData();
     } catch (err) {
-      toast.error('Failed to submit diary.');
+      toast.error(t('roadmap.toast.diaryFailed'));
     }
   };
 
   const handleTaskAction = async (taskId: string, status: 'Completed' | 'Skipped' | 'Delayed') => {
     try {
       await updateTaskStatus(taskId, status);
-      toast.success(`Task marked as ${status}! Adaptive plan recalculated.`);
+      toast.success(t('roadmap.toast.taskStatusSuccess', { status: t(`roadmap.status.${status}`, status) }));
       await loadAllBackendData();
     } catch (err) {
-      toast.error('Failed to update task status.');
+      toast.error(t('roadmap.toast.taskStatusFailed'));
     }
   };
 
@@ -220,14 +226,17 @@ export default function FarmRoadmap() {
     if (!textToSend) setInputQuery('');
 
     setTimeout(() => {
-      let aiAns = `Based on backend metrics for ${profile?.farmerName || 'Farmer'}, soil moisture is at ${dashboard?.waterBalancePercent || 80}%. Everything is optimal.`;
+      let aiAns = t('roadmap.assistant.waterBalanceAnswer', {
+        name: profile?.farmerName || t('roadmap.assistant.defaultFarmerName'),
+        value: dashboard?.waterBalancePercent || 80,
+      });
       const qLower = q.toLowerCase();
       if (qLower.includes('irrigate') || qLower.includes('water')) {
-        aiAns = `Based on live weather API data for ${district}, next irrigation is recommended in 3 days.`;
+        aiAns = t('roadmap.assistant.irrigateAnswer', { district });
       } else if (qLower.includes('fertilizer') || qLower.includes('urea')) {
-        aiAns = `Your crop is currently in ${profile?.growthStage || 'Vegetative Stage'}. Top-dressing Urea application is due.`;
+        aiAns = t('roadmap.assistant.fertilizerAnswer', { stage: profile?.growthStage || t('roadmap.assistant.defaultGrowthStage') });
       } else if (qLower.includes('today')) {
-        aiAns = `Today's priority is: ${todayTasks[0]?.taskName || 'Check Field Moisture'}.`;
+        aiAns = t('roadmap.assistant.todayAnswer', { task: todayTasks[0]?.taskName || t('roadmap.assistant.defaultTaskName') });
       }
 
       setChatMessages((prev) => [...prev, { sender: 'ai', text: aiAns }]);
@@ -265,19 +274,25 @@ export default function FarmRoadmap() {
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <Badge className="bg-amber-400 text-emerald-950 font-bold px-2.5 py-0.5">
-                  AI Digital Farm Twin Active
+                  {t('roadmap.aiTwinBadge')}
                 </Badge>
                 <span className="text-emerald-200 text-xs font-semibold">
-                  District: {profile?.district || district || 'Ludhiana'} • Village: {profile?.village || 'Gill'}
+                  {t('roadmap.districtVillageLabel', {
+                    district: profile?.district || district || 'Ludhiana',
+                    village: profile?.village || 'Gill',
+                  })}
                 </span>
               </div>
               <h1 className="text-3xl font-extrabold text-white flex items-center gap-2">
-                🌾 My Farm Roadmap & Intelligent Advisory
+                {t('roadmap.pageTitle')}
               </h1>
               <p className="text-emerald-100 text-sm">
-                Farmer: <span className="font-bold text-white">{profile?.farmerName || 'Gurpreet Singh'}</span> • Land:{' '}
-                <span className="font-bold text-amber-300">{profile?.farmSizeAcres || 2.5} Acres</span> ({profile?.numFields || 2} Fields) • Crop:{' '}
-                <span className="font-bold text-white">{profile?.currentCrop || 'Sugarcane'}</span>
+                {t('roadmap.farmerLine', {
+                  name: profile?.farmerName || 'Gurpreet Singh',
+                  acres: profile?.farmSizeAcres || 2.5,
+                  fields: profile?.numFields || 2,
+                  crop: profile?.currentCrop || 'Sugarcane',
+                })}
               </p>
             </div>
 
@@ -287,21 +302,21 @@ export default function FarmRoadmap() {
                 <DialogTrigger asChild>
                   <Button className="bg-amber-500 hover:bg-amber-600 text-emerald-950 font-bold shadow-sm">
                     <User className="w-4 h-4 mr-2" />
-                    Edit Profile & Goals
+                    {t('roadmap.editProfile')}
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto">
                   <DialogHeader>
-                    <DialogTitle className="text-2xl font-bold text-emerald-950">Farmer Profile Setup</DialogTitle>
+                    <DialogTitle className="text-2xl font-bold text-emerald-950">{t('roadmap.profileDialog.title')}</DialogTitle>
                     <DialogDescription>
-                      Customize your farm details to dynamically generate a unique AI Roadmap.
+                      {t('roadmap.profileDialog.description')}
                     </DialogDescription>
                   </DialogHeader>
 
                   <form onSubmit={handleProfileSave} className="space-y-4 py-2">
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <Label>Farmer Name</Label>
+                        <Label>{t('roadmap.profileDialog.farmerName')}</Label>
                         <Input
                           value={profileForm.farmerName || ''}
                           onChange={(e) => setProfileForm({ ...profileForm, farmerName: e.target.value })}
@@ -309,7 +324,7 @@ export default function FarmRoadmap() {
                         />
                       </div>
                       <div>
-                        <Label>District</Label>
+                        <Label>{t('roadmap.profileDialog.district')}</Label>
                         <select
                           value={profileForm.district || district}
                           onChange={(e) => {
@@ -329,7 +344,7 @@ export default function FarmRoadmap() {
 
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <Label>Village</Label>
+                        <Label>{t('roadmap.profileDialog.village')}</Label>
                         <Input
                           value={profileForm.village || ''}
                           onChange={(e) => setProfileForm({ ...profileForm, village: e.target.value })}
@@ -337,7 +352,7 @@ export default function FarmRoadmap() {
                         />
                       </div>
                       <div>
-                        <Label>Total Land Area (Acres)</Label>
+                        <Label>{t('roadmap.profileDialog.landArea')}</Label>
                         <Input
                           type="number"
                           value={profileForm.farmSizeAcres || 5}
@@ -349,7 +364,7 @@ export default function FarmRoadmap() {
 
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <Label>Current Crop</Label>
+                        <Label>{t('roadmap.profileDialog.currentCrop')}</Label>
                         <Input
                           value={profileForm.currentCrop || ''}
                           onChange={(e) => setProfileForm({ ...profileForm, currentCrop: e.target.value })}
@@ -357,7 +372,7 @@ export default function FarmRoadmap() {
                         />
                       </div>
                       <div>
-                        <Label>Growth Stage</Label>
+                        <Label>{t('roadmap.profileDialog.growthStage')}</Label>
                         <Input
                           value={profileForm.growthStage || ''}
                           onChange={(e) => setProfileForm({ ...profileForm, growthStage: e.target.value })}
@@ -368,7 +383,7 @@ export default function FarmRoadmap() {
 
                     <DialogFooter className="mt-4">
                       <Button type="submit" className="bg-emerald-600 hover:bg-emerald-700 text-white w-full">
-                        Save Profile & Refresh Backend Roadmap
+                        {t('roadmap.profileDialog.save')}
                       </Button>
                     </DialogFooter>
                   </form>
@@ -380,14 +395,14 @@ export default function FarmRoadmap() {
                 <DialogTrigger asChild>
                   <Button variant="outline" className="border-amber-400 text-amber-300 hover:bg-emerald-950 font-bold">
                     <BookOpen className="w-4 h-4 mr-2" />
-                    End-of-Day Check-In
+                    {t('roadmap.checkIn')}
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="max-w-md">
                   <DialogHeader>
-                    <DialogTitle className="text-xl font-bold text-emerald-950">Daily Digital Farm Diary</DialogTitle>
+                    <DialogTitle className="text-xl font-bold text-emerald-950">{t('roadmap.diaryDialog.title')}</DialogTitle>
                     <DialogDescription>
-                      Record what actually happened on your farm today to dynamically update your AI Roadmap.
+                      {t('roadmap.diaryDialog.description')}
                     </DialogDescription>
                   </DialogHeader>
 
@@ -401,7 +416,7 @@ export default function FarmRoadmap() {
                           onChange={(e) => setDiaryForm({ ...diaryForm, irrigated: e.target.checked })}
                           className="w-4 h-4"
                         />
-                        <Label htmlFor="irrigated" className="font-semibold">Did you irrigate today?</Label>
+                        <Label htmlFor="irrigated" className="font-semibold">{t('roadmap.diaryDialog.irrigatedQuestion')}</Label>
                       </div>
 
                       <div className="flex items-center gap-2">
@@ -412,14 +427,14 @@ export default function FarmRoadmap() {
                           onChange={(e) => setDiaryForm({ ...diaryForm, fertilizerApplied: e.target.checked })}
                           className="w-4 h-4"
                         />
-                        <Label htmlFor="fertilizerApplied" className="font-semibold">Did you apply fertilizer today?</Label>
+                        <Label htmlFor="fertilizerApplied" className="font-semibold">{t('roadmap.diaryDialog.fertilizerQuestion')}</Label>
                       </div>
 
                       {diaryForm.fertilizerApplied && (
                         <div>
-                          <Label className="text-xs">Fertilizer Details (Amount & Type)</Label>
+                          <Label className="text-xs">{t('roadmap.diaryDialog.fertilizerDetailsLabel')}</Label>
                           <Input
-                            placeholder="e.g. 25kg Neem Urea"
+                            placeholder={t('roadmap.diaryDialog.fertilizerPlaceholder')}
                             value={diaryForm.fertilizerDetails}
                             onChange={(e) => setDiaryForm({ ...diaryForm, fertilizerDetails: e.target.value })}
                             className="mt-1"
@@ -435,11 +450,11 @@ export default function FarmRoadmap() {
                           onChange={(e) => setDiaryForm({ ...diaryForm, pestsObserved: e.target.checked })}
                           className="w-4 h-4"
                         />
-                        <Label htmlFor="pestsObserved" className="font-semibold">Pests or disease symptoms noticed?</Label>
+                        <Label htmlFor="pestsObserved" className="font-semibold">{t('roadmap.diaryDialog.pestsQuestion')}</Label>
                       </div>
 
                       <div>
-                        <Label className="text-xs">Number of Laborers Worked</Label>
+                        <Label className="text-xs">{t('roadmap.diaryDialog.laborersLabel')}</Label>
                         <Input
                           type="number"
                           value={diaryForm.laborersCount}
@@ -449,9 +464,9 @@ export default function FarmRoadmap() {
                       </div>
 
                       <div>
-                        <Label className="text-xs">Additional Field Notes</Label>
+                        <Label className="text-xs">{t('roadmap.diaryDialog.notesLabel')}</Label>
                         <Input
-                          placeholder="e.g. Crop greening fast"
+                          placeholder={t('roadmap.diaryDialog.notesPlaceholder')}
                           value={diaryForm.notes}
                           onChange={(e) => setDiaryForm({ ...diaryForm, notes: e.target.value })}
                           className="mt-1"
@@ -461,7 +476,7 @@ export default function FarmRoadmap() {
 
                     <DialogFooter>
                       <Button type="submit" className="bg-emerald-600 hover:bg-emerald-700 text-white w-full">
-                        Submit Daily Check-In
+                        {t('roadmap.diaryDialog.submit')}
                       </Button>
                     </DialogFooter>
                   </form>
@@ -477,12 +492,12 @@ export default function FarmRoadmap() {
         <CardContent className="p-4 flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Filter className="w-4 h-4 text-emerald-600" />
-            <span className="font-bold text-sm text-gray-800">Dynamic API Filters:</span>
+            <span className="font-bold text-sm text-gray-800">{t('roadmap.filters.label')}</span>
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
             <div className="flex items-center gap-1.5">
-              <Label className="text-xs font-semibold text-gray-600">District:</Label>
+              <Label className="text-xs font-semibold text-gray-600">{t('roadmap.filters.district')}</Label>
               <select
                 value={district}
                 onChange={(e) => setDistrict(e.target.value)}
@@ -495,26 +510,26 @@ export default function FarmRoadmap() {
             </div>
 
             <div className="flex items-center gap-1.5">
-              <Label className="text-xs font-semibold text-gray-600">Field:</Label>
+              <Label className="text-xs font-semibold text-gray-600">{t('roadmap.filters.field')}</Label>
               <select
                 value={fieldFilter}
                 onChange={(e) => setFieldFilter(e.target.value)}
                 className="px-2.5 py-1 bg-white border border-gray-300 rounded text-xs font-medium text-gray-900"
               >
-                <option value="All Fields">All Fields</option>
-                <option value="Field 1">Field 1 (Front Plot)</option>
-                <option value="Field 2">Field 2 (Canal Side)</option>
+                <option value="All Fields">{t('roadmap.filters.allFields')}</option>
+                <option value="Field 1">{t('roadmap.filters.field1')}</option>
+                <option value="Field 2">{t('roadmap.filters.field2')}</option>
               </select>
             </div>
 
             <div className="flex items-center gap-1.5">
-              <Label className="text-xs font-semibold text-gray-600">Crop:</Label>
+              <Label className="text-xs font-semibold text-gray-600">{t('roadmap.filters.crop')}</Label>
               <select
                 value={cropFilter}
                 onChange={(e) => setCropFilter(e.target.value)}
                 className="px-2.5 py-1 bg-white border border-gray-300 rounded text-xs font-medium text-gray-900"
               >
-                <option value="All Crops">All Crops</option>
+                <option value="All Crops">{t('roadmap.filters.allCrops')}</option>
                 <option value="Wheat">Wheat</option>
                 <option value="Paddy">Paddy</option>
                 <option value="Mustard">Mustard</option>
@@ -530,7 +545,7 @@ export default function FarmRoadmap() {
           <Card className="border-t-4 border-t-blue-500 shadow-sm">
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-gray-600 flex items-center justify-between">
-                Soil Water Balance
+                {t('roadmap.dashboard.soilWaterBalance')}
                 <Droplets className="w-4 h-4 text-blue-600" />
               </CardTitle>
             </CardHeader>
@@ -544,7 +559,7 @@ export default function FarmRoadmap() {
           <Card className="border-t-4 border-t-emerald-500 shadow-sm">
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-gray-600 flex items-center justify-between">
-                Nutrient Availability
+                {t('roadmap.dashboard.nutrientAvailability')}
                 <Zap className="w-4 h-4 text-emerald-600" />
               </CardTitle>
             </CardHeader>
@@ -558,27 +573,27 @@ export default function FarmRoadmap() {
           <Card className="border-t-4 border-t-amber-500 shadow-sm">
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-gray-600 flex items-center justify-between">
-                Expected Total Yield
+                {t('roadmap.dashboard.expectedTotalYield')}
                 <TrendingUp className="w-4 h-4 text-amber-600" />
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-xl font-bold text-amber-900">{dashboard.yieldPrediction}</div>
-              <p className="text-xs text-gray-500 mt-1">AI Confidence: {dashboard.aiConfidence}%</p>
+              <p className="text-xs text-gray-500 mt-1">{t('roadmap.dashboard.aiConfidence', { value: dashboard.aiConfidence })}</p>
             </CardContent>
           </Card>
 
           <Card className="border-t-4 border-t-purple-500 shadow-sm">
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-gray-600 flex items-center justify-between">
-                Expected Net Profit
+                {t('roadmap.dashboard.expectedNetProfit')}
                 <ShieldCheck className="w-4 h-4 text-purple-600" />
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-purple-900">{dashboard.profitPrediction}</div>
               <p className="text-xs text-gray-500 mt-1">
-                Harvest Countdown: <span className="font-bold text-purple-700">{dashboard.harvestCountdownDays} days</span>
+                {t('roadmap.dashboard.harvestCountdown', { days: dashboard.harvestCountdownDays })}
               </p>
             </CardContent>
           </Card>
@@ -588,12 +603,12 @@ export default function FarmRoadmap() {
       {/* Dynamic Sections: Daily Planner, Upcoming, Timeline, Alerts, Charts & AI Assistant */}
       <Tabs defaultValue="planner" className="w-full">
         <TabsList className="grid w-full grid-cols-6">
-          <TabsTrigger value="planner">Today's Farm Plan</TabsTrigger>
-          <TabsTrigger value="upcoming">Upcoming Tasks</TabsTrigger>
-          <TabsTrigger value="alerts">AI Smart Alerts</TabsTrigger>
-          <TabsTrigger value="timeline">Roadmap Timeline</TabsTrigger>
-          <TabsTrigger value="charts">API Charts</TabsTrigger>
-          <TabsTrigger value="assistant">AI Assistant</TabsTrigger>
+          <TabsTrigger value="planner">{t('roadmap.tabs.planner')}</TabsTrigger>
+          <TabsTrigger value="upcoming">{t('roadmap.tabs.upcoming')}</TabsTrigger>
+          <TabsTrigger value="alerts">{t('roadmap.tabs.alerts')}</TabsTrigger>
+          <TabsTrigger value="timeline">{t('roadmap.tabs.timeline')}</TabsTrigger>
+          <TabsTrigger value="charts">{t('roadmap.tabs.charts')}</TabsTrigger>
+          <TabsTrigger value="assistant">{t('roadmap.tabs.assistant')}</TabsTrigger>
         </TabsList>
 
         {/* Today's Farm Plan Tab */}
@@ -604,81 +619,86 @@ export default function FarmRoadmap() {
                 <div>
                   <CardTitle className="text-xl font-bold text-gray-900 flex items-center gap-2">
                     <Calendar className="w-5 h-5 text-emerald-600" />
-                    Today's Actionable Farm Plan (`GET /api/farm/today`)
+                    {t('roadmap.planner.title')} (`GET /api/farm/today`)
                   </CardTitle>
                   <CardDescription>
-                    Fetched dynamically for {profile?.currentCrop || 'Sugarcane'} in {district || 'Ludhiana'}
+                    {t('roadmap.planner.fetchedFor', {
+                      crop: profile?.currentCrop || 'Sugarcane',
+                      district: district || 'Ludhiana',
+                    })}
                   </CardDescription>
                 </div>
-                <Badge className="bg-emerald-700 text-white font-bold">{todayTasks.length} Tasks Returned</Badge>
+                <Badge className="bg-emerald-700 text-white font-bold">{t('roadmap.planner.tasksReturned', { count: todayTasks.length })}</Badge>
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
               {todayTasks.length === 0 ? (
-                <div className="p-8 text-center text-gray-500">No active tasks for today. Check back tomorrow!</div>
+                <div className="p-8 text-center text-gray-500">{t('roadmap.planner.noTasks')}</div>
               ) : (
-                todayTasks.map((t) => (
-                  <div key={t.id} className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
+                todayTasks.map((t2) => (
+                  <div key={t2.id} className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                       <div className="flex items-center gap-2">
-                        <Badge className={getPriorityColor(t.priority)}>{t.priority} Priority</Badge>
-                        <h4 className="font-bold text-gray-900 text-base">{t.taskName}</h4>
+                        <Badge className={getPriorityColor(t2.priority)}>
+                          {t('roadmap.planner.prioritySuffix', { priority: t(`roadmap.priority.${t2.priority}`, t2.priority) })}
+                        </Badge>
+                        <h4 className="font-bold text-gray-900 text-base">{t2.taskName}</h4>
                       </div>
                       <div className="flex items-center gap-2">
                         <Badge variant="outline" className="border-gray-300 text-gray-700">
-                          <Clock className="w-3 h-3 mr-1" /> {t.estimatedTime}
+                          <Clock className="w-3 h-3 mr-1" /> {t2.estimatedTime}
                         </Badge>
                         <Badge variant="outline" className="border-emerald-500 text-emerald-800">
-                          Due: {t.deadline}
+                          {t('roadmap.planner.dueLabel', { deadline: t2.deadline })}
                         </Badge>
                       </div>
                     </div>
 
-                    <p className="text-xs text-gray-600">{t.description}</p>
+                    <p className="text-xs text-gray-600">{t2.description}</p>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs bg-white p-3 border rounded-lg">
                       <div>
-                        <span className="font-semibold text-gray-700">AI Context & Reason:</span>
-                        <p className="text-gray-600 mt-0.5">{t.reason}</p>
+                        <span className="font-semibold text-gray-700">{t('roadmap.planner.aiContextLabel')}</span>
+                        <p className="text-gray-600 mt-0.5">{t2.reason}</p>
                       </div>
                       <div>
-                        <span className="font-semibold text-emerald-800">Expected Benefit:</span>
-                        <p className="text-emerald-700 mt-0.5">{t.benefits}</p>
+                        <span className="font-semibold text-emerald-800">{t('roadmap.planner.expectedBenefitLabel')}</span>
+                        <p className="text-emerald-700 mt-0.5">{t2.benefits}</p>
                       </div>
                     </div>
 
                     <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
                       <div className="text-xs text-red-600 font-medium">
-                        ⚠️ Consequence if skipped: {t.risk}
+                        {t('roadmap.planner.consequenceLabel', { risk: t2.risk })}
                       </div>
 
                       <div className="flex items-center gap-2">
-                        {t.status === 'Completed' ? (
-                          <Badge className="bg-emerald-600">✓ Completed</Badge>
+                        {t2.status === 'Completed' ? (
+                          <Badge className="bg-emerald-600">{t('roadmap.planner.completedBadge')}</Badge>
                         ) : (
                           <>
                             <Button
                               size="sm"
-                              onClick={() => handleTaskAction(t.id, 'Completed')}
+                              onClick={() => handleTaskAction(t2.id, 'Completed')}
                               className="bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-xs"
                             >
-                              Mark Completed
+                              {t('roadmap.planner.markCompleted')}
                             </Button>
                             <Button
                               size="sm"
                               variant="outline"
-                              onClick={() => handleTaskAction(t.id, 'Skipped')}
+                              onClick={() => handleTaskAction(t2.id, 'Skipped')}
                               className="text-gray-600 hover:bg-gray-100 font-medium text-xs"
                             >
-                              Skip
+                              {t('roadmap.planner.skip')}
                             </Button>
                             <Button
                               size="sm"
                               variant="outline"
-                              onClick={() => handleTaskAction(t.id, 'Delayed')}
+                              onClick={() => handleTaskAction(t2.id, 'Delayed')}
                               className="text-amber-700 border-amber-300 hover:bg-amber-50 font-medium text-xs"
                             >
-                              Delay
+                              {t('roadmap.planner.delay')}
                             </Button>
                           </>
                         )}
@@ -696,7 +716,7 @@ export default function FarmRoadmap() {
           <Card>
             <CardHeader>
               <CardTitle className="text-xl font-bold text-gray-900">
-                Upcoming Roadmap Tasks (`GET /api/farm/upcoming`)
+                {t('roadmap.upcoming.title')} (`GET /api/farm/upcoming`)
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -706,16 +726,16 @@ export default function FarmRoadmap() {
                     <Calendar className="w-4 h-4 text-emerald-600" />
                     {g.groupName}
                   </h3>
-                  {g.tasks.map((t) => (
-                    <div key={t.id} className="p-3 bg-white border rounded-lg space-y-2">
+                  {g.tasks.map((t2) => (
+                    <div key={t2.id} className="p-3 bg-white border rounded-lg space-y-2">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <Badge className={getPriorityColor(t.priority)}>{t.priority}</Badge>
-                          <span className="font-bold text-gray-900 text-sm">{t.taskName}</span>
+                          <Badge className={getPriorityColor(t2.priority)}>{t(`roadmap.priority.${t2.priority}`, t2.priority)}</Badge>
+                          <span className="font-bold text-gray-900 text-sm">{t2.taskName}</span>
                         </div>
-                        <span className="text-xs text-emerald-700 font-semibold">{t.deadline}</span>
+                        <span className="text-xs text-emerald-700 font-semibold">{t2.deadline}</span>
                       </div>
-                      <p className="text-xs text-gray-600">{t.reason}</p>
+                      <p className="text-xs text-gray-600">{t2.reason}</p>
                     </div>
                   ))}
                 </div>
@@ -730,7 +750,7 @@ export default function FarmRoadmap() {
             <CardHeader>
               <CardTitle className="text-xl font-bold text-gray-900 flex items-center gap-2">
                 <Bell className="w-5 h-5 text-amber-500" />
-                AI Smart Alerts (`GET /api/farm/alerts`)
+                {t('roadmap.alerts.title')} (`GET /api/farm/alerts`)
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -747,7 +767,7 @@ export default function FarmRoadmap() {
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <Badge className={getPriorityColor(a.severity)}>{a.severity}</Badge>
+                      <Badge className={getPriorityColor(a.severity)}>{t(`roadmap.priority.${a.severity}`, a.severity)}</Badge>
                       <h4 className="font-bold text-gray-900 text-base">{a.title}</h4>
                     </div>
                     <span className="text-xs text-gray-500">{a.generatedTime}</span>
@@ -755,13 +775,13 @@ export default function FarmRoadmap() {
 
                   <div className="text-xs space-y-1">
                     <div>
-                      <strong className="text-gray-900">Why:</strong> {a.reason}
+                      <strong className="text-gray-900">{t('roadmap.alerts.whyLabel')}</strong> {a.reason}
                     </div>
                     <div>
-                      <strong className="text-emerald-900">Recommended Action:</strong> {a.recommendedAction}
+                      <strong className="text-emerald-900">{t('roadmap.alerts.recommendedActionLabel')}</strong> {a.recommendedAction}
                     </div>
                     <div>
-                      <strong className="text-red-900">What happens if ignored:</strong> {a.impact}
+                      <strong className="text-red-900">{t('roadmap.alerts.impactLabel')}</strong> {a.impact}
                     </div>
                   </div>
                 </div>
@@ -776,7 +796,7 @@ export default function FarmRoadmap() {
             <CardHeader>
               <CardTitle className="text-xl font-bold text-gray-900 flex items-center gap-2">
                 <Layers className="w-5 h-5 text-emerald-600" />
-                14-Phase Adaptive Lifecycle Timeline (`GET /api/farm/timeline`)
+                {t('roadmap.timeline.title')} (`GET /api/farm/timeline`)
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -799,7 +819,7 @@ export default function FarmRoadmap() {
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                         <div className="flex items-center gap-2">
                           <h4 className="font-bold text-gray-900 text-lg">
-                            Phase {p.stageNumber}: {p.stageName}
+                            {t('roadmap.timeline.phaseLabel', { num: p.stageNumber, name: p.stageName })}
                           </h4>
                           <Badge
                             className={
@@ -810,7 +830,7 @@ export default function FarmRoadmap() {
                                 : 'bg-slate-500'
                             }
                           >
-                            {p.currentStatus}
+                            {t(`roadmap.status.${p.currentStatus}`, p.currentStatus)}
                           </Badge>
                         </div>
                         <span className="text-xs text-gray-500 font-medium">
@@ -819,7 +839,7 @@ export default function FarmRoadmap() {
                       </div>
 
                       <p className="text-xs text-gray-700 font-medium">
-                        <strong>AI Strategy:</strong> {p.aiNotes}
+                        <strong>{t('roadmap.timeline.aiStrategyLabel')}</strong> {p.aiNotes}
                       </p>
                     </div>
                   </div>
@@ -837,7 +857,7 @@ export default function FarmRoadmap() {
                 <CardHeader>
                   <CardTitle className="text-lg flex items-center gap-2">
                     <BarChart3 className="w-5 h-5 text-emerald-600" />
-                    Task Completion Trend (`GET /api/farm/charts`)
+                    {t('roadmap.charts.taskCompletionTitle')} (`GET /api/farm/charts`)
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -849,8 +869,8 @@ export default function FarmRoadmap() {
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Bar dataKey="completed" fill="#059669" name="Completed" />
-                        <Bar dataKey="target" fill="#94a3b8" name="Target" />
+                        <Bar dataKey="completed" fill="#059669" name={t('roadmap.charts.completedLegend')} />
+                        <Bar dataKey="target" fill="#94a3b8" name={t('roadmap.charts.targetLegend')} />
                       </BarChart>
                     </ResponsiveContainer>
                   </div>
@@ -861,7 +881,7 @@ export default function FarmRoadmap() {
                 <CardHeader>
                   <CardTitle className="text-lg flex items-center gap-2">
                     <TrendingUp className="w-5 h-5 text-amber-600" />
-                    Yield Prediction Trend (quintals/acre)
+                    {t('roadmap.charts.yieldTrendTitle')}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -872,7 +892,7 @@ export default function FarmRoadmap() {
                         <XAxis dataKey="stage" />
                         <YAxis />
                         <Tooltip />
-                        <Line type="monotone" dataKey="yieldQ" stroke="#d97706" strokeWidth={3} name="Predicted Yield (q/acre)" />
+                        <Line type="monotone" dataKey="yieldQ" stroke="#d97706" strokeWidth={3} name={t('roadmap.charts.predictedYieldLegend')} />
                       </LineChart>
                     </ResponsiveContainer>
                   </div>
@@ -888,7 +908,7 @@ export default function FarmRoadmap() {
             <CardHeader>
               <CardTitle className="text-xl font-bold text-gray-900 flex items-center gap-2">
                 <Bot className="w-5 h-5 text-emerald-600" />
-                AI Agricultural Scientist Assistant
+                {t('roadmap.assistant.title')}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -919,7 +939,7 @@ export default function FarmRoadmap() {
                 className="flex gap-2"
               >
                 <Input
-                  placeholder="Type your farming question..."
+                  placeholder={t('roadmap.assistant.inputPlaceholder')}
                   value={inputQuery}
                   onChange={(e) => setInputQuery(e.target.value)}
                   className="flex-1"

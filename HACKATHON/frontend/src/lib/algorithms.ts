@@ -3,10 +3,20 @@ interface Recipe {
   ingredients: string[];
 }
 
-interface Solution {
+export interface SolutionStep {
+  potion: string;
+  ingredients: string[];
+  orbs: number;
+  depth: number;
+}
+
+export interface Solution {
   minOrbs: number;
-  steps: string[];
-  explanation: string;
+  steps: SolutionStep[];
+  explanation: {
+    key: 'basicIngredient' | 'composed' | 'error';
+    params: Record<string, string | number>;
+  };
 }
 
 export function solveFrankensteinProblem(recipesText: string, targetPotion: string): Solution {
@@ -14,18 +24,18 @@ export function solveFrankensteinProblem(recipesText: string, targetPotion: stri
     // Parse recipes from text input
     const recipes: Recipe[] = [];
     const lines = recipesText.trim().split('\n');
-    
+
     for (const line of lines) {
       if (line.trim()) {
         const parts = line.split('=');
         if (parts.length !== 2) {
           throw new Error(`Invalid recipe format: ${line}`);
         }
-        
+
         const potion = parts[0].trim();
         const ingredientsPart = parts[1].trim();
         const ingredients = ingredientsPart.split('+').map(ing => ing.trim());
-        
+
         recipes.push({ potion, ingredients });
       }
     }
@@ -38,7 +48,7 @@ export function solveFrankensteinProblem(recipesText: string, targetPotion: stri
 
     // Memoization cache
     const memo = new Map<string, number>();
-    const solutionSteps: string[] = [];
+    const solutionSteps: SolutionStep[] = [];
 
     // Recursive function to calculate minimum orbs
     function calculateMinOrbs(potion: string, depth: number = 0): number {
@@ -66,12 +76,7 @@ export function solveFrankensteinProblem(recipesText: string, targetPotion: stri
 
       // Store in memo and add to solution steps
       memo.set(potion, totalOrbs);
-      
-      if (depth === 0) {
-        solutionSteps.push(`Create ${potion} using ${ingredients.join(' + ')} (${totalOrbs} orbs total)`);
-      } else {
-        solutionSteps.push(`  ${'  '.repeat(depth - 1)}Create ${potion} from ${ingredients.join(' + ')} (${totalOrbs} orbs)`);
-      }
+      solutionSteps.push({ potion, ingredients, orbs: totalOrbs, depth });
 
       return totalOrbs;
     }
@@ -92,35 +97,41 @@ export function solveFrankensteinProblem(recipesText: string, targetPotion: stri
     return {
       minOrbs: -1,
       steps: [],
-      explanation: `Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`
+      explanation: {
+        key: 'error',
+        params: { message: error instanceof Error ? error.message : 'Unknown error occurred' },
+      },
     };
   }
 }
 
-function generateExplanation(targetPotion: string, recipeMap: Map<string, string[]>, minOrbs: number): string {
+function generateExplanation(
+  targetPotion: string,
+  recipeMap: Map<string, string[]>,
+  minOrbs: number
+): Solution['explanation'] {
   const hasRecipe = recipeMap.has(targetPotion);
-  
+
   if (!hasRecipe) {
-    return `${targetPotion} is a basic ingredient that costs 1 magical orb.`;
+    return { key: 'basicIngredient', params: { potion: targetPotion } };
   }
 
   const ingredients = recipeMap.get(targetPotion)!;
   const basicIngredients = ingredients.filter(ing => !recipeMap.has(ing));
   const complexIngredients = ingredients.filter(ing => recipeMap.has(ing));
 
-  let explanation = `To create ${targetPotion}, we need ${ingredients.join(' and ')}.`;
-  
-  if (basicIngredients.length > 0) {
-    explanation += ` Basic ingredients (${basicIngredients.join(', ')}) cost 1 orb each.`;
-  }
-  
-  if (complexIngredients.length > 0) {
-    explanation += ` Complex ingredients (${complexIngredients.join(', ')}) require their own recipes.`;
-  }
-  
-  explanation += ` The total cost includes ingredient orbs plus 1 orb for the combination process, resulting in ${minOrbs} magical orbs.`;
-
-  return explanation;
+  return {
+    key: 'composed',
+    params: {
+      potion: targetPotion,
+      ingredients: ingredients.join(' + '),
+      basicIngredients: basicIngredients.join(', '),
+      hasBasic: basicIngredients.length > 0 ? 1 : 0,
+      complexIngredients: complexIngredients.join(', '),
+      hasComplex: complexIngredients.length > 0 ? 1 : 0,
+      minOrbs,
+    },
+  };
 }
 
 // Additional utility functions for agricultural calculations
@@ -134,7 +145,7 @@ export function calculateCropYield(
   const weatherMultiplier = Math.max(0.5, Math.min(1.5, weatherFactor));
   const soilMultiplier = soilHealth / 100;
   const fertilizerMultiplier = Math.max(0.8, Math.min(1.3, fertilizerEfficiency));
-  
+
   return baseYield * weatherMultiplier * soilMultiplier * fertilizerMultiplier;
 }
 
@@ -151,7 +162,7 @@ export function predictOptimalHarvestDate(
   // Simple harvest date prediction
   const baseHarvestDate = new Date(plantingDate);
   baseHarvestDate.setDate(baseHarvestDate.getDate() + cropDuration);
-  
+
   // Adjust for weather conditions
   let adjustment = 0;
   for (const condition of weatherConditions) {
@@ -167,7 +178,7 @@ export function predictOptimalHarvestDate(
         break;
     }
   }
-  
+
   baseHarvestDate.setDate(baseHarvestDate.getDate() + adjustment);
   return baseHarvestDate;
 }
@@ -181,7 +192,7 @@ export function calculateFertilizerRecommendation(
   const nitrogenNeeded = Math.max(0, (cropRequirements.nitrogen - soilNPK.nitrogen) * fieldSize / 100);
   const phosphorusNeeded = Math.max(0, (cropRequirements.phosphorus - soilNPK.phosphorus) * fieldSize / 100);
   const potassiumNeeded = Math.max(0, (cropRequirements.potassium - soilNPK.potassium) * fieldSize / 100);
-  
+
   return {
     nitrogen: Math.round(nitrogenNeeded * 10) / 10,
     phosphorus: Math.round(phosphorusNeeded * 10) / 10,
@@ -204,6 +215,14 @@ export interface MLWeatherFeatures {
   weatherCode: number;
 }
 
+export type ConditionKey =
+  | 'clearStable'
+  | 'heavyRain'
+  | 'lightShowers'
+  | 'highHumidityFoggy'
+  | 'heatwaveWarning'
+  | 'pleasantCool';
+
 export interface MLPredictionHorizon {
   horizon: string;
   hoursOffset: number;
@@ -213,16 +232,37 @@ export interface MLPredictionHorizon {
   predictedRainfall: number;
   windSpeed: number;
   confidenceScore: number;
-  conditionText: string;
+  conditionKey: ConditionKey;
 }
+
+export type WeatherAlertKey =
+  | 'optimal'
+  | 'heavyRainfallFlooding'
+  | 'moderateRainfall'
+  | 'highWind'
+  | 'highTemperature'
+  | 'highHumidityFog'
+  | 'denseFog';
+
+export type WeatherRecommendationKey =
+  | 'clearDrainage'
+  | 'suspendSpray'
+  | 'inspectFungal'
+  | 'scheduledFertilizer'
+  | 'soilMoisture'
+  | 'pestScouting'
+  | 'shadeNetting'
+  | 'dripIrrigation'
+  | 'seasonalSowing'
+  | 'waterStorage';
 
 export interface MLWeatherPredictionResult {
   horizons: MLPredictionHorizon[];
   riskLevel: 'low' | 'moderate' | 'high' | 'severe';
-  alertTitle: string;
-  alertDescription: string;
-  weeklyRecommendations: string[];
-  monthlyRecommendations: string[];
+  alertKey: WeatherAlertKey;
+  alertParams: Record<string, number>;
+  weeklyRecommendationKeys: WeatherRecommendationKey[];
+  monthlyRecommendationKeys: WeatherRecommendationKey[];
   modelConfidence: number;
   predictedAt: Date;
 }
@@ -230,6 +270,8 @@ export interface MLWeatherPredictionResult {
 /**
  * Predicts short-term and medium-term weather variables using live Open-Meteo features.
  * Features evaluated: Temperature, Humidity, Precipitation, Surface Pressure, Wind Speed, Cloud Cover.
+ * Returns translation keys + numeric params rather than English prose, so the UI layer
+ * can render the result in any supported language via i18next interpolation.
  */
 export function predictWeatherMLModel(
   current: MLWeatherFeatures,
@@ -241,7 +283,7 @@ export function predictWeatherMLModel(
   const horizons: MLPredictionHorizon[] = horizonsOffset.map((offset, idx) => {
     // Extract hourly feature matching offset if available, otherwise apply autoregressive trend
     const matchingHourly = hourlyHistory[offset];
-    
+
     // Feature normalization & linear trend adjustment weights
     const tempTrend = matchingHourly ? matchingHourly.temp : current.temperature + (Math.sin(offset / 3) * 2);
     const humidityTrend = matchingHourly ? matchingHourly.humidity : Math.min(100, Math.max(20, current.humidity + (Math.cos(offset / 4) * 5)));
@@ -252,18 +294,18 @@ export function predictWeatherMLModel(
     const baseConfidence = 96 - (offset * 0.4);
     const confidenceScore = Math.round(Math.max(85, baseConfidence));
 
-    // Determine condition text from features
-    let conditionText = 'Clear & Stable';
+    // Determine condition key from features
+    let conditionKey: ConditionKey = 'clearStable';
     if (predRainfall > 5 || rainProb > 70) {
-      conditionText = 'Heavy Rain Forecasted';
+      conditionKey = 'heavyRain';
     } else if (predRainfall > 0.5 || rainProb > 45) {
-      conditionText = 'Light Showers Expected';
+      conditionKey = 'lightShowers';
     } else if (humidityTrend > 80) {
-      conditionText = 'High Humidity / Foggy';
+      conditionKey = 'highHumidityFoggy';
     } else if (tempTrend > 36) {
-      conditionText = 'Heatwave Warning';
+      conditionKey = 'heatwaveWarning';
     } else if (tempTrend < 24) {
-      conditionText = 'Pleasant / Cool';
+      conditionKey = 'pleasantCool';
     }
 
     const predWindSpeed = matchingHourly ? matchingHourly.windSpeed : current.windSpeed;
@@ -277,7 +319,7 @@ export function predictWeatherMLModel(
       predictedRainfall: Math.round(predRainfall * 10) / 10,
       windSpeed: Math.round(predWindSpeed),
       confidenceScore,
-      conditionText,
+      conditionKey,
     };
   });
 
@@ -292,65 +334,58 @@ export function predictWeatherMLModel(
   const maxHumidity = Math.max(current.humidity, ...horizons.map(h => h.predictedHumidity));
 
   let riskLevel: 'low' | 'moderate' | 'high' | 'severe' = 'low';
-  let alertTitle = 'Optimal Farming Conditions';
-  let alertDescription = `Current conditions in your district are clear and stable (${current.temperature}°C, ${current.humidity}% humidity, ${current.windSpeed} km/h wind). Field operations can proceed normally.`;
+  let alertKey: WeatherAlertKey = 'optimal';
+  let alertParams: Record<string, number> = {
+    temp: current.temperature,
+    humidity: current.humidity,
+    wind: current.windSpeed,
+  };
 
   if (maxRain > 5 || maxRainProb >= 70) {
     riskLevel = 'severe';
-    alertTitle = 'Heavy Rainfall & Flooding Risk Detected';
-    alertDescription = `ML model detects high precipitation risk (${maxRainProb}% probability, ~${maxRain.toFixed(1)}mm expected). Ensure field drainage, avoid pesticide spraying, and protect low-lying crops.`;
+    alertKey = 'heavyRainfallFlooding';
+    alertParams = { maxRainProb, maxRain: Math.round(maxRain * 10) / 10 };
   } else if (maxRain > 1 || maxRainProb >= 40) {
     riskLevel = 'high';
-    alertTitle = 'Moderate Rainfall Expected';
-    alertDescription = `Rainfall likely in upcoming hours (~${maxRain.toFixed(1)}mm, ${maxRainProb}% chance). Postpone foliar fertilization and avoid deep irrigation before rain arrives.`;
+    alertKey = 'moderateRainfall';
+    alertParams = { maxRain: Math.round(maxRain * 10) / 10, maxRainProb };
   } else if (maxWind > 20) {
     riskLevel = 'moderate';
-    alertTitle = 'High Wind Speed Alert';
-    alertDescription = `Wind speeds of ${current.windSpeed} km/h recorded (gusts up to ${maxWind} km/h expected). Secure greenhouse structures and provide additional support for tall crops.`;
+    alertKey = 'highWind';
+    alertParams = { wind: current.windSpeed, maxWind };
   } else if (current.temperature >= 37) {
     riskLevel = 'moderate';
-    alertTitle = 'High Temperature & Heat Stress Risk';
-    alertDescription = `Temperature at ${current.temperature}°C (feels like ${current.apparentTemperature}°C). Increase evening irrigation cycles to prevent crop thermal stress and leaf scorch.`;
+    alertKey = 'highTemperature';
+    alertParams = { temp: current.temperature, feelsLike: current.apparentTemperature };
   } else if (maxHumidity > 88) {
     riskLevel = 'moderate';
-    alertTitle = 'High Humidity & Fog / Disease Risk';
-    alertDescription = `Humidity at ${current.humidity}% (peak ${maxHumidity}%). High moisture increases fungal disease risk in Paddy, Wheat, and Cotton. Apply preventive fungicide if needed.`;
+    alertKey = 'highHumidityFog';
+    alertParams = { humidity: current.humidity, maxHumidity };
   } else if (current.weatherCode >= 45 && current.weatherCode <= 48) {
     riskLevel = 'moderate';
-    alertTitle = 'Dense Fog Advisory';
-    alertDescription = `Foggy conditions detected (weather code ${current.weatherCode}). Visibility may be reduced. Delay field spraying operations until fog clears after mid-morning.`;
+    alertKey = 'denseFog';
+    alertParams = { weatherCode: current.weatherCode };
   }
 
   // Dynamic Punjab-specific agricultural recommendations
-  const weeklyRecommendations: string[] = [];
-  const monthlyRecommendations: string[] = [];
+  const weeklyRecommendationKeys: WeatherRecommendationKey[] =
+    riskLevel === 'severe' || riskLevel === 'high'
+      ? ['clearDrainage', 'suspendSpray', 'inspectFungal']
+      : ['scheduledFertilizer', 'soilMoisture', 'pestScouting'];
 
-  if (riskLevel === 'severe' || riskLevel === 'high') {
-    weeklyRecommendations.push('• Clear drainage channels in fields to avoid waterlogging');
-    weeklyRecommendations.push('• Suspend spray of liquid nitrogen and insecticides prior to rain');
-    weeklyRecommendations.push('• Inspect standing Paddy/Wheat fields for fungal spore growth');
-  } else {
-    weeklyRecommendations.push('• Apply scheduled fertilizers during low-wind morning hours');
-    weeklyRecommendations.push('• Maintain standard soil moisture levels for active crops');
-    weeklyRecommendations.push('• Conduct routine pest scouting across crop borders');
-  }
-
-  if (current.temperature > 30) {
-    monthlyRecommendations.push('• Prepare shade netting for young vegetable nursery beds');
-    monthlyRecommendations.push('• Schedule drip irrigation during early morning hours');
-  } else {
-    monthlyRecommendations.push('• Plan seasonal sowing based on stable soil temperatures');
-    monthlyRecommendations.push('• Optimize water storage ahead of seasonal weather shifts');
-  }
+  const monthlyRecommendationKeys: WeatherRecommendationKey[] =
+    current.temperature > 30
+      ? ['shadeNetting', 'dripIrrigation']
+      : ['seasonalSowing', 'waterStorage'];
 
   return {
     horizons,
     riskLevel,
-    alertTitle,
-    alertDescription,
-    weeklyRecommendations,
-    monthlyRecommendations,
+    alertKey,
+    alertParams,
+    weeklyRecommendationKeys,
+    monthlyRecommendationKeys,
     modelConfidence: 94,
     predictedAt: new Date(),
   };
-}
+}

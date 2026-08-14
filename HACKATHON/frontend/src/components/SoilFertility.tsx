@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -47,6 +48,7 @@ import {
 } from '@/services/soilService';
 
 export default function SoilFertility() {
+  const { t } = useTranslation();
   const { recordFertilizerLog } = useUserStats();
 
   const [districts, setDistricts] = useState<DistrictSummary[]>(DEFAULT_DISTRICTS_LIST);
@@ -114,11 +116,11 @@ export default function SoilFertility() {
     setIsSyncing(true);
     const ok = await triggerAdminETLSync();
     if (ok) {
-      toast.success('Government Soil Health Datasets refreshed across all 23 Punjab districts!');
+      toast.success(t('soil.toast.syncSuccess'));
       const rep = await fetchSoilReport(selectedDistrict);
       if (rep) setSoilReport(rep);
     } else {
-      toast.error('Failed to trigger dataset sync.');
+      toast.error(t('soil.toast.syncError'));
     }
     setIsSyncing(false);
   };
@@ -130,7 +132,7 @@ export default function SoilFertility() {
     const k = parseFloat(fertilizerInput.potassium) || 0;
 
     if (n === 0 && p === 0 && k === 0) {
-      toast.error('Please enter at least one fertilizer amount (N, P, or K).');
+      toast.error(t('soil.toast.fertilizerEmptyError'));
       return;
     }
 
@@ -143,7 +145,7 @@ export default function SoilFertility() {
 
     if (success) {
       recordFertilizerLog();
-      toast.success(`Fertilizer log recorded for ${selectedDistrict}!`);
+      toast.success(t('soil.toast.fertilizerSuccess', { district: selectedDistrict }));
       setFertilizerInput({
         nitrogen: '',
         phosphorus: '',
@@ -151,7 +153,7 @@ export default function SoilFertility() {
         date: new Date().toISOString().split('T')[0],
       });
     } else {
-      toast.error('Failed to record fertilizer log.');
+      toast.error(t('soil.toast.fertilizerError'));
     }
   };
 
@@ -165,20 +167,20 @@ export default function SoilFertility() {
 
   const npkBarData = soilReport
     ? [
-        { name: 'Nitrogen (N)', current: soilReport.nutrients.nitrogen, benchmark: 90, unit: 'kg/ha' },
-        { name: 'Phosphorus (P)', current: soilReport.nutrients.phosphorus, benchmark: 25, unit: 'kg/ha' },
-        { name: 'Potassium (K)', current: soilReport.nutrients.potassium, benchmark: 180, unit: 'kg/ha' },
+        { name: t('soil.overview.nitrogen'), current: soilReport.nutrients.nitrogen, benchmark: 90, unit: 'kg/ha' },
+        { name: t('soil.overview.phosphorus'), current: soilReport.nutrients.phosphorus, benchmark: 25, unit: 'kg/ha' },
+        { name: t('soil.overview.potassium'), current: soilReport.nutrients.potassium, benchmark: 180, unit: 'kg/ha' },
       ]
     : [];
 
   const radarData = soilReport
     ? [
-        { subject: 'Nitrogen', A: Math.min(100, Math.round((soilReport.nutrients.nitrogen / 100) * 100)), fullMark: 100 },
-        { subject: 'Phosphorus', A: Math.min(100, Math.round((soilReport.nutrients.phosphorus / 30) * 100)), fullMark: 100 },
-        { subject: 'Potassium', A: Math.min(100, Math.round((soilReport.nutrients.potassium / 200) * 100)), fullMark: 100 },
-        { subject: 'Organic C.', A: Math.min(100, Math.round((soilReport.organicCarbon / 0.75) * 100)), fullMark: 100 },
-        { subject: 'Sulphur', A: Math.min(100, Math.round((soilReport.nutrients.sulphur / 15) * 100)), fullMark: 100 },
-        { subject: 'Zinc', A: Math.min(100, Math.round((soilReport.nutrients.zinc / 1.5) * 100)), fullMark: 100 },
+        { subject: t('soil.overview.nitrogen'), A: Math.min(100, Math.round((soilReport.nutrients.nitrogen / 100) * 100)), fullMark: 100 },
+        { subject: t('soil.overview.phosphorus'), A: Math.min(100, Math.round((soilReport.nutrients.phosphorus / 30) * 100)), fullMark: 100 },
+        { subject: t('soil.overview.potassium'), A: Math.min(100, Math.round((soilReport.nutrients.potassium / 200) * 100)), fullMark: 100 },
+        { subject: t('soil.cards.organicCarbon'), A: Math.min(100, Math.round((soilReport.organicCarbon / 0.75) * 100)), fullMark: 100 },
+        { subject: t('soil.overview.sulphur'), A: Math.min(100, Math.round((soilReport.nutrients.sulphur / 15) * 100)), fullMark: 100 },
+        { subject: t('soil.overview.zinc'), A: Math.min(100, Math.round((soilReport.nutrients.zinc / 1.5) * 100)), fullMark: 100 },
       ]
     : [];
 
@@ -192,20 +194,20 @@ export default function SoilFertility() {
               <div className="flex items-center gap-2">
                 <Leaf className="w-6 h-6 text-emerald-600" />
                 <CardTitle className="text-2xl font-bold text-gray-900">
-                  Dynamic Soil Health Intelligence System
+                  {t('soil.headerTitle')}
                 </CardTitle>
               </div>
               <CardDescription className="text-gray-600 mt-1">
-                Real-time ICAR & Soil Health Card analytics across all 23 districts of Punjab
+                {t('soil.headerSubtitle')}
               </CardDescription>
             </div>
 
             <div className="flex flex-wrap items-center gap-3">
               <div className="flex items-center gap-2">
-                <Label className="text-sm font-semibold text-gray-700">District:</Label>
+                <Label className="text-sm font-semibold text-gray-700">{t('soil.districtLabel')}</Label>
                 <Select value={selectedDistrict} onValueChange={handleDistrictChange}>
                   <SelectTrigger className="w-48 bg-white border-emerald-300 shadow-sm font-bold text-emerald-900">
-                    <SelectValue placeholder="Select District" />
+                    <SelectValue placeholder={t('soil.districtLabel')} />
                   </SelectTrigger>
                   <SelectContent>
                     {districts.map((d) => (
@@ -224,7 +226,7 @@ export default function SoilFertility() {
                 className="border-emerald-300 text-emerald-800 hover:bg-emerald-50"
               >
                 <RefreshCw className={`w-4 h-4 mr-2 ${isSyncing ? 'animate-spin' : ''}`} />
-                {isSyncing ? 'Syncing ETL...' : 'Refresh Government Datasets'}
+                {isSyncing ? t('soil.syncingEtl') : t('soil.refreshDatasets')}
               </Button>
             </div>
           </div>
@@ -243,7 +245,7 @@ export default function SoilFertility() {
         <Card className={`border-t-4 border-t-emerald-500 shadow-sm ${getScoreColor(soilReport.soilHealthScore)}`}>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium flex items-center justify-between">
-              Soil Health Score
+              {t('soil.cards.soilHealthScore')}
               <ShieldCheck className="w-4 h-4" />
             </CardTitle>
           </CardHeader>
@@ -251,7 +253,7 @@ export default function SoilFertility() {
             <div className="text-3xl font-bold">{soilReport.soilHealthScore} / 100</div>
             <div className="flex items-center gap-2 mt-1">
               <Badge className="bg-emerald-700 text-white">{soilReport.soilHealthStatus}</Badge>
-              <span className="text-xs text-gray-500">ICAR Certified Benchmark</span>
+              <span className="text-xs text-gray-500">{t('soil.cards.icarBenchmark')}</span>
             </div>
           </CardContent>
         </Card>
@@ -259,7 +261,7 @@ export default function SoilFertility() {
         <Card className="border-t-4 border-t-blue-500 shadow-sm">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-gray-600 flex items-center justify-between">
-              Soil Type & Texture
+              {t('soil.cards.soilTypeTexture')}
               <Layers className="w-4 h-4 text-blue-600" />
             </CardTitle>
           </CardHeader>
@@ -274,7 +276,7 @@ export default function SoilFertility() {
         <Card className="border-t-4 border-t-amber-500 shadow-sm">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-gray-600 flex items-center justify-between">
-              Soil pH & Salinity (EC)
+              {t('soil.cards.soilPhSalinity')}
               <Zap className="w-4 h-4 text-amber-600" />
             </CardTitle>
           </CardHeader>
@@ -289,13 +291,13 @@ export default function SoilFertility() {
         <Card className="border-t-4 border-t-purple-500 shadow-sm">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-gray-600 flex items-center justify-between">
-              Organic Carbon (OC)
+              {t('soil.cards.organicCarbon')}
               <TrendingUp className="w-4 h-4 text-purple-600" />
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-purple-900">{soilReport.organicCarbon}%</div>
-            <p className="text-xs text-gray-500 mt-1">Target: &gt;0.75% for optimal fertility</p>
+            <p className="text-xs text-gray-500 mt-1">{t('soil.cards.organicCarbonTarget')}</p>
           </CardContent>
         </Card>
       </div>
@@ -303,10 +305,10 @@ export default function SoilFertility() {
       {/* Main Visualizations & Analytics Tabs */}
       <Tabs defaultValue="overview" className="w-full">
         <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="overview">Nutrient Overview</TabsTrigger>
-          <TabsTrigger value="history">Historical Trends</TabsTrigger>
-          <TabsTrigger value="recommendations">AI Fertilizer & Crop Advice</TabsTrigger>
-          <TabsTrigger value="compare">District Comparison</TabsTrigger>
+          <TabsTrigger value="overview">{t('soil.tabs.overview')}</TabsTrigger>
+          <TabsTrigger value="history">{t('soil.tabs.history')}</TabsTrigger>
+          <TabsTrigger value="recommendations">{t('soil.tabs.recommendations')}</TabsTrigger>
+          <TabsTrigger value="compare">{t('soil.tabs.compare')}</TabsTrigger>
         </TabsList>
 
         {/* Overview Tab */}
@@ -314,8 +316,8 @@ export default function SoilFertility() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">Macronutrients (NPK) vs Benchmark</CardTitle>
-                <CardDescription>Available N, P, K levels in {selectedDistrict} (kg/ha)</CardDescription>
+                <CardTitle className="text-lg">{t('soil.overview.macronutrientsTitle')}</CardTitle>
+                <CardDescription>{t('soil.overview.macronutrientsDesc', { district: selectedDistrict })}</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="h-72">
@@ -326,8 +328,8 @@ export default function SoilFertility() {
                       <YAxis />
                       <Tooltip />
                       <Legend />
-                      <Bar dataKey="current" fill="#059669" name="Current Level" />
-                      <Bar dataKey="benchmark" fill="#94a3b8" name="Ideal Benchmark" />
+                      <Bar dataKey="current" fill="#059669" name={t('soil.overview.currentLevel')} />
+                      <Bar dataKey="benchmark" fill="#94a3b8" name={t('soil.overview.idealBenchmark')} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -336,8 +338,8 @@ export default function SoilFertility() {
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">Nutrient Balance Radar</CardTitle>
-                <CardDescription>Multi-parameter soil fertility index</CardDescription>
+                <CardTitle className="text-lg">{t('soil.overview.radarTitle')}</CardTitle>
+                <CardDescription>{t('soil.overview.radarDesc')}</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="h-72">
@@ -360,41 +362,41 @@ export default function SoilFertility() {
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <Droplets className="w-5 h-5 text-blue-600" />
-                Essential Micronutrient & Secondary Mineral Breakdown
+                {t('soil.overview.micronutrientsTitle')}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-3 text-center">
                 <div className="p-3 bg-slate-50 border rounded-lg">
-                  <div className="text-xs text-gray-500">Sulphur (S)</div>
+                  <div className="text-xs text-gray-500">{t('soil.overview.sulphur')}</div>
                   <div className="font-bold text-gray-900 mt-0.5">{soilReport.nutrients.sulphur} ppm</div>
                 </div>
                 <div className="p-3 bg-slate-50 border rounded-lg">
-                  <div className="text-xs text-gray-500">Zinc (Zn)</div>
+                  <div className="text-xs text-gray-500">{t('soil.overview.zinc')}</div>
                   <div className="font-bold text-gray-900 mt-0.5">{soilReport.nutrients.zinc} ppm</div>
                 </div>
                 <div className="p-3 bg-slate-50 border rounded-lg">
-                  <div className="text-xs text-gray-500">Iron (Fe)</div>
+                  <div className="text-xs text-gray-500">{t('soil.overview.iron')}</div>
                   <div className="font-bold text-gray-900 mt-0.5">{soilReport.nutrients.iron} ppm</div>
                 </div>
                 <div className="p-3 bg-slate-50 border rounded-lg">
-                  <div className="text-xs text-gray-500">Copper (Cu)</div>
+                  <div className="text-xs text-gray-500">{t('soil.overview.copper')}</div>
                   <div className="font-bold text-gray-900 mt-0.5">{soilReport.nutrients.copper} ppm</div>
                 </div>
                 <div className="p-3 bg-slate-50 border rounded-lg">
-                  <div className="text-xs text-gray-500">Manganese</div>
+                  <div className="text-xs text-gray-500">{t('soil.overview.manganese')}</div>
                   <div className="font-bold text-gray-900 mt-0.5">{soilReport.nutrients.manganese} ppm</div>
                 </div>
                 <div className="p-3 bg-slate-50 border rounded-lg">
-                  <div className="text-xs text-gray-500">Boron (B)</div>
+                  <div className="text-xs text-gray-500">{t('soil.overview.boron')}</div>
                   <div className="font-bold text-gray-900 mt-0.5">{soilReport.nutrients.boron} ppm</div>
                 </div>
                 <div className="p-3 bg-slate-50 border rounded-lg">
-                  <div className="text-xs text-gray-500">Calcium (Ca)</div>
+                  <div className="text-xs text-gray-500">{t('soil.overview.calcium')}</div>
                   <div className="font-bold text-gray-900 mt-0.5">{soilReport.nutrients.calcium} meq</div>
                 </div>
                 <div className="p-3 bg-slate-50 border rounded-lg">
-                  <div className="text-xs text-gray-500">Magnesium</div>
+                  <div className="text-xs text-gray-500">{t('soil.overview.magnesium')}</div>
                   <div className="font-bold text-gray-900 mt-0.5">{soilReport.nutrients.magnesium} meq</div>
                 </div>
               </div>
@@ -406,8 +408,8 @@ export default function SoilFertility() {
         <TabsContent value="history" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Historical Soil Health & NPK Trends</CardTitle>
-              <CardDescription>Multi-month progression for {selectedDistrict}</CardDescription>
+              <CardTitle>{t('soil.history.title')}</CardTitle>
+              <CardDescription>{t('soil.history.description', { district: selectedDistrict })}</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="h-72">
@@ -424,10 +426,10 @@ export default function SoilFertility() {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="nitrogen" stroke="#0088FE" name="Nitrogen (kg/ha)" strokeWidth={2} />
-                    <Line type="monotone" dataKey="phosphorus" stroke="#00C49F" name="Phosphorus (kg/ha)" strokeWidth={2} />
-                    <Line type="monotone" dataKey="potassium" stroke="#FFBB28" name="Potassium (kg/ha)" strokeWidth={2} />
-                    <Line type="monotone" dataKey="healthScore" stroke="#10b981" name="Health Score" strokeWidth={3} />
+                    <Line type="monotone" dataKey="nitrogen" stroke="#0088FE" name={t('soil.history.chart.nitrogen')} strokeWidth={2} />
+                    <Line type="monotone" dataKey="phosphorus" stroke="#00C49F" name={t('soil.history.chart.phosphorus')} strokeWidth={2} />
+                    <Line type="monotone" dataKey="potassium" stroke="#FFBB28" name={t('soil.history.chart.potassium')} strokeWidth={2} />
+                    <Line type="monotone" dataKey="healthScore" stroke="#10b981" name={t('soil.history.chart.healthScore')} strokeWidth={3} />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
@@ -439,14 +441,14 @@ export default function SoilFertility() {
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <Plus className="w-5 h-5 text-emerald-600" />
-                Record New Fertilizer Application Log
+                {t('soil.history.loggerTitle')}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleFertilizerSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                   <div>
-                    <Label htmlFor="nitrogen">Nitrogen Added (kg/acre)</Label>
+                    <Label htmlFor="nitrogen">{t('soil.history.nitrogenAdded')}</Label>
                     <Input
                       id="nitrogen"
                       type="number"
@@ -457,7 +459,7 @@ export default function SoilFertility() {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="phosphorus">Phosphorus Added (kg/acre)</Label>
+                    <Label htmlFor="phosphorus">{t('soil.history.phosphorusAdded')}</Label>
                     <Input
                       id="phosphorus"
                       type="number"
@@ -468,7 +470,7 @@ export default function SoilFertility() {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="potassium">Potassium Added (kg/acre)</Label>
+                    <Label htmlFor="potassium">{t('soil.history.potassiumAdded')}</Label>
                     <Input
                       id="potassium"
                       type="number"
@@ -479,7 +481,7 @@ export default function SoilFertility() {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="date">Application Date</Label>
+                    <Label htmlFor="date">{t('soil.history.applicationDate')}</Label>
                     <Input
                       id="date"
                       type="date"
@@ -490,7 +492,7 @@ export default function SoilFertility() {
                   </div>
                 </div>
                 <Button type="submit" className="bg-emerald-600 hover:bg-emerald-700 text-white">
-                  Record Log Entry
+                  {t('soil.history.recordLogEntry')}
                 </Button>
               </form>
             </CardContent>
@@ -504,9 +506,9 @@ export default function SoilFertility() {
               <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
                   <Zap className="w-5 h-5 text-amber-500" />
-                  Dynamic AI Fertilizer Dosage (kg/acre)
+                  {t('soil.recommendations.fertilizerDosageTitle')}
                 </CardTitle>
-                <CardDescription>Tailored for {selectedDistrict} based on ICAR recommendations</CardDescription>
+                <CardDescription>{t('soil.recommendations.fertilizerDosageDesc', { district: selectedDistrict })}</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
@@ -537,29 +539,29 @@ export default function SoilFertility() {
               <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
                   <CloudRain className="w-5 h-5 text-blue-600" />
-                  Open-Meteo Weather & Irrigation Schedule
+                  {t('soil.recommendations.irrigationTitle')}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="p-4 bg-blue-50 border border-blue-100 rounded-lg">
-                  <div className="font-semibold text-blue-900">Recommended Irrigation</div>
+                  <div className="font-semibold text-blue-900">{t('soil.recommendations.recommendedIrrigation')}</div>
                   <p className="text-sm text-blue-700 mt-1">{soilReport.recommendedIrrigation}</p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3 text-center">
                   <div className="p-3 bg-slate-50 border rounded-lg">
-                    <div className="text-xs text-gray-500">Live Temperature</div>
+                    <div className="text-xs text-gray-500">{t('soil.recommendations.liveTemperature')}</div>
                     <div className="font-bold text-gray-900 mt-0.5">{soilReport.weather.temp}°C</div>
                   </div>
                   <div className="p-3 bg-slate-50 border rounded-lg">
-                    <div className="text-xs text-gray-500">Soil Moisture</div>
+                    <div className="text-xs text-gray-500">{t('soil.recommendations.soilMoisture')}</div>
                     <div className="font-bold text-blue-600 mt-0.5">{soilReport.weather.moisture}%</div>
                   </div>
                 </div>
 
                 <Alert className="bg-emerald-50 border-emerald-200">
                   <AlertCircle className="h-4 w-4 text-emerald-600" />
-                  <AlertTitle className="text-emerald-800">Top Recommended Crop</AlertTitle>
+                  <AlertTitle className="text-emerald-800">{t('soil.recommendations.topRecommendedCrop')}</AlertTitle>
                   <AlertDescription className="text-emerald-700 font-medium">
                     {soilReport.recommendedCrop}
                   </AlertDescription>
@@ -575,14 +577,14 @@ export default function SoilFertility() {
             <CardHeader>
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
-                  <CardTitle>District Side-by-Side Soil Comparison</CardTitle>
-                  <CardDescription>Compare soil health parameters between any 2 Punjab districts</CardDescription>
+                  <CardTitle>{t('soil.compare.title')}</CardTitle>
+                  <CardDescription>{t('soil.compare.description')}</CardDescription>
                 </div>
 
                 <div className="flex items-center gap-3">
                   <Select value={selectedDistrict} onValueChange={setSelectedDistrict}>
                     <SelectTrigger className="w-36 bg-white">
-                      <SelectValue placeholder="District 1" />
+                      <SelectValue placeholder={districts[0]?.name} />
                     </SelectTrigger>
                     <SelectContent>
                       {districts.map((d) => (
@@ -590,10 +592,10 @@ export default function SoilFertility() {
                       ))}
                     </SelectContent>
                   </Select>
-                  <span className="text-sm font-bold text-gray-400">vs</span>
+                  <span className="text-sm font-bold text-gray-400">{t('soil.compare.vs')}</span>
                   <Select value={comparisonDistrict} onValueChange={setComparisonDistrict}>
                     <SelectTrigger className="w-36 bg-white">
-                      <SelectValue placeholder="District 2" />
+                      <SelectValue placeholder={districts[1]?.name} />
                     </SelectTrigger>
                     <SelectContent>
                       {districts.map((d) => (
@@ -613,11 +615,11 @@ export default function SoilFertility() {
                       <Badge className="bg-emerald-600">{comparisonData.district1.soilHealthScore} pts</Badge>
                     </div>
                     <div className="text-sm text-emerald-800">
-                      <div><strong>Soil Type:</strong> {comparisonData.district1.soilType}</div>
-                      <div><strong>pH:</strong> {comparisonData.district1.soilPh}</div>
-                      <div><strong>Organic Carbon:</strong> {comparisonData.district1.organicCarbon}%</div>
-                      <div><strong>Nitrogen:</strong> {comparisonData.district1.nutrients.nitrogen} kg/ha</div>
-                      <div><strong>Recommended Crop:</strong> {comparisonData.district1.recommendedCrop}</div>
+                      <div><strong>{t('soil.compare.soilType')}</strong> {comparisonData.district1.soilType}</div>
+                      <div><strong>{t('soil.compare.ph')}</strong> {comparisonData.district1.soilPh}</div>
+                      <div><strong>{t('soil.compare.organicCarbon')}</strong> {comparisonData.district1.organicCarbon}%</div>
+                      <div><strong>{t('soil.compare.nitrogen')}</strong> {comparisonData.district1.nutrients.nitrogen} kg/ha</div>
+                      <div><strong>{t('soil.compare.recommendedCrop')}</strong> {comparisonData.district1.recommendedCrop}</div>
                     </div>
                   </div>
 
@@ -627,16 +629,16 @@ export default function SoilFertility() {
                       <Badge className="bg-teal-600">{comparisonData.district2.soilHealthScore} pts</Badge>
                     </div>
                     <div className="text-sm text-teal-800">
-                      <div><strong>Soil Type:</strong> {comparisonData.district2.soilType}</div>
-                      <div><strong>pH:</strong> {comparisonData.district2.soilPh}</div>
-                      <div><strong>Organic Carbon:</strong> {comparisonData.district2.organicCarbon}%</div>
-                      <div><strong>Nitrogen:</strong> {comparisonData.district2.nutrients.nitrogen} kg/ha</div>
-                      <div><strong>Recommended Crop:</strong> {comparisonData.district2.recommendedCrop}</div>
+                      <div><strong>{t('soil.compare.soilType')}</strong> {comparisonData.district2.soilType}</div>
+                      <div><strong>{t('soil.compare.ph')}</strong> {comparisonData.district2.soilPh}</div>
+                      <div><strong>{t('soil.compare.organicCarbon')}</strong> {comparisonData.district2.organicCarbon}%</div>
+                      <div><strong>{t('soil.compare.nitrogen')}</strong> {comparisonData.district2.nutrients.nitrogen} kg/ha</div>
+                      <div><strong>{t('soil.compare.recommendedCrop')}</strong> {comparisonData.district2.recommendedCrop}</div>
                     </div>
                   </div>
                 </div>
               ) : (
-                <p className="text-center text-gray-500 py-4">Loading comparison metrics...</p>
+                <p className="text-center text-gray-500 py-4">{t('soil.compare.loading')}</p>
               )}
             </CardContent>
           </Card>

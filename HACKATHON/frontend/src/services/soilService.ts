@@ -318,7 +318,7 @@ export async function fetchSoilReport(district: string): Promise<DistrictSoilRep
     const res = await fetch(`${API_BASE}/report/${encodeURIComponent(district)}`);
     if (!res.ok) throw new Error(`HTTP error ${res.status}`);
     const data = await res.json();
-    if (data.report) return data.report;
+    if (data.report && data.report.nutrients) return data.report;
   } catch (error) {
     console.warn(`Backend API unavailable, using instant dataset fallback for ${district}.`);
   }
@@ -392,7 +392,41 @@ export async function compareDistricts(d1: string, d2: string): Promise<District
     const res = await fetch(`${API_BASE}/compare?d1=${encodeURIComponent(d1)}&d2=${encodeURIComponent(d2)}`);
     if (!res.ok) throw new Error(`HTTP error ${res.status}`);
     const data = await res.json();
-    if (data.comparison) return data.comparison;
+    // The backend returns each district's NPK fields flat (nitrogen, phosphorus, ...)
+    // rather than nested under `nutrients` like DistrictSoilReport expects — normalize
+    // here so callers can rely on the nested shape regardless of source.
+    if (data.comparison?.district1?.nutrients && data.comparison?.district2?.nutrients) {
+      return data.comparison;
+    }
+    if (data.comparison) {
+      const normalize = (d: any, fallback: DistrictSoilReport): DistrictSoilReport => ({
+        ...fallback,
+        district: d.name ?? fallback.district,
+        soilType: d.soilType ?? fallback.soilType,
+        soilPh: d.ph ?? fallback.soilPh,
+        organicCarbon: d.oc ?? fallback.organicCarbon,
+        soilHealthScore: d.healthScore ?? fallback.soilHealthScore,
+        soilHealthStatus: d.healthStatus ?? fallback.soilHealthStatus,
+        recommendedCrop: d.recommendedCrop ?? fallback.recommendedCrop,
+        nutrients: {
+          nitrogen: d.nitrogen ?? fallback.nutrients.nitrogen,
+          phosphorus: d.phosphorus ?? fallback.nutrients.phosphorus,
+          potassium: d.potassium ?? fallback.nutrients.potassium,
+          sulphur: d.sulphur ?? fallback.nutrients.sulphur,
+          zinc: d.zinc ?? fallback.nutrients.zinc,
+          iron: d.iron ?? fallback.nutrients.iron,
+          copper: d.copper ?? fallback.nutrients.copper,
+          manganese: d.manganese ?? fallback.nutrients.manganese,
+          boron: d.boron ?? fallback.nutrients.boron,
+          calcium: d.calcium ?? fallback.nutrients.calcium,
+          magnesium: d.magnesium ?? fallback.nutrients.magnesium,
+        },
+      });
+      return {
+        district1: normalize(data.comparison.district1, PUNJAB_DATASET_FALLBACK[k1]),
+        district2: normalize(data.comparison.district2, PUNJAB_DATASET_FALLBACK[k2]),
+      };
+    }
   } catch (error) {
     console.warn(`Backend API unavailable, building instant comparison fallback.`);
   }

@@ -280,8 +280,8 @@ export default function Index() {
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between">
                   <div>
-                    <CardTitle>Your Crops</CardTitle>
-                    <CardDescription>Crops you plan to grow this season</CardDescription>
+                    <CardTitle>{t('dashboard.overview.yourCrops')}</CardTitle>
+                    <CardDescription>{t('dashboard.overview.yourCropsDesc')}</CardDescription>
                   </div>
                   <Button
                     variant="outline"
@@ -289,7 +289,7 @@ export default function Index() {
                     onClick={handleReopenCropSelection}
                     className="flex items-center gap-1.5 text-xs text-green-700 border-green-300 hover:bg-green-50"
                   >
-                    <Edit3 className="w-3.5 h-3.5" /> Change Crops
+                    <Edit3 className="w-3.5 h-3.5" /> {t('dashboard.overview.changeCrops')}
                   </Button>
                 </CardHeader>
                 <CardContent>
@@ -301,7 +301,7 @@ export default function Index() {
                     ))}
                   </div>
                   <p className="text-sm text-gray-500 mt-3">
-                    Go to <strong>Market</strong> tab to see live prices and sell advice for your crops.
+                    {t('dashboard.overview.goToMarketPrefix')} <strong>{t('dashboard.tabs.market')}</strong> {t('dashboard.overview.goToMarketSuffix')}
                   </p>
                 </CardContent>
               </Card>
