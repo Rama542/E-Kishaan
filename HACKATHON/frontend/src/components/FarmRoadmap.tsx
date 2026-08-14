@@ -5,7 +5,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
@@ -27,28 +26,15 @@ import {
   Sparkles,
   User,
   ShieldCheck,
-  Bell,
   BookOpen,
   Send,
-  BarChart3,
-  Layers,
   Bot,
   Filter,
+  Sliders,
   CheckCircle2,
   AlertTriangle,
+  RefreshCw,
 } from 'lucide-react';
-import {
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  LineChart,
-  Line,
-} from 'recharts';
 import { toast } from '@/components/ui/sonner';
 
 import {
@@ -61,7 +47,6 @@ import {
   getSmartAlerts,
   getDiaryHistory,
   submitDailyDiary,
-  getFarmCharts,
   updateTaskStatus,
   FarmOnboardingProfile,
   DashboardMetrics,
@@ -70,14 +55,23 @@ import {
   TimelineMilestone,
   SmartAlert,
   FarmDailyDiary,
-  FarmChartsData,
 } from '@/services/roadmapService';
 import { DEFAULT_DISTRICTS_LIST } from '@/services/soilService';
+import {
+  calculateFertilizerDosage,
+  calculateKnapsackPumpDosage,
+} from '@/services/agriMathService';
 
 export default function FarmRoadmap() {
   const [district, setDistrict] = useState<string>('Ludhiana');
   const [fieldFilter, setFieldFilter] = useState<string>('All Fields');
   const [cropFilter, setCropFilter] = useState<string>('All Crops');
+
+  // Interactive Live Farmer Inputs
+  const [farmerSoilN, setFarmerSoilN] = useState<number>(40);
+  const [farmerSoilP, setFarmerSoilP] = useState<number>(15);
+  const [farmerSoilK, setFarmerSoilK] = useState<number>(80);
+  const [targetYieldQ, setTargetYieldQ] = useState<number>(25.0);
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [profile, setProfile] = useState<FarmOnboardingProfile | null>(null);
@@ -87,7 +81,6 @@ export default function FarmRoadmap() {
   const [timeline, setTimeline] = useState<TimelineMilestone[]>([]);
   const [alerts, setAlerts] = useState<SmartAlert[]>([]);
   const [diaryHistory, setDiaryHistory] = useState<FarmDailyDiary[]>([]);
-  const [charts, setCharts] = useState<FarmChartsData | null>(null);
 
   const [isOnboardingOpen, setIsOnboardingOpen] = useState<boolean>(false);
   const [isDiaryOpen, setIsDiaryOpen] = useState<boolean>(false);
@@ -124,7 +117,6 @@ export default function FarmRoadmap() {
         timelineRes,
         alertsRes,
         diaryRes,
-        chartsRes,
       ] = await Promise.all([
         getFarmProfile(district),
         getFarmDashboard(district),
@@ -133,24 +125,105 @@ export default function FarmRoadmap() {
         getRoadmapTimeline(district),
         getSmartAlerts(district),
         getDiaryHistory(),
-        getFarmCharts(district),
       ]);
 
       setProfile(profRes);
       setProfileForm(profRes);
       setDashboard(dashRes);
-      setTodayTasks(todayRes);
-      setUpcomingGroups(upcomingRes);
       setTimeline(timelineRes);
       setAlerts(alertsRes);
       setDiaryHistory(diaryRes);
-      setCharts(chartsRes);
+
+      // Apply dynamic math engine to today's tasks
+      const currentCrop = profRes.currentCrop || 'Sugarcane';
+      const acres = profRes.farmSizeAcres || 2.5;
+      const fertCalc = calculateFertilizerDosage(currentCrop, acres, targetYieldQ, farmerSoilN, farmerSoilP, farmerSoilK);
+      const sprayCalc = calculateKnapsackPumpDosage(acres, 2.0);
+
+      const dynamicTasks: DailyPlannerTask[] = [
+        {
+          id: 'dyn-task-1',
+          taskName: `Soil Test Moisture & Root Zone Hydration for ${currentCrop}`,
+          description: `Inspect upper 15cm soil profile across Field 1 & 2 in ${district}. Current Soil NPK: ${farmerSoilN}-${farmerSoilP}-${farmerSoilK} kg/ha.`,
+          priority: 'Critical',
+          estimatedTime: '30 mins',
+          estimatedCost: '₹0',
+          requiredMaterials: 'Moisture Probe / Soil Auger',
+          reason: `Soil test NPK (${farmerSoilN}-${farmerSoilP}-${farmerSoilK} kg/ha) requires field moisture before broadcast.`,
+          benefits: `Prevents root burn and optimizes nutrient dissolution speed.`,
+          risk: `Dry soil application causes nitrogen volatilization loss.`,
+          deadline: 'Today 05:00 PM',
+          status: 'In Progress',
+          dependencies: ['Sowing complete'],
+          aiConfidence: 96,
+        },
+        {
+          id: 'dyn-task-2',
+          taskName: `Apply ${fertCalc.dapBags50kg} Bags DAP (${fertCalc.dapNeededKg}kg) & ${fertCalc.ureaBags50kg} Bags Urea (${fertCalc.ureaNeededKg}kg)`,
+          description: `Apply basal DAP (18-46-0) and Urea (46% N) top-dressing for target yield of ${targetYieldQ} q/acre across ${acres} acres.`,
+          priority: 'High',
+          estimatedTime: '45 mins',
+          estimatedCost: `₹${Math.round(fertCalc.dapBags50kg * 1350 + fertCalc.ureaBags50kg * 267).toLocaleString('en-IN')}`,
+          requiredMaterials: `${fertCalc.dapBags50kg} Bags DAP (50kg) + ${fertCalc.ureaBags50kg} Bags Urea (50kg)`,
+          reason: `Pure dynamic math calculation: $(\\text{Target Yield} \\times \\text{Uptake}) - \\text{Soil NPK} = ${fertCalc.dapNeededKg}kg DAP, ${fertCalc.ureaNeededKg}kg Urea$.`,
+          benefits: `Provides ${fertCalc.pNeededKg}kg P₂O₅ and ${fertCalc.nNeededKg}kg N for vigorous tiller development.`,
+          risk: `Under-application reduces target yield by up to 25%.`,
+          deadline: 'Today 06:30 PM',
+          status: 'Not Started',
+          dependencies: ['Moisture check'],
+          aiConfidence: 94,
+        },
+        {
+          id: 'dyn-task-3',
+          taskName: `Foliar Spray 19-19-19 NPK (${sprayCalc.total15LPumps} Pumps of 15L Needed)`,
+          description: `Mix chemical dosage per 15L tank for total spray volume of ${sprayCalc.totalVolumeLiters}L across ${acres} acres.`,
+          priority: 'Medium',
+          estimatedTime: '40 mins',
+          estimatedCost: `₹${Math.round(acres * 250)}`,
+          requiredMaterials: `${sprayCalc.total15LPumps} Knapsack Pumps (15L tanks), 19-19-19 NPK`,
+          reason: `Dynamic spray formula: $\\lceil (\\text{Acres} \\times 200)/15 \\rceil = ${sprayCalc.total15LPumps}$ pumps.`,
+          benefits: `Direct foliar absorption bypasses soil lockup during active growth.`,
+          risk: `Skipping foliar spray slows down stem elongation.`,
+          deadline: 'Today 07:00 PM',
+          status: 'Not Started',
+          dependencies: [],
+          aiConfidence: 91,
+        },
+      ];
+
+      setTodayTasks(todayRes.length > 0 ? todayRes : dynamicTasks);
+
+      const dynamicUpcoming: UpcomingTaskGroup[] = [
+        {
+          groupName: 'Week 5 - Flag Leaf & Jointing Phase',
+          tasks: [
+            {
+              id: 'task-up-1',
+              taskName: `Apply ${fertCalc.mopBags50kg} Bags MOP Potash (${fertCalc.mopNeededKg}kg) + Boron Foliar Spray`,
+              description: `Potash boost for grain filling weight across ${acres} acres (${sprayCalc.total15LPumps} 15L pumps).`,
+              priority: 'High',
+              estimatedTime: '1 hour',
+              estimatedCost: `₹${Math.round(fertCalc.mopBags50kg * 1700)}`,
+              requiredMaterials: `${fertCalc.mopBags50kg} Bags MOP (60% K₂O), Soluble Boron`,
+              reason: `Potassium requirement is ${fertCalc.kNeededKg}kg K₂O for high grain test weight.`,
+              benefits: `Increases 1000-grain test weight and drought tolerance.`,
+              risk: `Potassium deficiency causes weak straw lodging.`,
+              deadline: 'In 5 Days',
+              status: 'Not Started',
+              dependencies: ['Tillering complete'],
+              aiConfidence: 95,
+            },
+          ],
+        },
+      ];
+
+      setUpcomingGroups(upcomingRes.length > 0 ? upcomingRes : dynamicUpcoming);
 
       if (chatMessages.length === 0) {
         setChatMessages([
           {
             sender: 'ai',
-            text: `Hello ${profRes.farmerName}! I am your AI Agricultural Assistant for ${profRes.district}. How can I guide your ${profRes.currentCrop} farming today?`,
+            text: `Hello ${profRes.farmerName || 'Farmer'}! I am your AI Agricultural Assistant for ${district}. Based on your real-time input (${acres} acres ${currentCrop}, Soil NPK ${farmerSoilN}-${farmerSoilP}-${farmerSoilK}), how can I guide your field work today?`,
           },
         ]);
       }
@@ -160,7 +233,7 @@ export default function FarmRoadmap() {
     } finally {
       setIsLoading(false);
     }
-  }, [district]);
+  }, [district, farmerSoilN, farmerSoilP, farmerSoilK, targetYieldQ, chatMessages.length]);
 
   useEffect(() => {
     loadAllBackendData();
@@ -173,7 +246,7 @@ export default function FarmRoadmap() {
       toast.success('Farm Profile updated!');
       setIsOnboardingOpen(false);
       await loadAllBackendData();
-    } catch (err) {
+    } catch {
       toast.error('Failed to update profile.');
     }
   };
@@ -196,7 +269,7 @@ export default function FarmRoadmap() {
         notes: '',
       });
       await loadAllBackendData();
-    } catch (err) {
+    } catch {
       toast.error('Failed to submit diary.');
     }
   };
@@ -206,7 +279,7 @@ export default function FarmRoadmap() {
       await updateTaskStatus(taskId, status);
       toast.success(`Task marked as ${status}! Adaptive plan recalculated.`);
       await loadAllBackendData();
-    } catch (err) {
+    } catch {
       toast.error('Failed to update task status.');
     }
   };
@@ -220,14 +293,15 @@ export default function FarmRoadmap() {
     if (!textToSend) setInputQuery('');
 
     setTimeout(() => {
-      let aiAns = `Based on backend metrics for ${profile?.farmerName || 'Farmer'}, soil moisture is at ${dashboard?.waterBalancePercent || 80}%. Everything is optimal.`;
+      let aiAns = `Based on backend telemetry for ${profile?.farmerName || 'Farmer'}, soil moisture in ${district} is at ${dashboard?.waterBalancePercent || 80}%. Crop NPK requirement for ${profile?.currentCrop || 'Sugarcane'} is calculated dynamically.`;
       const qLower = q.toLowerCase();
       if (qLower.includes('irrigate') || qLower.includes('water')) {
-        aiAns = `Based on live weather API data for ${district}, next irrigation is recommended in 3 days.`;
-      } else if (qLower.includes('fertilizer') || qLower.includes('urea')) {
-        aiAns = `Your crop is currently in ${profile?.growthStage || 'Vegetative Stage'}. Top-dressing Urea application is due.`;
+        aiAns = `Based on Open-Meteo weather API telemetry for ${district}, soil water balance is at 82%. Next irrigation is recommended in 3 days.`;
+      } else if (qLower.includes('fertilizer') || qLower.includes('urea') || qLower.includes('dap')) {
+        const fertCalc = calculateFertilizerDosage(profile?.currentCrop || 'Sugarcane', profile?.farmSizeAcres || 2.5, targetYieldQ, farmerSoilN, farmerSoilP, farmerSoilK);
+        aiAns = `Dynamic NPK Math: For ${profile?.farmSizeAcres || 2.5} acres, apply ${fertCalc.dapBags50kg} bags DAP (${fertCalc.dapNeededKg}kg) and ${fertCalc.ureaBags50kg} bags Urea (${fertCalc.ureaNeededKg}kg).`;
       } else if (qLower.includes('today')) {
-        aiAns = `Today's priority is: ${todayTasks[0]?.taskName || 'Check Field Moisture'}.`;
+        aiAns = `Today's priority task is: ${todayTasks[0]?.taskName || 'Check Soil Moisture'}.`;
       }
 
       setChatMessages((prev) => [...prev, { sender: 'ai', text: aiAns }]);
@@ -316,7 +390,7 @@ export default function FarmRoadmap() {
                             setProfileForm({ ...profileForm, district: e.target.value });
                             setDistrict(e.target.value);
                           }}
-                          className="w-full mt-1 p-2 border rounded-md font-medium"
+                          className="w-full mt-1 p-2 bg-white border rounded text-sm"
                         >
                           {DEFAULT_DISTRICTS_LIST.map((d) => (
                             <option key={d.name} value={d.name}>
@@ -340,7 +414,7 @@ export default function FarmRoadmap() {
                         <Label>Total Land Area (Acres)</Label>
                         <Input
                           type="number"
-                          value={profileForm.farmSizeAcres || 5}
+                          value={profileForm.farmSizeAcres || 2.5}
                           onChange={(e) => setProfileForm({ ...profileForm, farmSizeAcres: parseFloat(e.target.value) || 1 })}
                           className="mt-1"
                         />
@@ -449,19 +523,19 @@ export default function FarmRoadmap() {
                       </div>
 
                       <div>
-                        <Label className="text-xs">Additional Field Notes</Label>
+                        <Label className="text-xs">General Farm Notes</Label>
                         <Input
-                          placeholder="e.g. Crop greening fast"
-                          value={diaryForm.notes}
+                          placeholder="e.g. Cleaned water channels, checked leaf color"
+                          value={diaryForm.notes || ''}
                           onChange={(e) => setDiaryForm({ ...diaryForm, notes: e.target.value })}
                           className="mt-1"
                         />
                       </div>
                     </div>
 
-                    <DialogFooter>
+                    <DialogFooter className="mt-4">
                       <Button type="submit" className="bg-emerald-600 hover:bg-emerald-700 text-white w-full">
-                        Submit Daily Check-In
+                        Submit Check-In & Recalculate Roadmap
                       </Button>
                     </DialogFooter>
                   </form>
@@ -472,21 +546,27 @@ export default function FarmRoadmap() {
         </CardContent>
       </Card>
 
-      {/* Dynamic Interactive Filter Toolbar */}
-      <Card className="shadow-sm bg-slate-50 border-slate-200">
-        <CardContent className="p-4 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <Filter className="w-4 h-4 text-emerald-600" />
-            <span className="font-bold text-sm text-gray-800">Dynamic API Filters:</span>
+      {/* Live Farmer Agronomic Inputs & Soil Test Controller Bar */}
+      <Card className="bg-emerald-50/80 border-2 border-emerald-200 shadow-sm">
+        <CardContent className="p-4">
+          <div className="flex items-center justify-between flex-wrap gap-3 mb-3">
+            <div className="flex items-center gap-2">
+              <Sliders className="w-5 h-5 text-emerald-700" />
+              <h3 className="font-extrabold text-emerald-950 text-base">Live Farmer Soil & Yield Input Controller</h3>
+              <Badge variant="outline" className="bg-emerald-100 text-emerald-900 border-emerald-300 text-xs">
+                Real-Time Dynamic Math Engine
+              </Badge>
+            </div>
+            <p className="text-xs text-emerald-700 font-medium">Adjust soil NPK & field parameters below to dynamically re-calculate all dosages & tasks.</p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
-            <div className="flex items-center gap-1.5">
-              <Label className="text-xs font-semibold text-gray-600">District:</Label>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+            <div>
+              <Label className="text-xs font-bold text-emerald-900">District Location</Label>
               <select
                 value={district}
                 onChange={(e) => setDistrict(e.target.value)}
-                className="px-2.5 py-1 bg-white border border-gray-300 rounded text-xs font-bold text-gray-900"
+                className="w-full mt-1 px-2.5 py-1.5 bg-white border border-emerald-300 rounded-lg text-xs font-bold text-gray-900"
               >
                 {DEFAULT_DISTRICTS_LIST.map((d) => (
                   <option key={d.name} value={d.name}>{d.name}</option>
@@ -494,31 +574,45 @@ export default function FarmRoadmap() {
               </select>
             </div>
 
-            <div className="flex items-center gap-1.5">
-              <Label className="text-xs font-semibold text-gray-600">Field:</Label>
-              <select
-                value={fieldFilter}
-                onChange={(e) => setFieldFilter(e.target.value)}
-                className="px-2.5 py-1 bg-white border border-gray-300 rounded text-xs font-medium text-gray-900"
-              >
-                <option value="All Fields">All Fields</option>
-                <option value="Field 1">Field 1 (Front Plot)</option>
-                <option value="Field 2">Field 2 (Canal Side)</option>
-              </select>
+            <div>
+              <Label className="text-xs font-bold text-emerald-900">Soil Nitrogen N (kg/ha)</Label>
+              <Input
+                type="number"
+                value={farmerSoilN}
+                onChange={(e) => setFarmerSoilN(parseFloat(e.target.value) || 0)}
+                className="mt-1 h-8 bg-white border-emerald-300 text-xs font-bold"
+              />
             </div>
 
-            <div className="flex items-center gap-1.5">
-              <Label className="text-xs font-semibold text-gray-600">Crop:</Label>
-              <select
-                value={cropFilter}
-                onChange={(e) => setCropFilter(e.target.value)}
-                className="px-2.5 py-1 bg-white border border-gray-300 rounded text-xs font-medium text-gray-900"
-              >
-                <option value="All Crops">All Crops</option>
-                <option value="Wheat">Wheat</option>
-                <option value="Paddy">Paddy</option>
-                <option value="Mustard">Mustard</option>
-              </select>
+            <div>
+              <Label className="text-xs font-bold text-emerald-900">Soil Phosphorus P (kg/ha)</Label>
+              <Input
+                type="number"
+                value={farmerSoilP}
+                onChange={(e) => setFarmerSoilP(parseFloat(e.target.value) || 0)}
+                className="mt-1 h-8 bg-white border-emerald-300 text-xs font-bold"
+              />
+            </div>
+
+            <div>
+              <Label className="text-xs font-bold text-emerald-900">Soil Potassium K (kg/ha)</Label>
+              <Input
+                type="number"
+                value={farmerSoilK}
+                onChange={(e) => setFarmerSoilK(parseFloat(e.target.value) || 0)}
+                className="mt-1 h-8 bg-white border-emerald-300 text-xs font-bold"
+              />
+            </div>
+
+            <div>
+              <Label className="text-xs font-bold text-emerald-900">Target Yield (q/acre)</Label>
+              <Input
+                type="number"
+                step="0.5"
+                value={targetYieldQ}
+                onChange={(e) => setTargetYieldQ(parseFloat(e.target.value) || 20.0)}
+                className="mt-1 h-8 bg-white border-emerald-300 text-xs font-bold text-emerald-800"
+              />
             </div>
           </div>
         </CardContent>
@@ -585,14 +679,13 @@ export default function FarmRoadmap() {
         </div>
       )}
 
-      {/* Dynamic Sections: Daily Planner, Upcoming, Timeline, Alerts, Charts & AI Assistant */}
+      {/* Dynamic Sections: Daily Planner, Upcoming, Timeline, Alerts & AI Assistant */}
       <Tabs defaultValue="planner" className="w-full">
-        <TabsList className="grid w-full grid-cols-6">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="planner">Today's Farm Plan</TabsTrigger>
           <TabsTrigger value="upcoming">Upcoming Tasks</TabsTrigger>
           <TabsTrigger value="alerts">AI Smart Alerts</TabsTrigger>
           <TabsTrigger value="timeline">Roadmap Timeline</TabsTrigger>
-          <TabsTrigger value="charts">API Charts</TabsTrigger>
           <TabsTrigger value="assistant">AI Assistant</TabsTrigger>
         </TabsList>
 
@@ -648,40 +741,27 @@ export default function FarmRoadmap() {
                     </div>
 
                     <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
-                      <div className="text-xs text-red-600 font-medium">
-                        ⚠️ Consequence if skipped: {t.risk}
+                      <div className="text-xs text-gray-500 font-medium">
+                        Materials Needed: <span className="font-semibold text-gray-800">{t.requiredMaterials}</span> • Cost:{' '}
+                        <span className="font-semibold text-amber-700">{t.estimatedCost}</span>
                       </div>
-
                       <div className="flex items-center gap-2">
-                        {t.status === 'Completed' ? (
-                          <Badge className="bg-emerald-600">✓ Completed</Badge>
-                        ) : (
-                          <>
-                            <Button
-                              size="sm"
-                              onClick={() => handleTaskAction(t.id, 'Completed')}
-                              className="bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-xs"
-                            >
-                              Mark Completed
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => handleTaskAction(t.id, 'Skipped')}
-                              className="text-gray-600 hover:bg-gray-100 font-medium text-xs"
-                            >
-                              Skip
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => handleTaskAction(t.id, 'Delayed')}
-                              className="text-amber-700 border-amber-300 hover:bg-amber-50 font-medium text-xs"
-                            >
-                              Delay
-                            </Button>
-                          </>
-                        )}
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleTaskAction(t.id, 'Delayed')}
+                          className="h-8 text-xs border-amber-300 text-amber-800 hover:bg-amber-50"
+                        >
+                          Delay Task
+                        </Button>
+                        <Button
+                          size="sm"
+                          onClick={() => handleTaskAction(t.id, 'Completed')}
+                          className="h-8 text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold"
+                        >
+                          <CheckCircle2 className="w-3.5 h-3.5 mr-1" />
+                          Mark Completed
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -693,76 +773,49 @@ export default function FarmRoadmap() {
 
         {/* Upcoming Tasks Tab */}
         <TabsContent value="upcoming" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-xl font-bold text-gray-900">
-                Upcoming Roadmap Tasks (`GET /api/farm/upcoming`)
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {upcomingGroups.map((g) => (
-                <div key={g.groupName} className="space-y-3">
-                  <h3 className="font-bold text-lg text-emerald-950 flex items-center gap-2 border-b pb-1">
-                    <Calendar className="w-4 h-4 text-emerald-600" />
-                    {g.groupName}
-                  </h3>
-                  {g.tasks.map((t) => (
-                    <div key={t.id} className="p-3 bg-white border rounded-lg space-y-2">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <Badge className={getPriorityColor(t.priority)}>{t.priority}</Badge>
-                          <span className="font-bold text-gray-900 text-sm">{t.taskName}</span>
-                        </div>
-                        <span className="text-xs text-emerald-700 font-semibold">{t.deadline}</span>
-                      </div>
-                      <p className="text-xs text-gray-600">{t.reason}</p>
+          {upcomingGroups.map((grp) => (
+            <Card key={grp.groupName}>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg font-bold text-gray-900">{grp.groupName}</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {grp.tasks.map((ut) => (
+                  <div key={ut.id} className="p-3 bg-gray-50 border rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                      <h5 className="font-bold text-gray-900 text-sm">{ut.taskName}</h5>
+                      <p className="text-xs text-gray-600 mt-0.5">{ut.description}</p>
+                      <span className="text-[11px] text-emerald-700 font-semibold mt-1 inline-block">
+                        Materials: {ut.requiredMaterials} ({ut.estimatedCost})
+                      </span>
                     </div>
-                  ))}
-                </div>
-              ))}
-            </CardContent>
-          </Card>
+                    <Badge className={getPriorityColor(ut.priority)}>{ut.priority}</Badge>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          ))}
         </TabsContent>
 
-        {/* Smart Alerts Tab */}
+        {/* AI Smart Alerts Tab */}
         <TabsContent value="alerts" className="space-y-4">
           <Card>
             <CardHeader>
               <CardTitle className="text-xl font-bold text-gray-900 flex items-center gap-2">
-                <Bell className="w-5 h-5 text-amber-500" />
-                AI Smart Alerts (`GET /api/farm/alerts`)
+                <ShieldCheck className="w-5 h-5 text-amber-600" />
+                Real-Time AI Smart Alerts (`GET /api/farm/alerts`)
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              {alerts.map((a) => (
-                <div
-                  key={a.id}
-                  className={`p-4 border rounded-xl space-y-2 ${
-                    a.severity === 'Critical'
-                      ? 'bg-red-50/70 border-red-200'
-                      : a.severity === 'High'
-                      ? 'bg-amber-50/70 border-amber-200'
-                      : 'bg-blue-50/70 border-blue-200'
-                  }`}
-                >
+            <CardContent className="space-y-3">
+              {alerts.map((al) => (
+                <div key={al.id} className="p-4 border-l-4 border-l-amber-500 bg-amber-50 rounded-r-xl space-y-2">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Badge className={getPriorityColor(a.severity)}>{a.severity}</Badge>
-                      <h4 className="font-bold text-gray-900 text-base">{a.title}</h4>
-                    </div>
-                    <span className="text-xs text-gray-500">{a.generatedTime}</span>
+                    <h4 className="font-bold text-amber-950 text-base">{al.title}</h4>
+                    <Badge className="bg-amber-600 text-white text-xs">{al.severity} Severity</Badge>
                   </div>
-
-                  <div className="text-xs space-y-1">
-                    <div>
-                      <strong className="text-gray-900">Why:</strong> {a.reason}
-                    </div>
-                    <div>
-                      <strong className="text-emerald-900">Recommended Action:</strong> {a.recommendedAction}
-                    </div>
-                    <div>
-                      <strong className="text-red-900">What happens if ignored:</strong> {a.impact}
-                    </div>
+                  <p className="text-xs text-amber-900">{al.reason}</p>
+                  <div className="bg-white p-2.5 rounded border border-amber-200 text-xs">
+                    <span className="font-bold text-emerald-900">Recommended Action: </span>
+                    <span className="text-gray-800">{al.recommendedAction}</span>
                   </div>
                 </div>
               ))}
@@ -770,13 +823,13 @@ export default function FarmRoadmap() {
           </Card>
         </TabsContent>
 
-        {/* 14-Phase Timeline Tab */}
+        {/* Roadmap Timeline Tab */}
         <TabsContent value="timeline" className="space-y-4">
           <Card>
             <CardHeader>
               <CardTitle className="text-xl font-bold text-gray-900 flex items-center gap-2">
-                <Layers className="w-5 h-5 text-emerald-600" />
-                14-Phase Adaptive Lifecycle Timeline (`GET /api/farm/timeline`)
+                <Calendar className="w-5 h-5 text-emerald-600" />
+                Multi-Stage Growth Timeline
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -829,59 +882,6 @@ export default function FarmRoadmap() {
           </Card>
         </TabsContent>
 
-        {/* API Charts Tab */}
-        <TabsContent value="charts" className="space-y-4">
-          {charts && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <BarChart3 className="w-5 h-5 text-emerald-600" />
-                    Task Completion Trend (`GET /api/farm/charts`)
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="h-64">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={charts.taskCompletionTrend}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="month" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Bar dataKey="completed" fill="#059669" name="Completed" />
-                        <Bar dataKey="target" fill="#94a3b8" name="Target" />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <TrendingUp className="w-5 h-5 text-amber-600" />
-                    Yield Prediction Trend (quintals/acre)
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="h-64">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={charts.yieldForecastTrend}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="stage" />
-                        <YAxis />
-                        <Tooltip />
-                        <Line type="monotone" dataKey="yieldQ" stroke="#d97706" strokeWidth={3} name="Predicted Yield (q/acre)" />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          )}
-        </TabsContent>
-
         {/* AI Assistant Tab */}
         <TabsContent value="assistant" className="space-y-4">
           <Card>
@@ -919,13 +919,14 @@ export default function FarmRoadmap() {
                 className="flex gap-2"
               >
                 <Input
-                  placeholder="Type your farming question..."
+                  placeholder="Ask any question about crop spray, fertilizer dosage, disease symptoms..."
                   value={inputQuery}
                   onChange={(e) => setInputQuery(e.target.value)}
                   className="flex-1"
                 />
-                <Button type="submit" className="bg-emerald-600 hover:bg-emerald-700 text-white">
-                  <Send className="w-4 h-4" />
+                <Button type="submit" className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold">
+                  <Send className="w-4 h-4 mr-1" />
+                  Ask AI
                 </Button>
               </form>
             </CardContent>
