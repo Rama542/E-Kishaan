@@ -12,8 +12,8 @@ export interface OfflineJournalEntry {
   crop_name: string;
   activity_type: string;
   description: string;
-  debit_account: str;
-  credit_account: str;
+  debit_account: string;
+  credit_account: string;
   amount_inr: number;
   inputs_used?: Array<{ item_name: string; quantity: number; unit: string; unit_price_inr: number }>;
   labor_hours?: number;
