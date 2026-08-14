@@ -241,26 +241,41 @@ export interface MandiComparison {
   options: (MandiOption & { price: number; netRealization: number; isBest: boolean })[];
 }
 
-// Punjab mandis with realistic price differentials and transport costs
-const PUNJAB_MANDIS: MandiOption[] = [
-  { name: 'Ludhiana',   district: 'Ludhiana',   distanceKm: 0,   transportCostPerQ: 30,  priceDiffPct: 0    },
-  { name: 'Amritsar',   district: 'Amritsar',   distanceKm: 75,  transportCostPerQ: 130, priceDiffPct: 2.5  },
-  { name: 'Jalandhar',  district: 'Jalandhar',  distanceKm: 60,  transportCostPerQ: 100, priceDiffPct: 1.5  },
-  { name: 'Bathinda',   district: 'Bathinda',   distanceKm: 115, transportCostPerQ: 180, priceDiffPct: -1.0 },
-  { name: 'Patiala',    district: 'Patiala',    distanceKm: 55,  transportCostPerQ: 90,  priceDiffPct: 1.0  },
+import { calculateMandiNetPrice } from '@/services/agriMathService';
+
+const PUNJAB_MANDIS_LOCATIONS = [
+  { name: 'Ludhiana', district: 'Ludhiana', lat: 30.9010, lon: 75.8573, priceDiffPct: 0 },
+  { name: 'Amritsar', district: 'Amritsar', lat: 31.6340, lon: 74.8723, priceDiffPct: 2.5 },
+  { name: 'Jalandhar', district: 'Jalandhar', lat: 31.3260, lon: 75.5762, priceDiffPct: 1.5 },
+  { name: 'Bathinda', district: 'Bathinda', lat: 30.2110, lon: 74.9455, priceDiffPct: -1.0 },
+  { name: 'Patiala', district: 'Patiala', lat: 30.3398, lon: 76.3869, priceDiffPct: 1.0 },
 ];
 
 export function getMandiComparison(crops: CropPriceInfo[]): MandiComparison[] {
+  const farmLat = 30.9010; // Farm centroid
+  const farmLon = 75.8573;
+
   return crops.map((crop) => {
-    const options = PUNJAB_MANDIS.map((mandi) => {
-      const price          = Math.round(crop.currentPrice * (1 + mandi.priceDiffPct / 100));
-      const netRealization = price - mandi.transportCostPerQ;
-      return { ...mandi, price, netRealization, isBest: false };
+    const options = PUNJAB_MANDIS_LOCATIONS.map((mandi) => {
+      const rawPrice = Math.round(crop.currentPrice * (1 + mandi.priceDiffPct / 100));
+      const calc = calculateMandiNetPrice(farmLat, farmLon, mandi.lat, mandi.lon, rawPrice, 0.85, 2.5);
+
+      return {
+        name: mandi.name,
+        district: mandi.district,
+        distanceKm: calc.distanceKm,
+        transportCostPerQ: calc.transportCostPerQ,
+        priceDiffPct: mandi.priceDiffPct,
+        price: rawPrice,
+        netRealization: Math.round(calc.netRealizedPricePerQ),
+        isBest: false,
+      };
     });
 
-    // Mark the best net realization
     const maxNet = Math.max(...options.map((o) => o.netRealization));
-    options.forEach((o) => { o.isBest = o.netRealization === maxNet; });
+    options.forEach((o) => {
+      o.isBest = o.netRealization === maxNet;
+    });
 
     return { cropName: crop.cropName, unit: crop.unit, options };
   });

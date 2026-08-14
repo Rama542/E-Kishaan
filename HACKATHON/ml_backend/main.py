@@ -100,6 +100,11 @@ from routers.crop_ai import router as crop_router
 from routers.roadmap_ai import router as roadmap_router
 from routers.roadmap_engine import router as roadmap_engine_router
 from routers.journal_engine import router as journal_engine_router
+from routers.agronomy_router import router as agronomy_router
+from routers.finance_router import router as finance_router
+from routers.gis_router import router as gis_router
+from routers.weather_router import router as weather_router
+from routers.offline_router import router as offline_router
 
 app.include_router(market_router, prefix="/api")
 app.include_router(soil_router, prefix="/api")
@@ -107,6 +112,11 @@ app.include_router(crop_router)
 app.include_router(roadmap_router)
 app.include_router(roadmap_engine_router)
 app.include_router(journal_engine_router)
+app.include_router(agronomy_router)
+app.include_router(finance_router)
+app.include_router(gis_router)
+app.include_router(weather_router)
+app.include_router(offline_router)
 
 # ─── Root & Health ────────────────────────────────────────────────────────────
 

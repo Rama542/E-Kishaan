@@ -18,6 +18,7 @@ import CropRoadmapView from '@/components/CropRoadmapView';
 import FarmJournalView from '@/components/FarmJournalView';
 import FarmerOnboarding, { clearProfile } from '@/components/FarmerOnboarding';
 import AlertsCenter, { AlertItem } from '@/components/AlertsCenter';
+import OfflineBanner from '@/components/OfflineBanner';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/components/ui/sonner';
 
@@ -128,6 +129,9 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50">
+      {/* Offline Status & Sync Banner */}
+      <OfflineBanner />
+
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-md border-b border-green-200 sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">

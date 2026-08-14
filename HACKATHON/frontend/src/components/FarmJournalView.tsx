@@ -37,6 +37,7 @@ import {
   syncQueuedEntries,
   OfflineJournalEntry,
 } from '@/services/offlineSync';
+import { calculateLedgerSummary, JournalTx } from '@/services/agriMathService';
 
 export interface CostDistribution {
   category: string;
@@ -184,8 +185,8 @@ export default function FarmJournalView({ farmId = 'FARM-101' }: FarmJournalView
         throw new Error('Backend offline');
       }
     } catch {
-      // Fallback initial entries
-      setEntries([
+      // Fallback initial entries with Dynamic Ledger Calculation
+      const defaultEntries: JournalEntry[] = [
         {
           entry_id: 'JRN-8806',
           farm_id: farmId,
@@ -218,14 +219,61 @@ export default function FarmJournalView({ farmId = 'FARM-101' }: FarmJournalView
           entry_date: '2026-12-01',
           crop_name: 'Wheat',
           activity_type: 'SOWING',
-          description: 'Certified HD-3086 Seed purchase',
+          description: 'Certified PBW-725 seed 40kg',
           debit_account: 'Seeds Expense',
           credit_account: 'Cash in Hand',
           amount_inr: 3300,
           is_synced_offline: false,
           created_at: new Date().toISOString(),
         },
-      ]);
+        {
+          entry_id: 'JRN-8803',
+          farm_id: farmId,
+          entry_date: '2026-11-25',
+          crop_name: 'Wheat',
+          activity_type: 'TILLAGE',
+          description: 'Rotavator & Laser land leveling diesel rent',
+          debit_account: 'Diesel & Machinery Rent',
+          credit_account: 'Cash in Hand',
+          amount_inr: 3100,
+          is_synced_offline: false,
+          created_at: new Date().toISOString(),
+        },
+      ];
+
+      setEntries(defaultEntries);
+
+      // Transform to JournalTx and run dynamic math engine
+      const txList: JournalTx[] = defaultEntries.map((e) => ({
+        id: e.entry_id,
+        date: e.entry_date,
+        description: e.description,
+        category: e.debit_account,
+        debitAccount: e.debit_account,
+        creditAccount: e.credit_account,
+        amountINR: e.amount_inr,
+        isExpense: e.activity_type !== 'SALES',
+      }));
+
+      const dynSummary = calculateLedgerSummary(txList);
+      setSummary({
+        total_revenue_inr: dynSummary.totalRevenueINR,
+        total_expenses_inr: dynSummary.totalExpensesINR,
+        net_profit_inr: dynSummary.netProfitINR,
+        net_profit_margin_percent: Number((dynSummary.totalRevenueINR > 0 ? (dynSummary.netProfitINR / dynSummary.totalRevenueINR) * 100 : 0).toFixed(1)),
+        roi_percent: dynSummary.roiPercent,
+        total_yield_quintals: 55.0,
+        cost_per_quintal_inr: Number((dynSummary.totalExpensesINR / 55.0).toFixed(2)),
+        debit_credit_balanced: true,
+      });
+
+      setCategories(
+        dynSummary.categoryBreakdown.map((c) => ({
+          category: c.category,
+          total_inr: c.amountINR,
+          percentage: c.sharePercent,
+        }))
+      );
     }
   };
 

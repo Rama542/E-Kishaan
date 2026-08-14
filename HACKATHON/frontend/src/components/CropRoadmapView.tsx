@@ -31,6 +31,7 @@ import {
   Info,
 } from 'lucide-react';
 import { toast } from '@/components/ui/sonner';
+import { calculateFertilizerDosage, calculateKnapsackPumpDosage } from '@/services/agriMathService';
 
 export interface FertilizerInput {
   name: string;
@@ -127,24 +128,46 @@ export default function CropRoadmapView({ cropName = 'Wheat', areaAcres = 2.5 }:
       } else {
         throw new Error('Fallback to deterministic engine');
       }
-    } catch {
-      // Deterministic Agronomic Engine Fallback
+      // Dynamic Agronomic Engine with Pure Mathematical Calculation
+      const fertCalc = calculateFertilizerDosage(selectedCrop, acres, 2.2, 40, 15, 80);
+      const sprayCalc = calculateKnapsackPumpDosage(acres, 2.0);
+
       const steps: WeeklyExecutionStep[] = Array.from({ length: 16 }, (_, i) => {
         const w = i + 1;
         const bbch = w === 1 ? 0 : w === 2 ? 10 : w <= 5 ? 21 : w <= 8 ? 35 : w <= 10 ? 60 : w <= 14 ? 75 : 90;
+        
+        let fertName = '19-19-19 Foliar NPK';
+        let fertDose = `${(3 * acres).toFixed(1)} kg total`;
+        let pumpDose = `${(225 * acres).toFixed(0)}g per 15L pump (${sprayCalc.total15LPumps} pumps needed)`;
+
+        if (w === 1) {
+          fertName = `DAP (18-46-0) & MOP (0-0-60)`;
+          fertDose = `${fertCalc.dapBags50kg} Bags DAP (${fertCalc.dapNeededKg}kg) + ${fertCalc.mopBags50kg} Bags MOP (${fertCalc.mopNeededKg}kg)`;
+          pumpDose = `Basal soil application (${acres} acres total)`;
+        } else if (w === 4) {
+          fertName = `Urea (46% N) 1st Split`;
+          fertDose = `${fertCalc.ureaBags50kg} Bags Urea (${fertCalc.ureaNeededKg}kg total)`;
+          pumpDose = `Top-dressing broadcast / fertigation (${acres} acres)`;
+        }
+
         return {
           week_number: w,
           bbch_stage_code: bbch,
           stage_name: `BBCH ${bbch} - ${w <= 2 ? 'Germination & Seedling' : w <= 5 ? 'Active Tillering' : w <= 8 ? 'Stem Jointing & Booting' : w <= 10 ? 'Anthesis & Flowering' : w <= 14 ? 'Grain Milking & Dough' : 'Harvest & Storage'}`,
           gdd_target_accumulated: Math.round((w / 16) * 1650),
-          primary_operation: w === 1 ? 'Land preparation & basal DAP/MOP broadcast' : w === 4 ? 'Tillering boost & 19-19-19 foliar spray' : w === 8 ? 'Flag leaf protection & Boron 20% spray' : w === 15 ? 'Combine harvesting & grain moisture test' : `Field operation & irrigation split W${w}`,
+          primary_operation: w === 1 ? 'Land preparation & basal DAP/MOP broadcast' : w === 4 ? 'Tillering boost & Urea split application' : w === 8 ? 'Flag leaf protection & Boron spray' : w === 15 ? 'Combine harvesting & grain moisture test' : `Field operation & irrigation split W${w}`,
           fertilizer_inputs: [
-            { name: w === 1 ? 'DAP (18-46-0)' : w <= 5 ? 'Urea (46% N)' : '13-0-45 Potash', dose_per_acre: `${25 * acres} kg`, pump_15l_dose: '185g per 15L pump (13.3 pumps/acre)', purpose: 'NPK Nutrition' }
+            {
+              name: fertName,
+              dose_per_acre: fertDose,
+              pump_15l_dose: pumpDose,
+              purpose: 'NPK Crop Nutrition',
+            }
           ],
           ipm_scouting_guidelines: [`Scout field for ${w <= 5 ? 'weeds & aphids' : 'rust pustules & blights'}`, 'Inspect plant density per m²'],
           frac_irac_codes: [w <= 4 ? 'FRAC M03' : 'FRAC 3 + IRAC 4A'],
           phi_days_countdown: Math.max(0, 120 - w * 7),
-          labor_mandays_required: Math.round(2.0 * Math.sqrt(acres) * 10) / 10,
+          labor_mandays_required: Number((2.0 * Math.sqrt(acres)).toFixed(1)),
           estimated_cost_inr: Math.round(2500 * acres * (w === 1 || w === 15 ? 1.5 : 0.8)),
           risk_mitigation_notes: w === 4 ? 'CRI stage is critical for irrigation; avoid water stress.' : 'Maintain ideal soil moisture.',
         };
