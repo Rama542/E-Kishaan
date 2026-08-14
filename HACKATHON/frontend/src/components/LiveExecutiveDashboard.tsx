@@ -178,7 +178,7 @@ export default function LiveExecutiveDashboard({
 
         {/* Financial Ledger & ROI Card */}
         <Card
-          onClick={() => onNavigateTab('roadmap', 'journal')}
+          onClick={() => onNavigateTab('market')}
           className="bg-gradient-to-br from-purple-600 to-indigo-800 text-white shadow-md hover:shadow-xl transition-all cursor-pointer group relative overflow-hidden"
         >
           <CardHeader className="pb-2">
@@ -198,7 +198,7 @@ export default function LiveExecutiveDashboard({
             <div className="pt-2 flex items-center justify-between text-xs text-purple-200 border-t border-purple-400/30">
               <span>Total Sales ₹{ledgerSummary.totalRevenueINR.toLocaleString('en-IN')}</span>
               <span className="flex items-center gap-1 font-bold group-hover:translate-x-1 transition-transform">
-                Expense Book <ChevronRight className="w-3.5 h-3.5" />
+                Mandi Rates <ChevronRight className="w-3.5 h-3.5" />
               </span>
             </div>
           </CardContent>
@@ -214,7 +214,7 @@ export default function LiveExecutiveDashboard({
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <Button
               variant="outline"
               onClick={() => onNavigateTab('roadmap', 'roadmap')}
@@ -247,18 +247,8 @@ export default function LiveExecutiveDashboard({
 
             <Button
               variant="outline"
-              onClick={() => onNavigateTab('roadmap', 'journal')}
-              className="h-auto py-3 px-3 flex flex-col items-center text-center justify-center border-purple-200 bg-purple-50/50 hover:bg-purple-100 hover:border-purple-400 transition-all rounded-xl"
-            >
-              <span className="text-xl mb-1">📖</span>
-              <span className="font-bold text-xs text-purple-950">Farm Expense Book</span>
-              <span className="text-[10px] text-purple-700 mt-0.5">Track Money Spent & Earned</span>
-            </Button>
-
-            <Button
-              variant="outline"
               onClick={() => onNavigateTab('solver')}
-              className="h-auto py-3 px-3 flex flex-col items-center text-center justify-center border-teal-200 bg-teal-50/50 hover:bg-teal-100 hover:border-teal-400 transition-all rounded-xl col-span-2 sm:col-span-1"
+              className="h-auto py-3 px-3 flex flex-col items-center text-center justify-center border-teal-200 bg-teal-50/50 hover:bg-teal-100 hover:border-teal-400 transition-all rounded-xl"
             >
               <span className="text-xl mb-1">🤖</span>
               <span className="font-bold text-xs text-teal-950">Ask Doctor AI</span>

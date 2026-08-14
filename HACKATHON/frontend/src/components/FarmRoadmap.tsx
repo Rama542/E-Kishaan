@@ -374,38 +374,19 @@ export default function FarmRoadmap() {
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <Badge className="bg-amber-400 text-emerald-950 font-bold px-2.5 py-0.5">
-<<<<<<< HEAD
-                  {t('roadmap.aiTwinBadge')}
-=======
                   🤖 Smart AI Farm Assistant Active
->>>>>>> 97135bcf (fix(roadmap): convert all technical titles, cards, buttons, and API labels into simple layman farmer terms)
                 </Badge>
                 <span className="text-emerald-200 text-xs font-semibold">
-                  {t('roadmap.districtVillageLabel', {
-                    district: profile?.district || district || 'Ludhiana',
-                    village: profile?.village || 'Gill',
-                  })}
+                  District: {profile?.district || district || 'Ludhiana'} • Village: {profile?.village || 'Gill'}
                 </span>
               </div>
               <h1 className="text-3xl font-extrabold text-white flex items-center gap-2">
-<<<<<<< HEAD
-                {t('roadmap.pageTitle')}
-              </h1>
-              <p className="text-emerald-100 text-sm">
-                {t('roadmap.farmerLine', {
-                  name: profile?.farmerName || 'Gurpreet Singh',
-                  acres: profile?.farmSizeAcres || 2.5,
-                  fields: profile?.numFields || 2,
-                  crop: profile?.currentCrop || 'Sugarcane',
-                })}
-=======
                 🌾 My Farm Care Guide & Daily Helper
               </h1>
               <p className="text-emerald-100 text-sm">
                 Farmer: <span className="font-bold text-white">{profile?.farmerName || 'Gurpreet Singh'}</span> • Field Area:{' '}
                 <span className="font-bold text-amber-300">{profile?.farmSizeAcres || 2.5} Acres</span> ({profile?.numFields || 2} Plots) • Crop:{' '}
                 <span className="font-bold text-white">{profile?.currentCrop || 'Sugarcane'}</span>
->>>>>>> 97135bcf (fix(roadmap): convert all technical titles, cards, buttons, and API labels into simple layman farmer terms)
               </p>
             </div>
 
@@ -413,15 +394,9 @@ export default function FarmRoadmap() {
               {/* Onboarding Dialog Trigger */}
               <Dialog open={isOnboardingOpen} onOpenChange={setIsOnboardingOpen}>
                 <DialogTrigger asChild>
-<<<<<<< HEAD
-                  <Button className="bg-amber-500 hover:bg-amber-600 text-emerald-950 font-bold shadow-sm">
-                    <User className="w-4 h-4 mr-2" />
-                    {t('roadmap.editProfile')}
-=======
                   <Button className="bg-amber-500 hover:bg-amber-600 text-emerald-950 font-bold shadow-sm text-xs">
                     <User className="w-4 h-4 mr-1.5" />
                     👤 Change Farm Details
->>>>>>> 97135bcf (fix(roadmap): convert all technical titles, cards, buttons, and API labels into simple layman farmer terms)
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto">
@@ -512,28 +487,16 @@ export default function FarmRoadmap() {
               {/* End-of-Day Check-In Trigger */}
               <Dialog open={isDiaryOpen} onOpenChange={setIsDiaryOpen}>
                 <DialogTrigger asChild>
-<<<<<<< HEAD
-                  <Button variant="outline" className="border-amber-400 text-amber-300 hover:bg-emerald-950 font-bold">
-                    <BookOpen className="w-4 h-4 mr-2" />
-                    {t('roadmap.checkIn')}
-=======
                   <Button variant="outline" className="border-amber-400 text-amber-300 hover:bg-emerald-950 font-bold text-xs">
                     <BookOpen className="w-4 h-4 mr-1.5" />
                     📖 Daily Farm Record Book
->>>>>>> 97135bcf (fix(roadmap): convert all technical titles, cards, buttons, and API labels into simple layman farmer terms)
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="max-w-md">
                   <DialogHeader>
-<<<<<<< HEAD
-                    <DialogTitle className="text-xl font-bold text-emerald-950">{t('roadmap.diaryDialog.title')}</DialogTitle>
-                    <DialogDescription>
-                      {t('roadmap.diaryDialog.description')}
-=======
                     <DialogTitle className="text-xl font-bold text-emerald-950">📖 Record Today's Farm Work</DialogTitle>
                     <DialogDescription>
                       Check what you did in your field today so the AI can update tomorrow's plan.
->>>>>>> 97135bcf (fix(roadmap): convert all technical titles, cards, buttons, and API labels into simple layman farmer terms)
                     </DialogDescription>
                   </DialogHeader>
 

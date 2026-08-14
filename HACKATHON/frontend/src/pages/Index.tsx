@@ -15,7 +15,6 @@ import MarketAnalysis from '@/components/MarketAnalysis';
 import FrankensteinSolver from '@/components/FrankensteinSolver';
 import FarmRoadmap from '@/components/FarmRoadmap';
 import CropRoadmapView from '@/components/CropRoadmapView';
-import FarmJournalView from '@/components/FarmJournalView';
 import FarmerOnboarding, { clearProfile } from '@/components/FarmerOnboarding';
 import AlertsCenter, { AlertItem } from '@/components/AlertsCenter';
 import OfflineBanner from '@/components/OfflineBanner';
@@ -276,16 +275,6 @@ export default function Index() {
                   🌾 16-Week Crop Roadmap
                 </button>
                 <button
-                  onClick={() => setRoadmapSubTab('journal')}
-                  className={`text-xs px-4 py-2 rounded-xl font-bold transition-all flex items-center gap-1.5 ${
-                    roadmapSubTab === 'journal'
-                      ? 'bg-emerald-600 text-white shadow-md'
-                      : 'bg-gray-50 text-gray-700 hover:bg-emerald-50'
-                  }`}
-                >
-                  📓 Double-Entry Farm Journal
-                </button>
-                <button
                   onClick={() => setRoadmapSubTab('planner')}
                   className={`text-xs px-4 py-2 rounded-xl font-bold transition-all flex items-center gap-1.5 ${
                     roadmapSubTab === 'planner'
@@ -304,10 +293,6 @@ export default function Index() {
 
             {roadmapSubTab === 'roadmap' && (
               <CropRoadmapView cropName={farmer.primaryCrops[0] || 'Wheat'} areaAcres={2.5} />
-            )}
-
-            {roadmapSubTab === 'journal' && (
-              <FarmJournalView farmId={`FARM-${(farmer.primaryCrops[0] || 'WHEAT').toUpperCase()}-101`} />
             )}
 
             {roadmapSubTab === 'planner' && (
