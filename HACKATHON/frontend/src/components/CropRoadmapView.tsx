@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -92,6 +93,7 @@ function getSimpleStageName(weekNum: number, cropName: string): { title: string;
 }
 
 export default function CropRoadmapView({ cropName = 'Wheat', areaAcres = 2.5 }: CropRoadmapViewProps) {
+  const { t } = useTranslation();
   const [selectedCrop, setSelectedCrop] = useState(cropName);
   const [acres, setAcres] = useState(areaAcres);
   const [sowingDate, setSowingDate] = useState('2026-11-01');

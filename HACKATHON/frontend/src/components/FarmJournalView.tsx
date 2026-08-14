@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -99,6 +100,7 @@ interface FarmJournalViewProps {
 }
 
 export default function FarmJournalView({ farmId = 'FARM-101' }: FarmJournalViewProps) {
+  const { t } = useTranslation();
   const [entries, setEntries] = useState<JournalEntry[]>([]);
   const [summary, setSummary] = useState<FinancialSummary>({
     total_revenue_inr: 125125,
