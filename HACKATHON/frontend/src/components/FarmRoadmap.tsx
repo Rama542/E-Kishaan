@@ -268,16 +268,16 @@ export default function FarmRoadmap() {
                   AI Digital Farm Twin Active
                 </Badge>
                 <span className="text-emerald-200 text-xs font-semibold">
-                  District: {profile?.district} • Village: {profile?.village}
+                  District: {profile?.district || district || 'Ludhiana'} • Village: {profile?.village || 'Gill'}
                 </span>
               </div>
               <h1 className="text-3xl font-extrabold text-white flex items-center gap-2">
                 🌾 My Farm Roadmap & Intelligent Advisory
               </h1>
               <p className="text-emerald-100 text-sm">
-                Farmer: <span className="font-bold text-white">{profile?.farmerName}</span> • Land:{' '}
-                <span className="font-bold text-amber-300">{profile?.farmSizeAcres} Acres</span> ({profile?.numFields} Fields) • Crop:{' '}
-                <span className="font-bold text-white">{profile?.currentCrop}</span>
+                Farmer: <span className="font-bold text-white">{profile?.farmerName || 'Gurpreet Singh'}</span> • Land:{' '}
+                <span className="font-bold text-amber-300">{profile?.farmSizeAcres || 2.5} Acres</span> ({profile?.numFields || 2} Fields) • Crop:{' '}
+                <span className="font-bold text-white">{profile?.currentCrop || 'Sugarcane'}</span>
               </p>
             </div>
 
@@ -607,7 +607,7 @@ export default function FarmRoadmap() {
                     Today's Actionable Farm Plan (`GET /api/farm/today`)
                   </CardTitle>
                   <CardDescription>
-                    Fetched dynamically for {profile?.currentCrop} in {district}
+                    Fetched dynamically for {profile?.currentCrop || 'Sugarcane'} in {district || 'Ludhiana'}
                   </CardDescription>
                 </div>
                 <Badge className="bg-emerald-700 text-white font-bold">{todayTasks.length} Tasks Returned</Badge>
