@@ -65,8 +65,8 @@ export default function FarmerOnboarding({
   defaultLocation = 'Ludhiana, Punjab'
 }: Props) {
   const { t } = useTranslation();
-  // Start with empty selected crops so nothing is highlighted beforehand
-  const [selectedCrops, setSelectedCrops] = useState<string[]>([]);
+  // Start with default selected crops so the farmer can click Start Farming immediately
+  const [selectedCrops, setSelectedCrops] = useState<string[]>(['Wheat', 'Rice']);
   const [cropError, setCropError] = useState('');
   const [isDone, setIsDone] = useState(false);
 

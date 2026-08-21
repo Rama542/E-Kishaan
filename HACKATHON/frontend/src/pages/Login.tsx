@@ -150,6 +150,21 @@ export default function Login() {
               >
                 {isSubmitting ? (t('auth.login.submitting') || 'Logging In...') : (t('auth.login.submit') || 'Log In')}
               </Button>
+
+              <div className="relative my-4 flex items-center justify-center">
+                <div className="border-t border-gray-200 w-full" />
+                <span className="bg-white px-3 text-sm text-gray-400 font-medium absolute">OR</span>
+              </div>
+
+              <Button
+                type="button"
+                onClick={handleGuestLogin}
+                variant="outline"
+                className="w-full h-12 text-lg font-bold border-2 border-green-600 text-green-700 hover:bg-green-50 shadow-sm flex items-center justify-center gap-2"
+              >
+                <Leaf className="w-5 h-5 text-green-600" />
+                Continue as Demo Farmer
+              </Button>
             </form>
 
             <p className="mt-6 text-center text-lg text-gray-600">

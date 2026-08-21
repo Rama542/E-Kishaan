@@ -80,7 +80,7 @@ export default function Landing() {
 
         <div className="mt-8">
           <Button asChild size="lg" className="text-lg px-8 py-6 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700">
-            <Link to="/login">
+            <Link to="/dashboard">
               {t('common.openDashboard')}
               <ArrowRight className="w-5 h-5" />
             </Link>

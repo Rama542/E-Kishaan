@@ -92,6 +92,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (session?.user) {
         setUser(session.user);
         fetchProfile(session.user.id);
+      } else {
+        try {
+          const savedGuest = localStorage.getItem(GUEST_STORAGE_KEY);
+          if (savedGuest) {
+            const { email, name } = JSON.parse(savedGuest);
+            setUser(createMockUser(email, name));
+            setProfile(createMockProfile(email, name));
+          } else {
+            const guestUser = createMockUser();
+            const guestProf = createMockProfile();
+            setUser(guestUser);
+            setProfile(guestProf);
+          }
+        } catch {
+          setUser(createMockUser());
+          setProfile(createMockProfile());
+        }
       }
       setLoading(false);
     });
@@ -103,7 +120,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(session.user);
         fetchProfile(session.user.id);
       } else {
-        // If no supabase session, check guest session before clearing
+        // If no supabase session, check guest session before fallback
         try {
           const savedGuest = localStorage.getItem(GUEST_STORAGE_KEY);
           if (savedGuest) {
@@ -111,12 +128,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             setUser(createMockUser(email, name));
             setProfile(createMockProfile(email, name));
           } else {
-            setUser(null);
-            setProfile(null);
+            setUser(createMockUser());
+            setProfile(createMockProfile());
           }
         } catch {
-          setUser(null);
-          setProfile(null);
+          setUser(createMockUser());
+          setProfile(createMockProfile());
         }
       }
       setLoading(false);
